@@ -1,12 +1,19 @@
 import './App.css'
-// Test
+// Need to import componenets for React Router
 
 function App() {
 
   return (
     <>
       <div>
-        Home
+        <Nav/>
+        <Home/>
+        <Contact/>
+        <About/>
+        <Projects/>
+        <Pokedex/>
+        <Weather/>
+        <Ranking/>
       </div>
     </>
   )
