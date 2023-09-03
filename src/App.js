@@ -1,5 +1,5 @@
 import './App.css'
-// Need to import componenets for React Router
+// import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Nav from './components/Nav'
 import Home from './components/Home'
 import Contact from './components/Contact'
