@@ -1,5 +1,5 @@
 import './App.css'
-// import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Nav from './components/Nav'
 import Home from './components/Home'
 import Contact from './components/Contact'
@@ -14,14 +14,32 @@ function App() {
   return (
     <>
       <div>
-        <Nav/>
-        <Home/>
-        <Contact/>
-        <About/>
-        <Projects/>
-        <Pokedex/>
-        <Weather/>
-        <Ranking/>
+        <Router>
+          <Route>
+            <Nav/>
+          </Route>
+          <Route>
+            <Home/>
+          </Route>
+          <Route>
+            <Contact/>
+          </Route>
+          <Route>
+            <About/>
+          </Route>
+          <Route>
+            <Projects/>
+          </Route>
+          <Route>
+            <Pokedex/>
+          </Route>
+          <Route>
+            <Weather/>
+          </Route>
+          <Route>
+            <Ranking/>
+          </Route>
+        </Router>
       </div>
     </>
   )
