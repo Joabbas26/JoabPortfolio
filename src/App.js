@@ -1,48 +1,39 @@
 import './App.css'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Provider } from "react-redux";
+import store from "./store";
 import Nav from './components/Nav'
 import Home from './components/Home'
 import Contact from './components/Contact'
 import About from './components/About'
 import Projects from './components/Projects'
 import Pokedex from './components/Pokedex'
-import Weather from './components/Weather'
+import WeatherApp from './components/Weather'
 import Ranking from './components/Ranking'
+import Footer from "./Footer.js";
 
 function App() {
 
   return (
-    <>
-      <div>
-        <Router>
-          <Route>
-            <Nav/>
-          </Route>
-          <Route>
-            <Home/>
-          </Route>
-          <Route>
-            <Contact/>
-          </Route>
-          <Route>
-            <About/>
-          </Route>
-          <Route>
-            <Projects/>
-          </Route>
-          <Route>
-            <Pokedex/>
-          </Route>
-          <Route>
-            <Weather/>
-          </Route>
-          <Route>
-            <Ranking/>
-          </Route>
-        </Router>
-      </div>
-    </>
-  )
+    <Provider store={store}>
+      <BrowserRouter>
+      <div className="App">
+        <Nav/>
+        {/* Contains website data in multiple routes */}
+          <Routes>
+                <Route index element={<Home />} />
+                <Route path='/projects' element={<Projects/>} /> 
+                <Route path='/about' element={<About/>} />
+                <Route path='/contact' element={<Contact/>} />
+                <Route path='/ranking' element={<Ranking/>} />
+                <Route path='/weather' element={<WeatherApp/>} />
+                <Route path='/Pokedex' element={<Pokedex/>} />
+          </Routes >
+          <Footer/>
+        </div>
+      </BrowserRouter>
+    </Provider>
+  );
 }
 
 export default App
