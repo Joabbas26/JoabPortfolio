@@ -22,9 +22,9 @@ function App() {
         {/* Contains website data in multiple routes */}
           <Routes>
                 <Route index element={<Home />} />
-                <Route path='/projects' element={<Projects/>} /> 
                 <Route path='/about' element={<About/>} />
                 <Route path='/contact' element={<Contact/>} />
+                <Route path='/projects' element={<Projects/>} /> 
                 <Route path='/ranking' element={<Ranking/>} />
                 <Route path='/weather' element={<WeatherApp/>} />
                 <Route path='/Pokedex' element={<Pokedex/>} />
