@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import Joab from './assets/Joab.png'
 import './Home.scss'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -5,6 +6,11 @@ import './Home.scss'
 
 
 export default function Home() {
+
+  const ref = useRef(null);
+  const handleClick = () => {
+    ref.current?.scrollIntoView({behavior:'smooth'});
+  }
 
   return (
     <div className='HomeDiv'>
@@ -14,7 +20,7 @@ export default function Home() {
               <div className='col-md-4 col-sm-12' id='textsDiv'>
                 <div className="content" id='devText'>
                   <div className="content__container">
-                    <ul className="content__container__list" onClick={event => window.location.href='/projects#webDevSection'}>
+                    <ul className="content__container__list" onClick={handleClick}>
                       <li className="content__container__list__item">HTML</li>
                       <li className="content__container__list__item">CSS</li>
                       <li className="content__container__list__item">JavaScript</li>
@@ -22,8 +28,8 @@ export default function Home() {
                     </ul>
                   </div>
                 </div>
-                <p className= 'appsText' onClick={event =>  window.location.href='/projects#appsSection'}>Apps</p>
-                <p className='novelText anim-typewriter' onClick={event =>  window.location.href='/projects#booksSection'}>Author</p>
+                <p className= 'appsText' onClick={handleClick}>Apps</p>
+                <p className='novelText anim-typewriter' onClick={handleClick}>Author</p>
               </div>
               <div className='col-md-8 col-sm-12' id='circleDiv'>
                 <img className='img-fluid' id='circleImage' src={Joab} alt="mainImage"/>

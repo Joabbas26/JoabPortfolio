@@ -28,7 +28,7 @@ function App() {
                 <Route path='/ranking' element={<Ranking/>} />
                 <Route path='/weather' element={<WeatherApp/>} />
                 <Route path='/Pokedex' element={<Pokedex/>} />
-          </Routes >
+          </Routes>
           <Footer/>
         </div>
       </BrowserRouter>
