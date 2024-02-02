@@ -10,7 +10,7 @@ import Projects from './components/Projects'
 import Pokedex from './components/Pokedex'
 import WeatherApp from './components/Weather'
 import Ranking from './components/Ranking'
-import Footer from "./Footer.js";
+// import Footer from "./Footer.js";
 
 function App() {
 
@@ -19,9 +19,8 @@ function App() {
       <BrowserRouter>
       <div className="App">
         <Nav/>
-        {/* Contains website data in multiple routes */}
           <Routes>
-                <Route index element={<Home />} />
+                <Route index element={<Home/>} />
                 <Route path='/about' element={<About/>} />
                 <Route path='/contact' element={<Contact/>} />
                 <Route path='/projects' element={<Projects/>} /> 
@@ -29,7 +28,7 @@ function App() {
                 <Route path='/weather' element={<WeatherApp/>} />
                 <Route path='/Pokedex' element={<Pokedex/>} />
           </Routes>
-          <Footer/>
+          {/* <Footer/> */}
         </div>
       </BrowserRouter>
     </Provider>
