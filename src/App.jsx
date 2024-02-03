@@ -10,7 +10,7 @@ import Projects from './components/Projects.jsx'
 import Pokedex from './components/Pokedex.jsx'
 import WeatherApp from './components/WeatherApp.jsx'
 import Ranking from './components/RankingApp.jsx'
-// import Footer from "./Footer.jsx";
+import Footer from "./components/Footer.jsx";
 
 function App() {
 
@@ -28,7 +28,7 @@ function App() {
                 <Route path='/weather' element={<WeatherApp/>} />
                 <Route path='/Pokedex' element={<Pokedex/>} />
           </Routes>
-          {/* <Footer/> */}
+          <Footer/>
         </div>
       </BrowserRouter>
     </Provider>
