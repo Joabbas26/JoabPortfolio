@@ -1,4 +1,4 @@
-import './styles/Pokedex.scss'
+import './src/styles/Pokedex.scss'
 
 export default function Pokedex() {
   return (
