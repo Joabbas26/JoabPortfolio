@@ -1,4 +1,4 @@
-import './src/styles/PaycheckCalc.scss'
+import '../styles/PaycheckCalc.scss'
 
 export default function PaycheckCalc() {
   return (

@@ -1,4 +1,4 @@
-import './src/styles/RankingApp.scss'
+import '../styles/RankingApp.scss'
 
 export default function RankingApp() {
   return (
