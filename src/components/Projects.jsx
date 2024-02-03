@@ -1,4 +1,4 @@
-import './Projects.scss'
+import './styles/Projects.scss'
 import Pokedex from './assets/Pokedex.png'
 
 export default function Projects() {

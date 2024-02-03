@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import Joab from './assets/Joab.png'
-import './Home.scss'
+import './styles/Home.scss'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faAmazon, faGithub, faInstagram, faLinkedin, faTwitter } from "@fortawesome/free-brands-svg-icons"
 
