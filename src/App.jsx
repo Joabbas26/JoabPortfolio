@@ -1,16 +1,16 @@
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from "react-redux";
-import store from "./store";
-import Nav from './components/Nav'
-import Home from './components/Home'
-import Contact from './components/Contact'
-import About from './components/About'
-import Projects from './components/Projects'
-import Pokedex from './components/Pokedex'
-import WeatherApp from './components/WeatherApp'
-import Ranking from './components/Ranking'
-// import Footer from "./Footer";
+import store from "./store.jsx";
+import Nav from './components/Nav.jsx'
+import Home from './components/Home.jsx'
+import Contact from './components/Contact.jsx'
+import About from './components/About.jsx'
+import Projects from './components/Projects.jsx'
+import Pokedex from './components/Pokedex.jsx'
+import WeatherApp from './components/WeatherApp.jsx'
+import Ranking from './components/RankingApp.jsx'
+// import Footer from "./Footer.jsx";
 
 function App() {
 
