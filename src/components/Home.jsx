@@ -13,8 +13,8 @@ export default function Home() {
   }
 
   return (
-    <div className='HomeDiv'>
-      <p className='homeTitle'>Welcome to My Site</p>
+    <div className='py-6 px-4 sm:p-6 md:py-10 md:px-8'>
+      <p className='space-y-4'>Welcome to My Site</p>
         <div className='container'>
           <div className='row' id='optionsDiv'>
               <div className='col-md-4 col-sm-12' id='textsDiv'>

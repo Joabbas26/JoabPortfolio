@@ -16,7 +16,6 @@ function App() {
 
   return (
     <Provider store={store}>
-      <BrowserRouter>
       <div className="App">
         <Nav/>
           <Routes>
@@ -30,7 +29,6 @@ function App() {
           </Routes>
           <Footer/>
         </div>
-      </BrowserRouter>
     </Provider>
   );
 }
