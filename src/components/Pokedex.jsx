@@ -1,7 +1,7 @@
 import '../styles/Pokedex.scss'
 import React, { useState } from 'react';
 import axios from 'axios';
-import { response } from 'express';
+// import { response } from 'express';
 
 export default function Pokedex() {
   const [pokemonName, setPokemonName] = useState('');
