@@ -18,16 +18,9 @@ export default function Home() {
         <div className='container'>
           <div className='row' id='optionsDiv'>
               <div className='col-md-4 col-sm-12' id='textsDiv'>
-                <div className="content" id='devText'>
-                  <div className="content__container">
                     <ul className="content__container__list" onClick={handleClick}>
                       <li className="content__container__list__item">HTML</li>
-                      <li className="content__container__list__item">CSS</li>
-                      <li className="content__container__list__item">JavaScript</li>
-                      <li className="content__container__list__item">React</li>
                     </ul>
-                  </div>
-                </div>
                 <p className= 'appsText' onClick={handleClick}>Apps</p>
                 <p className='novelText anim-typewriter' onClick={handleClick}>Author</p>
               </div>
