@@ -2,7 +2,7 @@ import '../styles/Contact.scss';
 import React, { useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons'
-import { faInstagram, faLinkedin, faTwitter} from "@fortawesome/free-brands-svg-icons"
+import { faAmazon, faGithub, faInstagram, faLinkedin, faTwitter } from "@fortawesome/free-brands-svg-icons"
 import emailjs from 'emailjs-com';
 
 export default function Contact() {
