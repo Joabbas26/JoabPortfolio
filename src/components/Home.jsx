@@ -11,8 +11,8 @@ export default function Home() {
         <div className='container'>
           <div className='row' id='optionsDiv'>
               <div className='col-md-4 col-sm-12' id='textsDiv'>
-                    <ul className="content__container__list" onClick={handleClick}>
-                      <li className="content__container__list__item"><Link to="/projects">Full Stack</Link></li>
+                    <ul className="list-none" >
+                      <li><Link to="/projects">Full Stack</Link></li>
                     </ul>
               </div>
               <div className='col-md-8 col-sm-12' id='circleDiv'>

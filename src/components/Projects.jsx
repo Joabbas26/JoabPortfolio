@@ -29,7 +29,7 @@ export default function Projects() {
                   CRUD project using JavaScript, React and Redux Toolkit to handle state management</p>
                   <div className='projectInfoButtons'>
                     <a className='btn btn-primary' href="https://github.com/Joabbas26/Rank-Table">Github</a>
-                    <a className='btn btn-danger'><Link to="/mainTable" style={{ color: 'inherit', textDecoration: 'inherit'}}>Demo</Link></a>
+                    <button className='btn btn-danger'><Link to="/mainTable" style={{ color: 'inherit', textDecoration: 'inherit'}}>Demo</Link></button>
                   </div>
               </div>
             </div>
@@ -41,7 +41,7 @@ export default function Projects() {
             Used Axios and React to fetch weather data from OpenWeatherMap API.</p>
                   <div className='projectInfoButtons'>
                     <a className='btn btn-primary' href="https://github.com/Joabbas26/WeatherApp">Github</a>
-                    <a className='btn btn-danger'><Link to="/weather" style={{ color: 'inherit', textDecoration: 'inherit'}}>Demo</Link></a>
+                    <button className='btn btn-danger'><Link to="/weather" style={{ color: 'inherit', textDecoration: 'inherit'}}>Demo</Link></button>
                   </div>
               </div>
             </div>
@@ -65,35 +65,11 @@ export default function Projects() {
                 <p className="projectDescription">Pokdex for searching pokemon</p>
                   <div className='projectInfoButtons'>
                     <a className='btn btn-primary' href="https://github.com/Joabbas26/Rank-Table">Github</a>
-                    <a className='btn btn-danger'><Link to="/Pokedex" style={{ color: 'inherit', textDecoration: 'inherit'}}>Demo</Link></a>
+                    <button className='btn btn-danger'><Link to="/Pokedex" style={{ color: 'inherit', textDecoration: 'inherit'}}>Demo</Link></button>
                   </div>
               </div>
             </div>
         </div> 
-      </div>
-
-      {/* App projects */}
-      <p className='projectTitle' id='appsSection'>Apps</p>
-      <div className='container-fluid' id='projectsSection'>
-        <div className='row' style={{justifyContent: 'center'}}>
-          <div className='col-md-3 col-sm-12 col-lg-3' id='card'>
-            <a href='https://apps.apple.com/us/app/snakeeaters/id1574034388'>
-              <img className='img-fluid' id='projectImage' src={snakeEaters} alt="projectImage" style={{borderRadius: '10px'}}/>
-            </a>
-            <div className="card-body">
-            <h5 className="card-title">Snake Game</h5>
-            <p className="card-text">Classic snake game for iOS with better visuals and controls. Developed by my brother and I</p>
-          </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Books projects */}
-      <p className='projectTitle' id='booksSection'>Books</p>
-      <div className='container-fluid' id='projectsSection'>
-        <div className='row' id='commingSoon'>
-          Comming Soon!
-        </div>
       </div>
     </div>
   )
