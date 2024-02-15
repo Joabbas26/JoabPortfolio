@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import Joab from '../assets/Joab.png'
-import '../styles/Home.scss'
 
 
 export default function Home() {

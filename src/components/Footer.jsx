@@ -1,9 +1,8 @@
-import '../styles/Footer.scss'
 
 export default function Footer() {
   return (
     <div className='footer'>
-        <footer className="bg-gray-800 text-white py-8 fixed bottom-0 left-0 w-full z-10">
+        <footer className="bg-gray-800 text-white py-8 bottom-0 left-0 w-full z-10">
   <div className="container mx-auto flex justify-between items-center">
     <div className="flex flex-col">
       <h2 className="text-lg font-semibold mb-2">Contact Me</h2>

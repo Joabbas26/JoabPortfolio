@@ -1,4 +1,3 @@
-import '../styles/Projects.scss'
 import Pokedex from '../assets/Pokedex.png'
 import { Link } from 'react-router-dom';
 import snakeEaters from '../assets/snakeEaters.png';

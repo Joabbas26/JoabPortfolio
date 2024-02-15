@@ -1,4 +1,3 @@
-import '../styles/PaycheckCalc.scss'
 import React, {useState, useEffect} from 'react';
 import moment from 'moment';
 import axios from 'axios';

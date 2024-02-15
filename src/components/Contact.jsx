@@ -1,8 +1,7 @@
-import '../styles/Contact.scss';
 import React, { useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons'
-import { faAmazon, faGithub, faInstagram, faLinkedin, faTwitter } from "@fortawesome/free-brands-svg-icons"
+import { faEnvelope, faPhone, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faAmazon, faGithub, faInstagram, faLinkedin, faTwitter, faFacebook } from "@fortawesome/free-brands-svg-icons"
 import emailjs from 'emailjs-com';
 
 export default function Contact() {
@@ -60,9 +59,87 @@ export default function Contact() {
 }
 
   return (
-    <div className='contactDiv'>
+    <div className="bg-gray-100 min-h-screen w-full flex items-center justify-center">
+    <div className="w-full md:w-2/3 px-6 py-8 bg-white rounded-3xl">
+      <div className="container mx-auto flex flex-col md:flex-row">
+        {/* Contact Form */}
+        <div className="md:w-1/2 md:pr-8">
+          <h2 className="text-2xl text-gray-700 font-bold mb-4">Contact Me</h2>
+          <form>
+            <div className="mb-4">
+              <label htmlFor="name" className="block text-gray-700 font-bold mb-2">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your Name" className="w-full px-3 py-2 border rounded-md" />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="email" className="block text-gray-700 font-bold mb-2">Email</label>
+              <input type="email" id="email" name="email" placeholder="Your Email" className="w-full px-3 py-2 border rounded-md" />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="message" className="block text-gray-700 font-bold mb-2">Message</label>
+              <textarea id="message" name="message" rows="4" placeholder="Your Message" className="w-full px-3 py-2 border rounded-md"></textarea>
+            </div>
+            <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md">Send</button>
+          </form>
+        </div>
+
+        {/* Contact Info */}
+        <div className="md:w-1/2 mt-8 md:mt-0 md:pl-8 flex flex-col justify-center">
+          <div className="flex items-center mb-4">
+            <FontAwesomeIcon icon={faEnvelope} className="text-gray-700 mr-2" />
+            <span className="text-gray-700">example@example.com</span>
+          </div>
+          <div className="flex items-center mb-4">
+            <FontAwesomeIcon icon={faPhone} className="text-gray-700 mr-2" />
+            <span className="text-gray-700">+123 456 7890</span>
+          </div>
+          <div className="flex items-center mb-4">
+            <FontAwesomeIcon icon={faMapMarkerAlt} className="text-gray-700 mr-2" />
+            <span className="text-gray-700">123 Main St, City, Country</span>
+          </div>
+          <div className="flex items-center">
+            <a href="#" className="text-gray-700 hover:text-blue-500 mr-4"><FontAwesomeIcon icon={faLinkedin} /></a>
+            <a href="#" className="text-gray-700 hover:text-blue-500 mr-4"><FontAwesomeIcon icon={faFacebook} /></a>
+            <a href="#" className="text-gray-700 hover:text-blue-500"><FontAwesomeIcon icon={faInstagram} /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  )
+}
+
+/**
+ * 
+*              
+ 
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+const ContactPage = () => {
+  return (
+    
+  );
+};
+
+
+
+
+
+
+
+
+
+<div className='bg-gray-100 min-h-screen'>
       <p className='contactTitle'>Get In Touch</p>
-      <div className='container' id='contactMainForm'>
+      <div className='container mx-auto p-6 flex flex-col md:flex-row'>
         <div className='row'>
           <div className='col-md-8' id='contactForm'>
             <form ref={form} onSubmit={handleSubmit} method="POST">
@@ -127,13 +204,15 @@ export default function Contact() {
         </div>
       </div>
     </div>
-  )
-}
 
-/**
- * 
-*              
- <div className='col-md-1 col-sm-3' id='iconDiv'>
+
+
+
+
+
+
+
+<div className='col-md-1 col-sm-3' id='iconDiv'>
     <a href='https://www.amazon.com/'><FontAwesomeIcon icon={faAmazon}/></a>
     <a href='https://github.com/Joabbas26?tab=repositories'><FontAwesomeIcon icon={faGithub}/></a>
     <a href='https://www.instagram.com/joab_bastidas/'><FontAwesomeIcon icon={faInstagram}/></a>

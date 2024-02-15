@@ -1,4 +1,3 @@
-import '../styles/RankingApp.scss'
 import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggle } from '../reducers/ModalSlice';
