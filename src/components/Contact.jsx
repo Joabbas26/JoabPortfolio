@@ -59,12 +59,12 @@ export default function Contact() {
 }
 
   return (
-    <div className="bg-gray-100 min-h-screen w-full flex items-center justify-center">
-    <div className="w-full md:w-2/3 px-6 py-8 bg-white rounded-3xl">
+    <div className="bg-gray-800 min-h-screen w-full flex items-center justify-center">
+    <div className="w-full md:w-2/3 px-6 py-8 bg-gray-400 rounded-3xl">
       <div className="container mx-auto flex flex-col md:flex-row">
         {/* Contact Form */}
         <div className="md:w-1/2 md:pr-8">
-          <h2 className="text-2xl text-gray-700 font-bold mb-4">Contact Me</h2>
+          <h2 className="text-2xl text-gray-200 font-bold mb-4">Contact Me</h2>
           <form>
             <div className="mb-4">
               <label htmlFor="name" className="block text-gray-700 font-bold mb-2">Name</label>
