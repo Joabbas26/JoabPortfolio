@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 // import { response } from 'express';
 
-export default function Pokedex() {
+export default function PokedexApp() {
   const [pokemonName, setPokemonName] = useState('');
   const [pokemonData, setPokemonData] = useState(null);
   const [pokemonEntry, setPokemonEntry] = useState(null);

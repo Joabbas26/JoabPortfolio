@@ -5,7 +5,7 @@ import Joab from '../assets/Joab.png'
 export default function Home() {
 
   return (
-  <>
+  <div className='bg-gray-800'>
     <div id='circle1'></div>
     <div id='circle1'></div>
     <div id='circle1'></div>
@@ -15,7 +15,7 @@ export default function Home() {
         <h1>About Me</h1>
         <p className='rounded border border-white p-4 inline-block'>Full Stack</p>
         <p className='rounded border border-white p-4 inline-block'>Coming Soon</p>
-        <div className="flex flex-wrap justify-center items-center bg-gray-600">
+        <div className="flex flex-wrap justify-center items-center bg-gray-600 rounded-md">
           <div className="m-2">
             <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="HTML Logo" className="h-10"/>
           </div>
@@ -47,11 +47,11 @@ export default function Home() {
             <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg" alt="SQL Logo" className="h-10"/>
           </div>
         </div>
-      <div id='profilePic' className='w-1/2'>
-        <img className='img-fluid' id='circleImage' src={Joab} alt="mainImage"/>
+        <div id='profilePic' className='w-1/2'>
+          <img className='img-fluid' id='circleImage' src={Joab} alt="mainImage"/>
+        </div>
       </div>
     </div>
   </div>
-  </>
   );
 }
