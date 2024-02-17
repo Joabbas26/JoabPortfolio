@@ -13,8 +13,8 @@ export default function Home() {
     <div className='container flex mx-auto px-16 py-16 justify-items-space-between'>
       <div id='projects' className='w-1/2'>
         <h1>About Me</h1>
-        <p className='rounded border border-white p-4 inline-block'>Full Stack</p>
-        <p className='rounded border border-white p-4 inline-block'>Coming Soon</p>
+        <button className='rounded-xl border-white bg-gray-800 p-3 inline-block'><Link to='/projects'>Full Stack</Link></button>
+        <button className='rounded-xl border-white bg-gray-800 p-3 inline-block disabled'>Coming Soon</button>
         <div className="flex flex-wrap justify-center items-center bg-gray-600 rounded-md">
           <div className="m-2">
             <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="HTML Logo" className="h-10"/>

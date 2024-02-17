@@ -38,7 +38,3 @@ const NewRowSlice = createSlice({
 
 export default NewRowSlice.reducer;
 export const { addRow, deleteRow, saveRow } = NewRowSlice.actions;
-
-/*
-    
-*/

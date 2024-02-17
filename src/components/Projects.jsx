@@ -2,8 +2,6 @@ import { Link } from 'react-router-dom';
 import table from '../assets/CRUDApp.png';
 import weather from '../assets/WeatherApp.png';
 import pokedex from '../assets/Pokedex.png';
-// import payCalc from './Images/PaycheckApp.png';
-
 
 export default function Projects() {
 

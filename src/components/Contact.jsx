@@ -104,7 +104,3 @@ export default function Contact() {
     </div>
   )
 }
-
-/** 
- * w-full md:w-2/3 px-6 py-8 bg-gray-700 rounded-3xl
- */

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-// import { response } from 'express';
 
 export default function PokedexApp() {
   const [pokemonName, setPokemonName] = useState('');
@@ -26,6 +25,7 @@ export default function PokedexApp() {
         setPokemonData(null);
         setLoading(false);
       });
+      
       // Api for pokedex entries
     axios
       .get(`https://pokeapi.co/api/v2/pokemon-species/${pokemonName.toLowerCase()}`)
