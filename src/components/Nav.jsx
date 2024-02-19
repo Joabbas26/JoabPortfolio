@@ -23,9 +23,9 @@ return (
           {/* Navigation Links */}
           <div className={`md:flex md:items-center md:w-auto ${isOpen ? "absolute top-full left-0 bg-gray-800 w-full" : "hidden"} md:relative z-50`}>
             <ul className="flex flex-col md:flex-row md:space-x-4">
-              <li><NavLink to="/projects" className="hover:text-gray-300">Projects</NavLink></li>
               <li><NavLink to="/about" className="hover:text-gray-300">About</NavLink></li>
               <li><NavLink to="/contact" className="hover:text-gray-300">Contact</NavLink></li>
+              <li><NavLink to="/projects" className="hover:text-gray-300">Projects</NavLink></li>
             </ul>
           </div>
         </div>
