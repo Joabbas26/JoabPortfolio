@@ -130,35 +130,29 @@ const [data, setData] = useState({});
   }
 
   return (
-    <div className='weatherApp'>
-      <div className='wrap'>
-          <div className="searchField"> 
-            <input type="search" name="search" required placeholder="Enter Your City" 
-            className='searchInput' value={city} onChange={e => setCity(e.target.value)}/>
-            <button type="submit" className="searchButton">
-            <FontAwesomeIcon icon={faSearch} onClick={searchWeather}/> 
-            </button>
-          </div>
+    <div id='weatherApp' className='justify-center items-center py-20 bg-gray-800'>
+      <div className="flex justify-center">
+        <input type="search" required placeholder="Enter Your City" value={city} onChange={e => setCity(e.target.value)}
+          className="text-black border border-gray-300 rounded-lg py-2 px-4 w-64 md:w-80 focus:outline-none"
+          onKeyDown={(e) => { if (e.key === "Enter") searchWeather(); }}/>
+        <button className="right-0 top-0 bottom-0 rounded-lg border border-gray-700 flex items-center justify-center w-12 bg-gray-700 ml-1">
+          <FontAwesomeIcon icon={faSearch} onClick={searchWeather} className="text-gray-400" />
+        </button>
       </div>
-      
-      <div className='container' id="weatherContainer">
-         <div className="weather">
-           <div className="city">
-             <p>{data.name}</p>
-             </div>
-           <div className='row' id='tempInfo'>
-            <div className='col-md-8' id="condition">
-              {data.weather ? selectCondition() : null}
-              {data.weather ? <p>{description}</p> : null}
+      <div className="flex justify-center">
+        <div className="w-3/5 bg-blue-400 p-20 rounded-2xl m-6 items-center">
+          <h1 className="text-center mb-4 font-bold">{data.name}</h1>
+          <div className="flex items-center justify-evenly mx-10">
+            <div className="w-1/2">
+                <h2 className='mb-2'>{data.weather ? selectCondition() : null}</h2>
+                <p className='font-bold ml-10'>{data.weather ? <p>{description}</p> : null}</p>
             </div>
-            <div className='col-md-4' id="temperature">
-              {data.main ? <p>{data.main.temp.toFixed()}°F</p> : null}
-              </div>
-           </div>
-           <div className='dateAndTime'>
-             <div className="time">{Time}</div>
-             <div className='date'>{getTodaysDate(new Date())}</div>
-           </div>
+            <h1 className="w-1/2 text-right font-bold">{data.main ? <p>{data.main.temp.toFixed()}°F</p> : null}</h1>
+          </div>
+          <div className="items-left p-3 ml-10">
+            <h1 className='font-bold'>{Time}</h1>
+            <p className='font-bold'>{getTodaysDate(new Date())}</p>
+          </div>
         </div>
       </div>
     </div>
