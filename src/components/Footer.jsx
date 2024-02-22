@@ -3,7 +3,7 @@ import { faGithub, faInstagram, faLinkedin, faTwitter } from "@fortawesome/free-
 
 export default function Footer() {
   return (
-<footer className="bg-gray-800 text-white py-8 bottom-0 left-0 w-full z-10">
+<footer className="bg-gray-800 text-white py-8 bottom-0 left-0 w-full z-10 sticky top-[100vh]">
   <div className="flex justify-center">
     <div className="mx-4">
       <a href="https://www.linkedin.com/in/joab-bastidas/" target="_blank" rel="noopener noreferrer">

@@ -16,8 +16,8 @@ function App() {
 
   return (
     <Provider store={store}>
-      <div className="App">
-        <Nav/>
+      <div className="flex flex-col h-screen">
+        <Nav className="sticky top-0 z-50"/>
           <Routes>
                 <Route index element={<Home/>} />
                 <Route path='/about' element={<About/>} />
@@ -27,7 +27,7 @@ function App() {
                 <Route path='/weather' element={<WeatherApp/>} />
                 <Route path='/pokedex' element={<PokedexApp/>} />
           </Routes>
-          <Footer/>
+          <Footer className="sticky bottom-0 z-50"/>
         </div>
     </Provider>
   );

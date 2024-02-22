@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <div className="bg-gray-800 min-h-screen py-20">
+    <div className="bg-gray-800 py-20 grow">
       <div className="container mx-auto px-4">
         <h1 className="text-3xl font-bold mb-6 text-center">About Me</h1>
         <div className="grid md:grid-cols-4 gap-6 p-6">

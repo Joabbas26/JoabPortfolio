@@ -130,7 +130,7 @@ const [data, setData] = useState({});
   }
 
   return (
-    <div className='justify-center items-center py-20 bg-gray-800'>
+    <div className='justify-center items-center py-20 bg-gray-800 grow'>
       <div className="flex justify-center">
         <input type="search" required placeholder="Enter Your City" value={city} onChange={e => setCity(e.target.value)}
           className="text-black border border-gray-300 rounded-lg py-2 px-4 w-64 md:w-80 focus:outline-none"

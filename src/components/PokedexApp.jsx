@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStop, faPlay, faShuffle } from '@fortawesome/free-solid-svg-icons';
+import { faStop, faPlay, faShuffle, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 export default function PokedexApp() {
   const [pokemonName, setPokemonName] = useState('');
@@ -43,20 +43,21 @@ export default function PokedexApp() {
   };
 
   return (
-  <div className='justify-center items-center py-20 bg-gray-800'>
-      <div className="flex items-center justify-center my-5">
+  <div className="justify-center items-center py-20 bg-gray-800 grow">
+      <div className="flex items-center justify-center mb-5">
         <input
-          className="border border-gray-400 p-2 mr-2 text-gray-800"
+          className="border border-gray-400 p-2 mr-2 text-gray-800 rounded-lg"
           type="text"
           value={pokemonName}
           onChange={(e) => setPokemonName(e.target.value)}
           placeholder="Enter Pokémon name"
           onKeyDown={e => e.key === 'Enter' && searchPokemon(e)}
         />
-        <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={searchPokemon} disabled={loading}>
-          {loading ? 'Searching...' : 'Search'}
+        <button className="bg-gray-700 border border-gray-700 text-white px-4 py-2 rounded" onClick={searchPokemon} disabled={loading}>
+        <FontAwesomeIcon icon={faSearch} onClick={searchPokemon} className="text-gray-400" />
         </button>
       </div>
+
 
     {pokemonData && (
     <div className="flex justify-center items-center my-12">
