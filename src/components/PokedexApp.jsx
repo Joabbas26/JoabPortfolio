@@ -9,6 +9,36 @@ export default function PokedexApp() {
   const [loading, setLoading] = useState(false);
   const [pokemonDescription, setPokemonDescription] = useState("");
 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
+  const getTypeColor = (type) => {
+    // Define color mappings for each type
+    const typeColors = {
+      normal: 'gray',
+      fire: 'red',
+      water: 'blue',
+      electric: 'yellow',
+      grass: 'green',
+      ice: 'cyan',
+      fighting: 'orange',
+      poison: 'purple',
+      ground: 'saddlebrown',
+      flying: 'skyblue',
+      psychic: 'magenta',
+      bug: 'olive',
+      rock: 'brown',
+      ghost: 'darkviolet',
+      dragon: 'darkorange',
+      dark: 'dimgray',
+      steel: 'darkgray',
+      fairy: 'pink',
+    };
+  
+    // Return the corresponding color for the type, or a default color if not found
+    return typeColors[type] || 'black'; // Default to black if type not found in mapping
+  };
 
   const searchPokemon = async () => {
     try {
@@ -49,7 +79,7 @@ export default function PokedexApp() {
           className="border border-gray-400 p-2 mr-2 text-gray-800 rounded-lg"
           type="text"
           value={pokemonName}
-          onChange={(e) => setPokemonName(e.target.value)}
+          onChange={(e) => setPokemonName(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))}
           placeholder="Enter Pokémon name"
           onKeyDown={e => e.key === 'Enter' && searchPokemon(e)}
         />
@@ -61,22 +91,22 @@ export default function PokedexApp() {
 
     {pokemonData && (
     <div className="flex justify-center items-center my-12">
-      <div className="grid grid-cols-3 grid-rows-3 w-96 h-auto bg-red-900 border border-black rounded-xl">
+      <div className="grid grid-cols-3 grid-rows-3 w-96 h-auto bg-red-900 shadow-inner shadow-red-800 border border-black rounded-xl">
         {/* Dark blue circle on the top left corner */}
-        <div className="row-start-1 col-start-1 m-1 flex justify-center items-center">
-          <div className="w-40 h-20 m-5 bg-gray-800 rounded-full">
+        <div className="row-start-1 col-start-1 col-span-2 mx-4 flex justify-start items-start">
+          <div className="w-36 h-36 my-5 bg-gray-800 rounded-full">
           {pokemonData.sprites && (
         <img
             src={pokemonData.sprites.front_default}
             alt={pokemonData.name}
-            className="w-48 h-24"
+            className="w-36 h-36 stroke-2"
           /> )}
           </div>
         </div>
         
         {/* Div on the top right corner with 4 rows */}
         <div className="row-start-1 col-start-3 flex flex-col justify-between">
-          <div className=" p-4 flex flex-col justify-end">
+          <div className="px-4 pt-4 flex flex-col justify-end">
             <div className="flex justify-end items-center w-full">
             <div className="w-12 h-3 rounded-full bg-blue-600 mx-1"></div>
             <div className="w-12 h-3 rounded-full bg-yellow-300 mx-1"></div>
@@ -84,18 +114,27 @@ export default function PokedexApp() {
             <div className="w-36 h-8 rounded-full bg-black mx-1"></div>
           </div>
           <div className="flex justify-end">
-            <h2 className="text-2xl font-bold">{pokemonData.name}</h2>
+            <p className="text-3xl font-bold">{capitalizeFirstLetter(pokemonData.name)}</p>
           </div>
           <div className="flex justify-end">
-            <h2>#{pokemonData.id}</h2>
+            <h2 className='font-semibold'>#{pokemonData.id}</h2>
           </div>
           <div className='flex justify-end'>
             {pokemonData.types && pokemonData.types.length > 0 && (
-            <p className="text-lg font-semibold mb-2">
-            {pokemonData.types.map((type) => type.type.name).join(", ")}
-            </p>
+              <div className='flex justify-end'>
+                {pokemonData.types.map((type, index) => (
+                  <div className='inline-block rounded-full mx-1 shadow-lg' style={{ background: getTypeColor(type.type.name)}}>
+                    <span key={index}
+                    className="text-xxs p-1 antialiased font-semibold text-black flex items-center ">
+                    {type.type.name.toUpperCase()}
+                    {index < pokemonData.types.length - 1 }
+                    </span>
+                  </div>
+                  
+                ))}
+              </div>
             )}
-        </div>
+          </div>
           </div>
         </div>
         
@@ -108,13 +147,13 @@ export default function PokedexApp() {
         
         {/* Row of 3 buttons on the bottom */}
         <div className="row-start-3 col-start-1 col-end-4 flex justify-center items-center">
-          <button className="border border-black p-6 mx-2">
+          <button className="border border-black p-5 mx-2">
             <FontAwesomeIcon icon={faStop} />
           </button>
-          <button className="border border-black p-6 mx-2">
+          <button className="border border-black p-5 mx-2">
             <FontAwesomeIcon icon={faPlay} />
           </button>
-          <button className="border border-black p-6 mx-2" onClick={fetchRandomPokemon}>
+          <button className="border border-black p-5 mx-2" onClick={fetchRandomPokemon}>
             <FontAwesomeIcon icon={faShuffle} />
           </button>
         </div>
