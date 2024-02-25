@@ -8,6 +8,8 @@ export default function PokedexApp() {
   const [pokemonData, setPokemonData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [pokemonDescription, setPokemonDescription] = useState("");
+  const [isReading, setIsReading] = useState(false);
+  const [audio, setAudio] = useState(null);
 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -59,8 +61,8 @@ export default function PokedexApp() {
       .replace(/[\x00-\x1F\x7F-\x9F]+|[^a-zA-Z0-9\séÉ.]+/g, ' ') // Exclude é and É from replacement, also include periods ('.')
     .toLowerCase()  // Convert all characters to lowercase
     .replace(/(?:^|[.!?]\s+)\w/g, firstChar => firstChar.toUpperCase()); // Capitalize first letter of each word after period, exclamation mark, or question mark
-
       setPokemonDescription(sanitizedDescription);
+
     } catch (error) {
       console.error(error);
       setPokemonData(null);
@@ -73,8 +75,33 @@ export default function PokedexApp() {
       const randomId = Math.floor(Math.random() * 898) + 1; // There are currently 898 Pokémon
       const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
       setPokemonData(response.data);
+
     } catch (error) {
       console.error('Error fetching random Pokémon:', error);
+    }
+  };
+
+
+  const handleRead = async () => {
+    if (!isReading) {
+      try {
+        const response = await axios.post('http://localhost:5173', {
+          pokemonDescription, });
+
+        setAudio(new Audio(response.data));
+        audio.play();
+        setIsReading(true);
+        audio.onended = () => setIsReading(false);
+      } catch (error) {
+        console.error('Error generating audio:', error);
+      }
+    }
+  };
+
+  const handlePause = () => {
+    if (isReading && audio) {
+      audio.pause();
+      setIsReading(false);
     }
   };
 
@@ -154,10 +181,10 @@ export default function PokedexApp() {
         {/* Row of 3 buttons on the bottom */}
         <div className="row-start-3 col-start-1 col-end-4 flex justify-center items-center">
           <button className="border border-black p-5 mx-2">
-            <FontAwesomeIcon icon={faStop} />
+            <FontAwesomeIcon icon={faPlay} onClick={handleRead} disabled={!pokemonDescription}/>
           </button>
           <button className="border border-black p-5 mx-2">
-            <FontAwesomeIcon icon={faPlay} />
+            <FontAwesomeIcon icon={faStop} onClick={handlePause} disabled={!isReading}/>
           </button>
           <button className="border border-black p-5 mx-2" onClick={fetchRandomPokemon}>
             <FontAwesomeIcon icon={faShuffle} />
