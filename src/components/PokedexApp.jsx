@@ -40,6 +40,7 @@ export default function PokedexApp() {
     return typeColors[type] || 'black'; // Default to black if type not found in mapping
   };
 
+
   const searchPokemon = async () => {
     try {
       const response = await axios.get(
@@ -54,7 +55,12 @@ export default function PokedexApp() {
       const description = speciesData.flavor_text_entries.find(
         entry => entry.language.name === 'en'
       );
-      setPokemonDescription(description.flavor_text);
+      const sanitizedDescription = description.flavor_text
+      .replace(/[\x00-\x1F\x7F-\x9F]+|[^a-zA-Z0-9\séÉ.]+/g, ' ') // Exclude é and É from replacement, also include periods ('.')
+    .toLowerCase()  // Convert all characters to lowercase
+    .replace(/(?:^|[.!?]\s+)\w/g, firstChar => firstChar.toUpperCase()); // Capitalize first letter of each word after period, exclamation mark, or question mark
+
+      setPokemonDescription(sanitizedDescription);
     } catch (error) {
       console.error(error);
       setPokemonData(null);
