@@ -6,38 +6,27 @@ import emailjs from 'emailjs-com';
 
 export default function Contact() {
   
-  const [name, setName] = useState('')
-  const [number, setNumber] = useState('')
-  const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
-  const [result, setResult] = useState('')
-  const [resultStyle, setResultStyle] = useState()
-  const [requiredStyle, setRequiredStyle] = useState()
-  const form = useRef();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [result, setResult] = useState('');
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   function handleSubmit (e) {
     e.preventDefault();
-    if((email == "" && number == "")){
-      setResultStyle({display: "block", border: "solid red 5px"})
-      setRequiredStyle({border: "solid red 5px"})
+    if((email == "" && message == "")){
       setResult("Required fields cannot be empty")
+      setShowConfirmation(true);
+      setTimeout(() => {
+        setShowConfirmation(false);
+      }, 3000);
     }
-    else {
-    // setResult("Message Sent Successfully!");
-    // setResultStyle({display: "block", border: "solid green 1px"})
-      const details = {
-      name: name.value,
-      number: number.value,
-      email: email.value,
-      message: message.value,
-    };
     emailjs
     .send(
       "service_v16sidi",
       "template_wjaoovc",
       {
         name,
-        number,
         email,
         message,
       },
@@ -45,18 +34,18 @@ export default function Contact() {
     )
     .then(() => {
       setResult("Message Sent Successfully!");
-      setResultStyle({display: "block", border: "solid green 1px"})
-      setName("")
-      setNumber("")
-      setEmail("")
-      setMessage("")
+      setShowConfirmation(true);
+      setName("");
+      setEmail("");
+      setMessage("");
+      setTimeout(() => {
+        setShowConfirmation(false);
+      }, 3000);
     })
     .catch((error) => {
       console.error("Error sending message:", error);
-      alert("Error sending message. Please try again later.");
     });
   }
-}
 
   return (
     <div className="bg-gray-800 py-20 grow w-full flex justify-center">
@@ -65,21 +54,32 @@ export default function Contact() {
       <div className="container lg:w-2/3 px-6 py-8 bg-gray-700 rounded-3xl mx-auto flex flex-col md:flex-row">
         {/* Contact Form */}
         <div className="md:w-1/2 md:pr-8">
-          <form>
+          <form className='mb-2'>
             <div className="mb-4">
               <label htmlFor="name" className="block text-white font-bold mb-2">Name</label>
-              <input type="text" id="name" name="name" placeholder="Your Name" className="w-full px-3 py-2 border rounded-md text-black" />
+              <input type="text" id="name" name="name" placeholder="Your Name" 
+              className="w-full px-3 py-2 border rounded-md text-black" 
+              onChange={(event) => setName(event.target.value)}/>
             </div>
             <div className="mb-4">
               <label htmlFor="email" className="block text-white font-bold mb-2">Email</label>
-              <input type="email" id="email" name="email" placeholder="Your Email" className="w-full px-3 py-2 border rounded-md text-black" />
+              <input type="email" id="email" name="email" placeholder="Your Email" 
+              className="w-full px-3 py-2 border rounded-md text-black 
+              required:border-red-500" onChange={(event) => setEmail(event.target.value)}/>
             </div>
             <div className="mb-4">
               <label htmlFor="message" className="block text-white font-bold mb-2">Message</label>
-              <textarea id="message" name="message" rows="4" placeholder="Your Message" className="w-full px-3 py-2 border rounded-md text-black"></textarea>
+              <textarea id="message" name="message" rows="4" placeholder="Your Message" 
+              className="w-full px-3 py-2 border rounded-md text-black 
+              required:border-red-500" onChange={(event) => setMessage(event.target.value)}/>
             </div>
-            <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md">Send</button>
+            <button type="submit" className="bg-blue-500 text-white font-bold py-2 px-4 rounded-md" onClick={handleSubmit}>Send</button>
           </form>
+          {showConfirmation && (
+          <p className={`border ${result === 'Required fields cannot be empty' ? 'bg-red-600' : 'border-green-500'} p-2 text-white mx-1`}>
+            {result}
+          </p>
+          )}
         </div>
 
         {/* Contact Info */}

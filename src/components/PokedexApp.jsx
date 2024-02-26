@@ -125,7 +125,6 @@ export default function PokedexApp() {
     {pokemonData && (
     <div className="flex justify-center items-center my-12">
       <div className="grid grid-cols-3 grid-rows-3 w-96 h-auto bg-red-900 shadow-inner shadow-red-800 border border-black rounded-xl">
-        {/* Dark blue circle on the top left corner */}
         <div className="row-start-1 col-start-1 col-span-2 mx-4 flex justify-start items-start">
           <div className="w-36 h-36 my-5 bg-gray-800 rounded-full">
           {pokemonData.sprites && (
