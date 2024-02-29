@@ -4,11 +4,9 @@ import { toggle } from '../reducers/ModalSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPencilAlt, faPlusSquare } from '@fortawesome/free-solid-svg-icons';import { toggleEdit } from '../reducers/EditModalSlice';
 import { addRow, deleteRow, saveRow } from '../reducers/NewRowSlice';
-// import { v4 as uuidv4 } from 'uuid';
 
 
 export default function CRUDApp() {
-    // Use dispatch declaration and modal state from redux
     const newRow = useSelector((state) => state.newRow);
     const isOpen = useSelector((state) => state.modal.value);
     const editIsOpen = useSelector((state) => state.editModal.value);
@@ -18,12 +16,11 @@ export default function CRUDApp() {
     const [rowNumber, setRowNumber] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [companyTime, setCompanyTime] = useState('');
+    const [age, setage] = useState('');
     const [overTime, setOverTime] = useState('');
     const [fullTime, setFullTime] = useState('');
     const [recommendation, setRecommendation] = useState('');
-    const [inputStyle, setInputStyle] = useState({});
-    const [textValidationStyle, setTexValidationStyle] = useState({ display: 'none'});
+    const [error, setError] = useState("");
 
      // Used to toggle modal show and hide
      const editModalHandler = () => {
@@ -48,12 +45,12 @@ export default function CRUDApp() {
 
    const getRowTotal = () =>{
        var calcTotal = 0;
-            // If comp time more than 50 get 30 points 
-            if (companyTime <= 10) {
+            // If age is more than 30, but less than 60 get 30 points 
+            if (age <= 18) {
                 calcTotal += 10;
-            } else if (companyTime > 10 && companyTime < 50) {
+            } else if (age > 18 && age < 30) {
                 calcTotal += 20;
-            }else if (companyTime >= 50){
+            }else if (age <= 60){
                 calcTotal += 30;
                 
             }
@@ -84,9 +81,7 @@ export default function CRUDApp() {
 
   const handleEditSubmit = () => {
     if(firstName === ''){
-     // Add text description
-     setInputStyle({border: 'solid red 1px'});
-     setTexValidationStyle({fontSize:'.4rem', color: 'red', display: 'block'})
+      setError('Cannot be blank')
     }
     else{
     dispatch(toggleEdit());
@@ -95,41 +90,34 @@ export default function CRUDApp() {
         rowNum: rowNumber,
         fName : firstName,
         lName : lastName, 
-        compTime : companyTime, 
+        age : age, 
         fTime : fullTime,
         oTime : overTime,
         recomm: recommendation,
         total : totalRef.current,
     }));  
     getRowTotal();
-    setInputStyle({border: 'solid #ced4da 1px'});
-    setTexValidationStyle({display: 'none'});
     }
 }
 
    // Handles adding user data to table
    const handleSubmit = () => {
        if(firstName === ''){
-        // Add text description
-        setInputStyle({border: 'solid red 1px'});
-        setTexValidationStyle({fontSize:'.4rem', color: 'red', display: 'block'})
+        setError('Cannot be blank')
        }
        else{
         dispatch(toggle());
         getRowTotal();
-        // Adds input data to row
+
         dispatch(addRow({
-        //    rowNum: rowNumber,
            fName : firstName,
            lName : lastName, 
-           compTime : companyTime, 
+           age : age, 
            fTime : fullTime,
            oTime : overTime,
            recomm: recommendation,
            total : totalRef.current,
        }));  
-       setInputStyle({border: 'solid #ced4da 1px'});
-       setTexValidationStyle({display: 'none'});
        }
    }
 
@@ -144,7 +132,7 @@ export default function CRUDApp() {
             if (rowCounter === rowIndex) {
                 setFirstName(value.fName);
                 setLastName(value.lName);
-                setCompanyTime(value.compTime);
+                setage(value.age);
                 setFullTime(value.fTime);
                 setOverTime(value.oTime);
                 setRecommendation(value.recomm);
@@ -167,8 +155,8 @@ export default function CRUDApp() {
     }
 
     return (
-        <div className='mainTable'>
-             <div className={`fixed z-10 inset-0 overflow-y-auto ${editIsOpen ? 'block' : 'hidden'}`}>
+        <div className='bg-gray-800 relative w-full grow flex justify-center'>
+             <div className={`z-60 inset-0 overflow-y-auto ${editIsOpen ? 'block' : 'hidden'}`}>
       <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
@@ -188,8 +176,8 @@ export default function CRUDApp() {
                 <input id="lastName" type="text" placeholder="Last Name" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={lastName} onChange={(e) => setLastName(e.target.value)} />
               </div>
               <div className="mb-4">
-                <label htmlFor="companyTime" className="block text-gray-700 text-sm font-bold mb-2">Time At Company</label>
-                <input id="companyTime" type="number" placeholder="In Years" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={companyTime} onChange={(e) => setCompanyTime(e.target.value)} />
+                <label htmlFor="age" className="block text-gray-700 text-sm font-bold mb-2">Age</label>
+                <input id="age" type="number" placeholder="In Years" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={age} onChange={(e) => setage(e.target.value)} />
               </div>
               <div className="mb-4">
                 <label htmlFor="fullTime" className="block text-gray-700 text-sm font-bold mb-2">Full-Time</label>
@@ -217,7 +205,7 @@ export default function CRUDApp() {
       </div>
     </div>
 
-    <div className={`fixed z-10 inset-0 overflow-y-auto ${isOpen ? 'block' : 'hidden'}`}>
+    <div className={`z-60 inset-0 overflow-y-auto ${isOpen ? 'block' : 'hidden'}`}>
       <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
@@ -237,8 +225,8 @@ export default function CRUDApp() {
                 <input id="lastName" type="text" placeholder="Last Name" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={lastName} onChange={(e) => setLastName(e.target.value)} />
               </div>
               <div className="mb-4">
-                <label htmlFor="companyTime" className="block text-gray-700 text-sm font-bold mb-2">Time At Company</label>
-                <input id="companyTime" type="number" placeholder="In Years" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={companyTime} onChange={(e) => setCompanyTime(e.target.value)} />
+                <label htmlFor="age" className="block text-gray-700 text-sm font-bold mb-2">Age</label>
+                <input id="age" type="number" placeholder="In Years" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={age} onChange={(e) => setage(e.target.value)} />
               </div>
               <div className="mb-4">
                 <label htmlFor="fullTime" className="block text-gray-700 text-sm font-bold mb-2">Full-Time</label>
@@ -266,42 +254,48 @@ export default function CRUDApp() {
       </div>
     </div>
             
-    <h1 className='tableTitle'>CRUD App</h1>
-    <div className="table-responsive">
-            <table className="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Years At Company</th>
-                            <th>Full-Time</th>
-                            <th>Overtime</th>
-                            <th>Recommendation</th>
-                            <th>Total</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {newRow.map((row, index) => (
-                            <tr key={uuidv4()} id={index+1}>
-                                <td>{index+1}</td>
-                                <td>{row.fName}</td>
-                                <td>{row.lName}</td>
-                                <td>{row.compTime}</td>
-                                <td>{row.fTime}</td>
-                                <td>{row.oTime}</td>
-                                <td>{row.recomm}</td>
-                                <td>{row.total}</td>
-                                <td>{editIcon()}</td>
-                                <td>{deleteIcon()}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-            </table>
-            <FontAwesomeIcon icon={faPlusSquare} className='addRow' onClick={modalHandler}/>
-        </div>
+    <div className="justify-center items-center py-20 bg-gray-800">
+      <div className="justify-center container mx-auto px-4">
+          <h1 className="text-3xl mb-6 font-bold text-center">CRUD App</h1>
+          <div className="overflow-x-auto">
+              <table className="table-auto border">
+                  <thead>
+                      <tr>
+                          <th className="border px-4">#</th>
+                          <th className="border px-4">First Name</th>
+                          <th className="border px-4">Last Name</th>
+                          <th className="border px-4">Age</th>
+                          <th className="border px-4">Full-Time</th>
+                          <th className="border px-4">Overtime</th>
+                          <th className="border px-4">Recommendation</th>
+                          <th className="border px-4">Total</th>
+                          <th className="border px-4">Edit</th>
+                          <th className="border px-4">Delete</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {newRow.map((row, index) => (
+                          <tr key={uuidv4()} id={index + 1} className="border">
+                              <td className="border px-4">{index + 1}</td>
+                              <td className="border px-4">{row.fName}</td>
+                              <td className="border px-4">{row.lName}</td>
+                              <td className="border px-4">{row.age}</td>
+                              <td className="border px-4">{row.fTime}</td>
+                              <td className="border px-4">{row.oTime}</td>
+                              <td className="border px-4">{row.recomm}</td>
+                              <td className="border px-4">{row.total}</td>
+                              <td className="border px-4">{editIcon()}</td>
+                              <td className="border px-4">{deleteIcon()}</td>
+                          </tr>
+                      ))}
+                  </tbody>
+              </table>
+          </div>
+          <FontAwesomeIcon icon={faPlusSquare} className="w-8 h-8 border-2 border-green-600 rounded-lg my-1" onClick={modalHandler}/>
+      </div>
     </div>
+
+  </div>
 )
 }
+
