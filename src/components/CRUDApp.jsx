@@ -2,9 +2,9 @@ import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggle } from '../reducers/ModalSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPencilAlt, faPlusSquare } from '@fortawesome/free-solid-svg-icons';import { toggleEdit } from '../reducers/EditModalSlice';
+import { faTrashCan, faPenToSquare, faPlusSquare } from '@fortawesome/free-solid-svg-icons';import { toggleEdit } from '../reducers/EditModalSlice';
 import { addRow, deleteRow, saveRow } from '../reducers/NewRowSlice';
-
+import { v4 as uuidv4 } from 'uuid';
 
 export default function CRUDApp() {
     const newRow = useSelector((state) => state.newRow);
@@ -43,41 +43,33 @@ export default function CRUDApp() {
    // Ref for calculating total
    const totalRef = useRef(0);
 
-   const getRowTotal = () =>{
-       var calcTotal = 0;
-            // If age is more than 30, but less than 60 get 30 points 
-            if (age <= 18) {
-                calcTotal += 10;
-            } else if (age > 18 && age < 30) {
-                calcTotal += 20;
-            }else if (age <= 60){
-                calcTotal += 30;
-                
-            }
-    
-            // If full time get 20 points 
-            if (fullTime === 'Yes') {
-                calcTotal += 20;
-            } else {
-                calcTotal += 10;
-            }
-    
-            // If over time more than 5 get 30 points 
-            if (overTime < 5) {
-                calcTotal += 10;
-            } else {
-                calcTotal += 20;
-            }
-    
-            // Divide recommendation score by 10 and multiply  by 3 to get 30 points
-            if (recommendation <= 100) {
-                calcTotal += Math.floor((recommendation / 10) * 3);
-            } else {
-                calcTotal += 0;
-            }
-           // Sets ref to calculated total score
-           totalRef.current = calcTotal;
-  }
+   const getRowTotal = () => {
+    let calcTotal = 0;
+
+    // Age points calculation
+    if (age <= 18) {
+        calcTotal += 10;
+    } else if (age < 30) {
+        calcTotal += 20;
+    } else if (age <= 60) {
+        calcTotal += 30;
+    }
+
+    // Full time points calculation
+    calcTotal += fullTime === 'Yes' ? 20 : 10;
+
+    // Overtime points calculation
+    calcTotal += overTime < 5 ? 10 : 20;
+
+    // Recommendation points calculation
+    if (recommendation <= 100) {
+        calcTotal += Math.floor((recommendation / 10) * 3);
+    }
+
+    // Sets ref to calculated total score
+    totalRef.current = calcTotal;
+};
+
 
   const handleEditSubmit = () => {
     if(firstName === ''){
@@ -144,31 +136,34 @@ export default function CRUDApp() {
     // Delete button in row
     const deleteIcon = () => {
         return (
-          <FontAwesomeIcon icon={faTrash} className='delete' onClick={openDeleteHandler}/>
+          <FontAwesomeIcon icon={faTrashCan} style={{color: "red"}} onClick={openDeleteHandler} className="cursor-pointer"/>
     )};
 
     // Edit button in row
     const editIcon = () => {
         return(
-          <FontAwesomeIcon icon={faPencilAlt} className='edit' onClick={openEditHandler}/>
+          <FontAwesomeIcon icon={faPenToSquare} style={{color: "gray"}} onClick={openEditHandler} className="cursor-pointer"/>
         )
     }
 
     return (
-        <div className='bg-gray-800 relative w-full grow flex justify-center'>
-             <div className={`z-60 inset-0 overflow-y-auto ${editIsOpen ? 'block' : 'hidden'}`}>
-      <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+  <div className='bg-gray-800 relative grow flex justify-center'>
+    {/* Edit modal */}
+    <div className={`z-60 inset-0 overflow-y-auto ${editIsOpen ? 'block' : 'hidden'}`}>
+      <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:p-0 sm:flex sm:items-center sm:flex-col">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
           <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             <h1 className="text-lg font-bold mb-4">Employee Evaluation</h1>
             <form onSubmit={handleEditSubmit}>
               <div className="mb-4">
                 <label htmlFor="firstName" className="block text-gray-700 text-sm font-bold mb-2">First Name*</label>
-                <input id="firstName" type="text" placeholder="First Name" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                <input id="firstName" type="text" placeholder="First Name" 
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                 <p className="text-red-500 text-xs italic">Cannot be left blank</p>
               </div>
               <div className="mb-4">
@@ -177,7 +172,13 @@ export default function CRUDApp() {
               </div>
               <div className="mb-4">
                 <label htmlFor="age" className="block text-gray-700 text-sm font-bold mb-2">Age</label>
-                <input id="age" type="number" placeholder="In Years" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={age} onChange={(e) => setage(e.target.value)} />
+                <input id="age" type="number" placeholder="In Years" 
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                value={age} onChange={(e) => {
+                  // Ensure the entered value does not exceed 150
+                  const newValue = Math.min(parseInt(e.target.value), 150);
+                  setage(newValue);
+                }}  />
               </div>
               <div className="mb-4">
                 <label htmlFor="fullTime" className="block text-gray-700 text-sm font-bold mb-2">Full-Time</label>
@@ -189,11 +190,23 @@ export default function CRUDApp() {
               </div>
               <div className="mb-4">
                 <label htmlFor="overTime" className="block text-gray-700 text-sm font-bold mb-2">Overtime</label>
-                <input id="overTime" type="number" placeholder="In Hours" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={overTime} onChange={(e) => setOverTime(e.target.value)} />
+                <input id="overTime" type="number" placeholder="In Hours" 
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                value={overTime} onChange={(e) => {
+                  // Ensure the entered value does not exceed 40
+                  const newValue = Math.min(parseInt(e.target.value), 40);
+                  setOverTime(newValue);
+                }}  />
               </div>
               <div className="mb-4">
                 <label htmlFor="recommendation" className="block text-gray-700 text-sm font-bold mb-2">Recommendation</label>
-                <input id="recommendation" type="number" placeholder="Score" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={recommendation} onChange={(e) => setRecommendation(e.target.value)} />
+                <input id="recommendation" type="number" placeholder="Score" 
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                value={recommendation} onChange={(e) => {
+                  // Ensure the entered value does not exceed 100
+                  const newValue = Math.min(parseInt(e.target.value), 100);
+                  setRecommendation(newValue);
+                }} />
               </div>
             </form>
           </div>
@@ -205,6 +218,7 @@ export default function CRUDApp() {
       </div>
     </div>
 
+      {/* Modal for submission */}
     <div className={`z-60 inset-0 overflow-y-auto ${isOpen ? 'block' : 'hidden'}`}>
       <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -213,7 +227,7 @@ export default function CRUDApp() {
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            <h1 className="text-lg font-bold mb-4">Employee Evaluation</h1>
+            <p className="text-xl justify-center text-gray-700 my-1">Employee Evaluation</p>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label htmlFor="firstName" className="block text-gray-700 text-sm font-bold mb-2">First Name*</label>
@@ -226,7 +240,13 @@ export default function CRUDApp() {
               </div>
               <div className="mb-4">
                 <label htmlFor="age" className="block text-gray-700 text-sm font-bold mb-2">Age</label>
-                <input id="age" type="number" placeholder="In Years" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={age} onChange={(e) => setage(e.target.value)} />
+                <input id="age" type="number" placeholder="In Years" 
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                value={age} onChange={(e) => {
+                // Ensure the entered value does not exceed 150
+                const newValue = Math.min(parseInt(e.target.value), 150);
+                setage(newValue) 
+                }} />
               </div>
               <div className="mb-4">
                 <label htmlFor="fullTime" className="block text-gray-700 text-sm font-bold mb-2">Full-Time</label>
@@ -238,11 +258,23 @@ export default function CRUDApp() {
               </div>
               <div className="mb-4">
                 <label htmlFor="overTime" className="block text-gray-700 text-sm font-bold mb-2">Overtime</label>
-                <input id="overTime" type="number" placeholder="In Hours" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={overTime} onChange={(e) => setOverTime(e.target.value)} />
+                <input id="overTime" type="number" placeholder="In Hours" 
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                value={overTime} onChange={(e) => {
+                  // Ensure the entered value does not exceed 40
+                  const newValue = Math.min(parseInt(e.target.value), 40);
+                  setOverTime(newValue);
+                }}  />
               </div>
               <div className="mb-4">
                 <label htmlFor="recommendation" className="block text-gray-700 text-sm font-bold mb-2">Recommendation</label>
-                <input id="recommendation" type="number" placeholder="Score" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={recommendation} onChange={(e) => setRecommendation(e.target.value)} />
+                <input id="recommendation" type="number" placeholder="Score" 
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                value={recommendation} onChange={(e) => {
+                  // Ensure the entered value does not exceed 100
+                  const newValue = Math.min(parseInt(e.target.value), 100);
+                  setRecommendation(newValue);
+                }} />
               </div>
             </form>
           </div>
@@ -256,7 +288,7 @@ export default function CRUDApp() {
             
     <div className="justify-center items-center py-20 bg-gray-800">
       <div className="justify-center container mx-auto px-4">
-          <h1 className="text-3xl mb-6 font-bold text-center">CRUD App</h1>
+          <h1 className="text-3xl mb-6 font-bold text-center">Employee Evaluation</h1>
           <div className="overflow-x-auto">
               <table className="table-auto border">
                   <thead>
@@ -291,7 +323,7 @@ export default function CRUDApp() {
                   </tbody>
               </table>
           </div>
-          <FontAwesomeIcon icon={faPlusSquare} className="w-8 h-8 border-2 border-green-600 rounded-lg my-1" onClick={modalHandler}/>
+          <FontAwesomeIcon icon={faPlusSquare} style={{color: "green"}} className="w-8 h-8 rounded-lg my-1 cursor-pointer" onClick={modalHandler}/>
       </div>
     </div>
 
