@@ -150,14 +150,9 @@ export default function CRUDApp() {
   <div className='bg-gray-800 relative grow flex justify-center'>
     {/* Edit modal */}
     <div className={`z-60 inset-0 overflow-y-auto ${editIsOpen ? 'block' : 'hidden'}`}>
-      <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:p-0 sm:flex sm:items-center sm:flex-col">
-        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-        </div>
-        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
-          <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            <h1 className="text-lg font-bold mb-4">Employee Evaluation</h1>
+      <div className="fixed inset-0 bg-gray-500 opacity-75"></div>
+        <div className="bg-white rounded-lg p-5 w-80 z-60 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transform-all">
+            <p className="text-xl justify-center text-gray-700 my-1">Employee Evaluation</p>
             <form onSubmit={handleEditSubmit}>
               <div className="mb-4">
                 <label htmlFor="firstName" className="block text-gray-700 text-sm font-bold mb-2">First Name*</label>
@@ -209,24 +204,17 @@ export default function CRUDApp() {
                 }} />
               </div>
             </form>
-          </div>
-          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          <div className="px-6 flex flex-row-reverse">
             <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2" onClick={handleEditSubmit}>Save</button>
             <button type="button" className="bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded" onClick={editModalHandler}>Cancel</button>
           </div>
         </div>
       </div>
-    </div>
 
       {/* Modal for submission */}
-    <div className={`z-60 inset-0 overflow-y-auto ${isOpen ? 'block' : 'hidden'}`}>
-      <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-        </div>
-        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-          <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+      <div className={`z-60 inset-0 overflow-y-auto ${isOpen ? 'block' : 'hidden'}`}>
+        <div className="fixed inset-0 bg-gray-500 opacity-75"></div>
+        <div className="bg-white rounded-lg p-5 w-80 z-60 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transform-all">
             <p className="text-xl justify-center text-gray-700 my-1">Employee Evaluation</p>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
@@ -277,13 +265,11 @@ export default function CRUDApp() {
                 }} />
               </div>
             </form>
-          </div>
-          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          <div className="px-6 flex flex-row-reverse">
             <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2" onClick={handleSubmit}>Save</button>
             <button type="button" className="bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded" onClick={modalHandler}>Cancel</button>
           </div>
         </div>
-      </div>
     </div>
             
     <div className="justify-center items-center py-20 bg-gray-800">
@@ -326,7 +312,7 @@ export default function CRUDApp() {
           <FontAwesomeIcon icon={faPlusSquare} style={{color: "green"}} className="w-8 h-8 rounded-lg my-1 cursor-pointer" onClick={modalHandler}/>
       </div>
     </div>
-
+     
   </div>
 )
 }
