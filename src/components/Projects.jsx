@@ -9,7 +9,7 @@ export default function Projects() {
     {
       id: 1,
       title: 'CRUD App',
-      description: 'Open a modal and add data to a table. Perform calculation based on data. Able to delete rows and edit data. CRUD project using JavaScript, React and Redux Toolkit to handle state management',
+      description: 'CRUD application JavaScript, React, and Redux Toolkit, that enables users to efficiently manage data, perform calculations, and manipulate records within a dynamic user interface through modal data entry, dynamic table display, and advanced calculation capabilities.',
       imageUrl: table,
       githubLink: 'https://github.com/Joabbas26/Rank-Table',
       demoLink: '/table'
@@ -17,7 +17,7 @@ export default function Projects() {
     {
       id: 2,
       title: 'Pokedex',
-      description: 'Pokdex using the Pokemon API to find information on pokemon',
+      description: 'Pokédex application utilizing JavaScript, React, and Axios, that seamlessly retrieves and displays comprehensive information on Pokémon from the official Pokémon API while providing real-time data updates.',
       imageUrl: pokedex,
       githubLink: 'https://github.com/Joabbas26/Rank-Table',
       demoLink: '/pokedex'
@@ -25,7 +25,7 @@ export default function Projects() {
     {
       id: 3,
       title: 'Weather App',
-      description: 'Make an api call to get local weather data and show in a detailed view while being UI friendly. Used Axios and React to fetch weather data from OpenWeatherMap API.',
+      description: 'User-friendly weather application using JavaScript, React, and Axios, that fetches and presents detailed local weather data from the OpenWeatherMap API with an intuitive interface and comprehensive weather display.',
       imageUrl: weather,
       githubLink: 'https://github.com/Joabbas26/WeatherApp',
       demoLink: '/weather'
