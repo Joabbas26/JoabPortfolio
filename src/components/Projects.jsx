@@ -36,7 +36,7 @@ export default function Projects() {
     <div className='bg-gray-800 py-20 grow w-full flex justify-center scroll-smooth'>
       <div className="container mx-auto px-4">
         <h1 className="text-3xl font-bold mb-8 text-center">My Projects</h1>
-        <div className="grid grid-cols-1 xs-grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 xs-grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map(project => (
             <div key={project.id} className="bg-gray-700 rounded-lg shadow-md p-6">
               <div className="mb-4 flex justify-center">
@@ -45,8 +45,8 @@ export default function Projects() {
                 <h2 className="text-xl text-white font-bold mb-2">{project.title}</h2>
                 <p className="text-white mb-4">{project.description}</p>
               <div className="flex justify-center">
-                <a href={project.githubLink} target="_blank" rel="noopener noreferrer" className="bg-gray-800 text-white font-bold py-2 px-4 rounded-md mr-4 hover:bg-gray-700">GitHub</a>
-                <Link to={project.demoLink} target="_blank" rel="noopener noreferrer" className="bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600">Live Demo</Link>
+              <a href={project.githubLink} target="_blank" rel="noopener noreferrer" className="bg-gray-800 text-white font-bold py-2 px-4 border rounded-md mr-4 hover:bg-gray-800 hover:text-white hover:border-gray-800">GitHub</a>
+              <Link to={project.demoLink} target="_blank" rel="noopener noreferrer" className="bg-blue-500 text-white font-bold py-2 px-4 border rounded-md hover:bg-blue-500 hover:text-white hover:border-blue-800">Live Demo</Link>
               </div>
             </div>
           ))}

@@ -106,7 +106,7 @@ export default function PokedexApp() {
   };
 
   return (
-  <div className="justify-center items-center py-20 bg-gray-800 grow">
+  <div className="justify-center items-center py-20 bg-gray-800 grow h-screen">
       <div className="flex items-center justify-center mb-5">
         <input
           className="border border-gray-400 p-2 mr-2 text-gray-800 rounded-lg"
@@ -123,7 +123,7 @@ export default function PokedexApp() {
 
 
     {pokemonData && (
-    <div className="flex justify-center items-center my-12">
+    <div className="flex justify-center items-center my-12 mx-4">
       <div className="grid grid-cols-3 grid-rows-3 w-96 h-auto bg-red-900 shadow-inner shadow-red-800 border border-black rounded-xl">
         <div className="row-start-1 col-start-1 col-span-2 mx-4 flex justify-start items-start">
           <div className="w-36 h-36 my-5 bg-gray-800 rounded-full">
@@ -138,12 +138,12 @@ export default function PokedexApp() {
         
         {/* Div on the top right corner with 4 rows */}
         <div className="row-start-1 col-start-3 flex flex-col justify-between">
-          <div className="px-4 pt-4 flex flex-col justify-end">
-            <div className="flex justify-end items-center w-full">
-            <div className="w-12 h-3 rounded-full bg-blue-600 mx-1"></div>
-            <div className="w-12 h-3 rounded-full bg-yellow-300 mx-1"></div>
-            <div className="w-12 h-3 rounded-full bg-green-600 mx-1"></div>
-            <div className="w-36 h-8 rounded-full bg-black mx-1"></div>
+          <div className="mx-3 pt-4 flex flex-col justify-end">
+            <div className="flex grow justify-end items-center w-full">
+            <div className="w-4/5 h-1/3 rounded-full bg-blue-600 mx-1 sm:h-1/2 md:w-4 md:h-3"></div>
+            <div className="w-4/5 h-1/3 rounded-full bg-yellow-300 mx-1 sm:h-1/2 md:w-4 md:h-3"></div>
+            <div className="w-4/5 h-1/3 rounded-full bg-green-600 mx-1 sm:h-1/2 md:w-4 md:h-3"></div>
+            <div className="w-36 h-5 rounded-full bg-black mx-1 sm:h-7 md:w-10 md:h-8"></div>
           </div>
           <div className="flex justify-end">
             <p className="text-3xl font-bold">{capitalizeFirstLetter(pokemonData.name)}</p>

@@ -13,7 +13,8 @@ export default {
       roman: 'upper-roman',
     },
     screens: {
-      sm: '480px',
+      xs: '480px',
+      sm: '375px',
       md: '768px',
       lg: '976px',
       xl: '1440px',
