@@ -9,7 +9,7 @@ export default function Projects() {
     {
       id: 1,
       title: 'CRUD App',
-      description: 'CRUD application JavaScript, React, and Redux Toolkit, that enables users to efficiently manage data, perform calculations, and manipulate records within a dynamic user interface through modal data entry, dynamic table display, and advanced calculation capabilities.',
+      description: 'CRUD application using JavaScript, React, and Redux Toolkit, that enables users to efficiently manage data, perform calculations, and manipulate records within a dynamic user interface through modal data entry, dynamic table display, and advanced calculation capabilities.',
       imageUrl: table,
       githubLink: 'https://github.com/Joabbas26/Rank-Table',
       demoLink: '/table'

@@ -74,8 +74,20 @@ export default function PokedexApp() {
     try {
       const randomId = Math.floor(Math.random() * 898) + 1; // There are currently 898 Pokémon
       const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
-      setPokemonData(response.data);
-
+      const pokemonData = response.data;
+      // Fetch pokemon description
+      const speciesResponse = await axios.get(pokemonData.species.url);
+      const speciesData = speciesResponse.data;
+      const description = speciesData.flavor_text_entries.find(entry => entry.language.name === 'en');
+      const sanitizedDescription = description.flavor_text
+        .replace(/[\x00-\x1F\x7F-\x9F]+|[^a-zA-Z0-9\séÉ.]+/g, ' ')
+        .toLowerCase()
+        .replace(/(?:^|[.!?]\s+)\w/g, firstChar => firstChar.toUpperCase());
+  
+      // Assuming setPokemonData and setPokemonDescription are defined elsewhere and properly update the state
+      setPokemonData(pokemonData);
+      setPokemonDescription(sanitizedDescription);
+      setPokemonName('')
     } catch (error) {
       console.error('Error fetching random Pokémon:', error);
     }
@@ -146,7 +158,7 @@ export default function PokedexApp() {
             <div className="w-36 h-5 rounded-full bg-black mx-1 sm:h-7 md:w-10 md:h-8"></div>
           </div>
           <div className="flex justify-end">
-            <p className="text-3xl font-bold">{capitalizeFirstLetter(pokemonData.name)}</p>
+            <p className="text-xl font-bold md:text-3xl">{capitalizeFirstLetter(pokemonData.name)}</p>
           </div>
           <div className="flex justify-end">
             <h2 className='font-semibold'>#{pokemonData.id}</h2>
@@ -155,7 +167,7 @@ export default function PokedexApp() {
             {pokemonData.types && pokemonData.types.length > 0 && (
               <div className='flex justify-end'>
                 {pokemonData.types.map((type, index) => (
-                  <div className='inline-block rounded-full mx-1 shadow-lg' style={{ background: getTypeColor(type.type.name)}}>
+                  <div className='inline-block rounded-full mx-1 shadow-lg' key={index} style={{ background: getTypeColor(type.type.name)}}>
                     <span key={index}
                     className="text-xxs p-1 antialiased font-semibold text-black flex items-center ">
                     {type.type.name.toUpperCase()}

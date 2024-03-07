@@ -62,7 +62,6 @@ const [data, setData] = useState({});
       await axios.get(`${api.base}weather?q=${city}&units=imperial&appid=${api.key}`)
       .then((response) => {
         setData(response.data);
-        console.log(response.data);
       })
       .catch(error => console.log(error))
       setCity('');
@@ -117,7 +116,6 @@ const [data, setData] = useState({});
     ]
 
     for(var i = 0; i < condition.length; i++){
-      console.log(hour);
       if(parseInt(hour) >= 19){
         description = 'Night';
         return <FontAwesomeIcon icon={faMoon} size='10x'/>
@@ -130,27 +128,28 @@ const [data, setData] = useState({});
   }
 
   return (
-    <div className='justify-center items-center py-20 bg-gray-800 grow'>
-      <div className="flex justify-center">
+    <div className='justify-center items-center py-20 bg-gray-800 grow h-screen md:hfull'>
+      <div className="flex justify-center mx-10">
         <input type="search" required placeholder="Enter Your City" value={city} onChange={e => setCity(e.target.value)}
           className="text-black border border-gray-300 rounded-lg py-2 px-4 w-64 md:w-80 focus:outline-none"
-          onKeyDown={(e) => { if (e.key === "Enter") searchWeather(); }}/>
+          onKeyDown={(e) => { if (e.key === "Enter") searchWeather(); 
+          }}/>
         <button className="right-0 top-0 bottom-0 rounded-lg border border-gray-700 flex items-center justify-center w-12 bg-gray-700 ml-1">
           <FontAwesomeIcon icon={faSearch} onClick={searchWeather} className="text-gray-400" />
         </button>
       </div>
       <div className="flex justify-center">
-        <div className="w-3/5 bg-blue-400 p-20 rounded-2xl m-6 items-center">
-          <h1 className="text-center mb-4 font-bold">{data.name}</h1>
-          <div className="flex items-center justify-evenly mx-10">
-            <div className="w-1/2">
-                <h2 className='mb-2'>{data.weather ? selectCondition() : null}</h2>
-                <p className='font-bold ml-10'>{data.weather ? <p>{description}</p> : null}</p>
+        <div className="w-10/12 bg-blue-400 p-4 rounded-2xl my-6 items-center md:p-20 lg:w-3/5">
+          <p className="text-center mb-4 font-bold text-4xl">{data.name}</p>
+          <div className="flex flex-col items-center justify-evenly lg:mx-10 md:flex-row">
+            <div className="md:w-1/2">
+                <p className='mb-2 text-xxs md:text-lg'>{data.weather ? selectCondition() : null}</p>
+                <div className='flex font-bold justify-center md:justify-start md:ml-10'>{data.weather ? <p>{description}</p> : null}</div>
             </div>
-            <h1 className="w-1/2 text-right font-bold">{data.main ? <p>{data.main.temp.toFixed()}°F</p> : null}</h1>
+            <div className="font-bold md:w-1/2 md:text-right">{data.main ? <h1>{data.main.temp.toFixed()}°F</h1> : null}</div>
           </div>
-          <div className="items-left p-3 ml-10">
-            <h1 className='font-bold'>{Time}</h1>
+          <div className="p-3 mt-4 lg:ml-10">
+            <p className='font-bold text-4xl'>{Time}</p>
             <p className='font-bold'>{getTodaysDate(new Date())}</p>
           </div>
         </div>
