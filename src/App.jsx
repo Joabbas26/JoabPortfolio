@@ -16,7 +16,7 @@ function App() {
 
   return (
     <Provider store={store}>
-      <div className="flex flex-col md:h-screen">
+      <div>
         <Nav className="sticky top-0 z-50"/>
           <Routes>
                 <Route index element={<Home/>} />

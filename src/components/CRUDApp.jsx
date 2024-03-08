@@ -70,6 +70,11 @@ export default function CRUDApp() {
     totalRef.current = calcTotal;
 };
 
+  const handleChange = (e) => {
+    setFirstName(e.target.value);
+    setError('');
+  }
+
 
   const handleEditSubmit = () => {
     if(firstName === ''){
@@ -147,19 +152,19 @@ export default function CRUDApp() {
     }
 
     return (
-  <div className='bg-gray-800 relative grow flex justify-center'>
+  <div className='bg-gray-800 h-screen md:flex md:justify-center'>
     {/* Edit modal */}
     <div className={`z-60 inset-0 overflow-y-auto ${editIsOpen ? 'block' : 'hidden'}`}>
       <div className="fixed inset-0 bg-gray-500 opacity-75"></div>
         <div className="bg-white rounded-lg p-5 w-80 z-60 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transform-all">
-            <p className="text-xl justify-center text-gray-700 my-1">Employee Evaluation</p>
+            <p className="text-xl justify-center text-gray-700 my-1 lg:text-2xl">Employee Evaluation</p>
             <form onSubmit={handleEditSubmit}>
               <div className="mb-4">
                 <label htmlFor="firstName" className="block text-gray-700 text-sm font-bold mb-2">First Name*</label>
                 <input id="firstName" type="text" placeholder="First Name" 
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                <p className="text-red-500 text-xs italic">Cannot be left blank</p>
+                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${error ? 'border-red-700' : 'border-none'}`}  
+                value={firstName} onChange={handleChange} />
+                <p className="text-red-500 text-xs italic">{error}</p>
               </div>
               <div className="mb-4">
                 <label htmlFor="lastName" className="block text-gray-700 text-sm font-bold mb-2">Last Name</label>
@@ -215,12 +220,13 @@ export default function CRUDApp() {
       <div className={`z-60 inset-0 overflow-y-auto ${isOpen ? 'block' : 'hidden'}`}>
         <div className="fixed inset-0 bg-gray-500 opacity-75"></div>
         <div className="bg-white rounded-lg p-5 w-80 z-60 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transform-all">
-            <p className="text-xl justify-center text-gray-700 my-1">Employee Evaluation</p>
+            <p className="text-xl justify-center text-gray-700 my-1 lg:text-2xl">Employee Evaluation</p>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label htmlFor="firstName" className="block text-gray-700 text-sm font-bold mb-2">First Name*</label>
-                <input id="firstName" type="text" placeholder="First Name" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                <p className="text-red-500 text-xs italic">Cannot be left blank</p>
+                <input id="firstName" type="text" placeholder="First Name" className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${error ? 'border-red-700' : 'border-none'}`} 
+                value={firstName} onChange={handleChange} />
+                <p className="text-red-500 text-xs italic">{error}</p>
               </div>
               <div className="mb-4">
                 <label htmlFor="lastName" className="block text-gray-700 text-sm font-bold mb-2">Last Name</label>
@@ -293,7 +299,7 @@ export default function CRUDApp() {
                   </thead>
                   <tbody>
                       {newRow.map((row, index) => (
-                          <tr key={uuidv4()} id={index + 1} className="border">
+                          <tr key={uuidv4()}>
                               <td className="border px-4">{index + 1}</td>
                               <td className="border px-4">{row.fName}</td>
                               <td className="border px-4">{row.lName}</td>
