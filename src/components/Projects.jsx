@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import table from '../assets/CRUDApp.png';
-import weather from '../assets/WeatherApp.png';
+import weather from '../assets/Weather.png';
 import pokedex from '../assets/Pokedex.png';
 
 export default function Projects() {
