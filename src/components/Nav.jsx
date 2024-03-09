@@ -6,7 +6,7 @@ export default function Nav() {
 const [isOpen, setIsOpen] = useState(false);
 
 return (
-<div className="top-0 w-full">
+<div  className="sticky top-0 z-50 w-full">
   <nav className="bg-gray-800 text-white p-4 relative z-50">
         <div className="container mx-auto flex justify-between items-center relative">
           <NavLink to="/" className="text-white font-bold text-xl">Joab Bastidas</NavLink>

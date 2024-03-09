@@ -12,14 +12,27 @@ export default function Contact() {
   const [result, setResult] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
 
-  function handleSubmit (e) {
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  }
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if((email == "" && message == "")){
+    if(email.trim() === "" && message.trim() === ""){
       setResult("Required fields cannot be empty")
       setShowConfirmation(true);
-      setTimeout(() => {
-        setShowConfirmation(false);
-      }, 3000);
+      return
+    }
+    
+    if(!isValidEmail(email)) {
+      setResult("Email address invalid");
+      setShowConfirmation(true);
+      return
     }
     emailjs
     .send(
@@ -47,6 +60,7 @@ export default function Contact() {
     });
   }
 
+
   return (
     <div className="bg-gray-800 py-20 grow w-full flex justify-center">
       <div className="container mx-auto px-4">
@@ -65,7 +79,7 @@ export default function Contact() {
               <label htmlFor="email" className="block text-white font-bold mb-2">Email</label>
               <input type="email" id="email" name="email" placeholder="Your Email" 
               className="w-full px-3 py-2 border rounded-md text-black 
-              required:border-red-500" onChange={(event) => setEmail(event.target.value)}/>
+              required:border-red-500" onChange={handleEmailChange}/>
             </div>
             <div className="mb-4">
               <label htmlFor="message" className="block text-white font-bold mb-2">Message</label>
@@ -76,7 +90,8 @@ export default function Contact() {
             <button type="submit" className="bg-blue-500 text-white font-bold py-2 px-4 rounded-md" onClick={handleSubmit}>Send</button>
           </form>
           {showConfirmation && (
-          <p className={`border ${result === 'Required fields cannot be empty' ? 'bg-red-600' : 'border-green-500'} p-2 text-white mx-1`}>
+          <p className={`border ${result === 'Required fields cannot be empty' || result === 'Email address invalid' ? 'bg-red-600' : 'border-green-500'}
+          p-2 text-white mx-1`}>
             {result}
           </p>
           )}

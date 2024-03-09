@@ -5,7 +5,7 @@ import Joab from '../assets/Joab.png'
 export default function Home() {
 
   return (
-  <div className='bg-gray-800 relative w-full grow'>
+  <div className='bg-gray-800 w-full grow'>
     <div className='container flex flex-col mx-auto px-4 py-16 justify-between items-center md:flex-row md:pl-16'>
       <div className='md:w-1/2'>
         <h1 className='mb-5'>Welcome to My Site</h1>
