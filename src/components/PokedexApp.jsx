@@ -103,7 +103,7 @@ export default function PokedexApp() {
           voice: 'en-US-JennyNeural',
           output_format: 'mp3',
         });
-        const audioUrl = response.data;
+        const audioUrl = response.data.audioUrl;
         const newAudio = new Audio(audioUrl);
         newAudio.addEventListener('loadedmetadata', () => {
           newAudio.play();
@@ -129,7 +129,7 @@ export default function PokedexApp() {
   <div className="justify-center items-center py-20 bg-gray-800 grow h-screen">
       <div className="flex items-center justify-center mb-5">
         <input
-          className="border border-gray-400 p-2 mr-2 text-gray-800 rounded-lg"
+          className="border border-gray-400 p-2 mr-2 text-gray-800 rounded-lg bg-white"
           type="text"
           value={pokemonName}
           onChange={(e) => setPokemonName(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))}
