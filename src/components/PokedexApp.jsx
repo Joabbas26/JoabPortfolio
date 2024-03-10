@@ -50,10 +50,11 @@ export default function PokedexApp() {
       );
       const data = response.data;
       setPokemonData(data);
-  
-      // Fetch pokemon description
+     
       const speciesResponse = await axios.get(data.species.url);
       const speciesData = speciesResponse.data;
+    
+      // Fetch pokemon description
       const description = speciesData.flavor_text_entries.find(
         entry => entry.language.name === 'en'
       );
@@ -97,25 +98,32 @@ export default function PokedexApp() {
   const handleRead = async () => {
     if (!isReading) {
       try {
-        const response = await axios.post('http://localhost:5173', {
-          pokemonDescription, });
-
-        setAudio(new Audio(response.data));
-        audio.play();
+        const response = await axios.post('http://localhost:5173/tts', {
+          text: pokemonDescription,
+          voice: 'en-US-JennyNeural',
+          output_format: 'mp3',
+        });
+        const audioUrl = response.data;
+        const newAudio = new Audio(audioUrl);
+        newAudio.addEventListener('loadedmetadata', () => {
+          newAudio.play();
+        });
+        setAudio(newAudio);
         setIsReading(true);
-        audio.onended = () => setIsReading(false);
+        newAudio.onended = () => setIsReading(false);
       } catch (error) {
         console.error('Error generating audio:', error);
       }
     }
   };
-
+  
   const handlePause = () => {
     if (isReading && audio) {
       audio.pause();
       setIsReading(false);
     }
   };
+  
 
   return (
   <div className="justify-center items-center py-20 bg-gray-800 grow h-screen">
