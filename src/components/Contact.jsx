@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faInstagram, faLinkedin, faTwitter } from "@fortawesome/free-brands-svg-icons"
@@ -11,6 +11,10 @@ export default function Contact() {
   const [message, setMessage] = useState('');
   const [result, setResult] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
+
+  const nameInputRef = useRef(null);
+  const emailInputRef = useRef(null);
+  const messageInputRef = useRef(null);
 
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -38,19 +42,16 @@ export default function Contact() {
     .send(
       "service_v16sidi",
       "template_wjaoovc",
-      {
-        name,
-        email,
-        message,
-      },
+      { name, email, message },
       "BkTBjQCdtQ_kvasib"
     )
     .then(() => {
       setResult("Message Sent Successfully!");
       setShowConfirmation(true);
-      setName("");
-      setEmail("");
-      setMessage("");
+      // Clear input fields
+        if (nameInputRef.current) nameInputRef.current.value = "";
+        if (emailInputRef.current) emailInputRef.current.value = "";
+        if (messageInputRef.current) messageInputRef.current.value = "";
       setTimeout(() => {
         setShowConfirmation(false);
       }, 3000);
@@ -58,7 +59,7 @@ export default function Contact() {
     .catch((error) => {
       console.error("Error sending message:", error);
     });
-  }
+  };
 
 
   return (
@@ -68,24 +69,26 @@ export default function Contact() {
       <div className="container lg:w-2/3 px-6 py-8 bg-gray-700 rounded-3xl mx-auto flex flex-col md:flex-row">
         {/* Contact Form */}
         <div className="md:w-1/2 md:pr-8">
-          <form className='mb-2'>
+          <form className='mb-2' onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="name" className="block text-white font-bold mb-2">Name</label>
               <input type="text" id="name" name="name" placeholder="Your Name" 
-              className="w-full px-3 py-2 border rounded-md text-black" 
-              onChange={(event) => setName(event.target.value)}/>
+              className="w-full px-3 py-2 border rounded-md text-black bg-white" 
+              onChange={(e) => setName(e.target.value)}
+              ref={nameInputRef}/>
             </div>
             <div className="mb-4">
               <label htmlFor="email" className="block text-white font-bold mb-2">Email</label>
               <input type="email" id="email" name="email" placeholder="Your Email" 
-              className="w-full px-3 py-2 border rounded-md text-black 
-              required:border-red-500" onChange={handleEmailChange}/>
+              className={`w-full px-3 py-2 border rounded-md text-black bg-white ${result === 'Required fields cannot be empty' || result === 'Email address invalid' ? 'border-red-500' : 'bg-white'}`}
+              onChange={handleEmailChange}
+              ref={emailInputRef}/>
             </div>
             <div className="mb-4">
               <label htmlFor="message" className="block text-white font-bold mb-2">Message</label>
               <textarea id="message" name="message" rows="4" placeholder="Your Message" 
-              className="w-full px-3 py-2 border rounded-md text-black 
-              required:border-red-500" onChange={(event) => setMessage(event.target.value)}/>
+              className={`w-full px-3 py-2 border rounded-md text-black bg-white ${result === 'Required fields cannot be empty' ? 'border-red-500' : 'bg-white'}`}
+              onChange={(e) => setMessage(e.target.value)} ref={messageInputRef}/>
             </div>
             <button type="submit" className="bg-blue-500 text-white font-bold py-2 px-4 rounded-md" onClick={handleSubmit}>Send</button>
           </form>
