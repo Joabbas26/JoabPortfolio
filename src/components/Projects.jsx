@@ -2,6 +2,7 @@ import { Link, NavLink } from 'react-router-dom';
 import table from '../assets/CRUDApp.png';
 import weather from '../assets/Weather.png';
 import pokedex from '../assets/Pokedex.png';
+import payCheck from '../assets/PaycheckApp.png';
 
 export default function Projects() {
 
@@ -29,6 +30,14 @@ export default function Projects() {
       imageUrl: weather,
       githubLink: 'https://github.com/Joabbas26/WeatherApp',
       demoLink: '/weather'
+    },
+    {
+      id: 4,
+      title: 'Paycheck App',
+      description: 'Pay Check calculator using JavaScript, React, and Axios, that calculates how much you make per second depending on your hourly wage.',
+      imageUrl: payCheck,
+      githubLink: 'https://github.com/Joabbas26/WeatherApp',
+      demoLink: '/paycheck'
     }
   ];
 
@@ -46,7 +55,7 @@ export default function Projects() {
                 <p className="text-white mb-4">{project.description}</p>
               <div className="flex justify-center">
               <Link to={project.githubLink} target="_blank" rel="noopener noreferrer" className="bg-gray-800 text-white font-bold py-2 px-4 border rounded-md mr-4 hover:bg-gray-800 hover:text-white hover:border-gray-800">GitHub</Link>
-              <NavLink to={project.demoLink} rel="noopener noreferrer" className="bg-blue-500 text-white font-bold py-2 px-4 border rounded-md hover:bg-blue-500 hover:text-white hover:border-blue-800">Live Demo</NavLink>
+              <Link to={project.demoLink} rel="noopener noreferrer" className="bg-blue-500 text-white font-bold py-2 px-4 border rounded-md hover:bg-blue-500 hover:text-white hover:border-blue-800">Live Demo</Link>
               </div>
             </div>
           ))}

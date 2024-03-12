@@ -11,6 +11,7 @@ import PokedexApp from './components/PokedexApp.jsx'
 import WeatherApp from './components/WeatherApp.jsx'
 import CRUDApp from './components/CRUDApp.jsx'
 import Footer from "./components/Footer.jsx";
+import PaycheckApp from './components/PaycheckApp';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
                 <Route path='/table' element={<CRUDApp/>} />
                 <Route path='/weather' element={<WeatherApp/>} />
                 <Route path='/pokedex' element={<PokedexApp/>} />
+                <Route path='/paycheck' element={<PaycheckApp/>}/>
           </Routes>
           <Footer/>
         </div>
