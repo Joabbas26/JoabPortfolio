@@ -18,7 +18,39 @@ export default function PaycheckApp() {
   const now = new Date();
   const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-  
+  // Function to handle city input change
+  const handleCityChange = (e) => {
+    // Get the input value and convert it to uppercase
+    let inputVal = e.target.value.toUpperCase();
+
+    // Check if the input consists of exactly 2 letters
+    if (/^[A-Z]{2}$/.test(inputVal)) {
+      // Update the state with the validated and capitalized input
+      setCity(inputVal);
+    }
+  };
+
+  // Function to handle work hours input change
+  const handleWorkHoursChange = (e) => {
+    let inputVal = parseInt(e.target.value);
+
+    // Check if the input is a positive integer between 0 and 16
+    if (!isNaN(inputVal) && inputVal >= 0 && inputVal <= 16) {
+      // Update the state with the validated input
+      setWorkHours(inputVal);
+    }
+  };
+
+  // Function to handle salary input change
+  const handleSalaryChange = (e) => {
+    let inputVal = parseInt(e.target.value);
+
+    // Check if the input is a positive integer between 0 and 100,000
+    if (!isNaN(inputVal) && inputVal >= 0 && inputVal <= 100000) {
+      // Update the state with the validated input
+      setSalary(inputVal);
+    }
+  };
 
   const toggleStop = () => {
     setEndTime(time);
@@ -59,19 +91,19 @@ export default function PaycheckApp() {
                   <label htmlFor="salary" className="block text-gray-700 text-sm font-bold mb-2">Salary</label>
                   <input id="salary" type="number" placeholder="Hourly Wage" 
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 bg-white leading-tight focus:outline-none focus:shadow-outline" 
-                  value={salary} onChange={(e) => setSalary(e.target.value)} />
+                  value={salary} onChange={(e) => handleSalaryChange(e)} />
                 </div>
                 <div className="mb-4">
                   <label htmlFor="workHours" className="block text-gray-700 text-sm font-bold mb-2">Work Hours</label>
                   <input id="workHours" type="number" placeholder="Per day" 
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 bg-white leading-tight focus:outline-none focus:shadow-outline" 
-                  value={workHours} onChange={(e) => setWorkHours(e.target.value)} />
+                  value={workHours} onChange={(e) => handleWorkHoursChange(e)} />
                 </div>
                 <div className="mb-4">
                   <label htmlFor="city" className="block text-gray-700 text-sm font-bold mb-2">State 2 Letter Abbreviation</label>
                   <input id="city" type="text" placeholder="State ABRV" 
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 bg-white leading-tight focus:outline-none focus:shadow-outline" 
-                  value={city} onChange={(e) => setCity(e.target.value)} />
+                  value={city} onChange={(e) => handleCityChange(e)} />
                 </div>
               </form>
               <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
