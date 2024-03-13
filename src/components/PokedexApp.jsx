@@ -166,10 +166,10 @@ export default function PokedexApp() {
             <div className="w-36 h-5 rounded-full bg-black mx-1 sm:h-7 md:w-10 md:h-8"></div>
           </div>
           <div className="flex justify-end">
-            <p className="text-xl font-bold md:text-3xl">{capitalizeFirstLetter(pokemonData.name)}</p>
+            <p className="text-xl font-bold text-white md:text-3xl">{capitalizeFirstLetter(pokemonData.name)}</p>
           </div>
           <div className="flex justify-end">
-            <h2 className='font-semibold'>#{pokemonData.id}</h2>
+            <h2 className='font-semibold text-white'>#{pokemonData.id}</h2>
           </div>
           <div className='flex justify-end'>
             {pokemonData.types && pokemonData.types.length > 0 && (

@@ -10,15 +10,15 @@ export default function PaycheckApp() {
   const [earnings, setEarnings] = useState('');
   const [endTime, setEndTime] = useState('');
   const [startTime, setStartTime] = useState('');
+  const [showData, setShowData] = useState(false)
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const now = new Date();
-  const day = now.getDay(); 
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
-  const time = day + hours + minutes;
+  const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  
 
   const toggleStop = () => {
     setEndTime(time);
@@ -29,8 +29,10 @@ export default function PaycheckApp() {
   }
 
   const handleSubmit = () => {
+    setShow(false)
     setStartTime(time)
-    setEarnings(salary/workHours);
+    setEarnings((salary / workHours).toFixed(2));
+    setShowData(true);
   }
 
   return (
@@ -85,18 +87,20 @@ export default function PaycheckApp() {
               <div className="text-center my-4">
                 <button className='rounded-lg my-1 cursor-pointer' onClick={handleShow}>Calculate Earnings</button>
               </div>
-              <div className='text-center my-4'>
-                <h3>{jobTitle} {firstName}'s Income</h3>
-              </div>
-              <div className='text-center my-4'>
-                <p className="earnings">${earnings}</p>
-              </div>
-              <div className="text-center my-4">
-                <div className='flex flex-row justify-center'>
-                  <p className='inline-block md:mr-4'>Start Time: {startTime}</p>
-                  <button className="inline-block mx-4" onClick={toggleStop}>Stop</button>
-                  <button className="inline-block mx-4" onClick={toggleClear}>Clear</button>
-                  <p className='inline-block md:ml-4'>End Time: {endTime}</p>
+              <div className={`${showData === false ? 'hidden' : 'block'}`}>
+                <div className='text-center my-4'>
+                  <h3>{jobTitle} {firstName}'s Income</h3>
+                </div>
+                <div className='text-center my-4'>
+                  <p className="earnings">${earnings}</p>
+                </div>
+                <div className="text-center my-4">
+                  <div className='flex flex-row justify-center'>
+                    <p className='inline-block md:mr-4'>Start Time: {startTime}</p>
+                    <button className="inline-block mx-4" onClick={toggleStop}>Stop</button>
+                    <button className="inline-block mx-4" onClick={toggleClear}>Clear</button>
+                    <p className='inline-block md:ml-4'>End Time: {endTime}</p>
+                  </div>
                 </div>
               </div>
             </div>

@@ -152,7 +152,7 @@ export default function CRUDApp() {
     }
 
     return (
-  <div className='bg-gray-800 h-screen md:flex md:justify-center'>
+  <div className={`bg-gray-800 ${isOpen || editIsOpen ? 'min-h-screen' : 'h-screen'} md:flex md:justify-center`}>
     {/* Edit modal */}
     <div className={`z-60 inset-0 overflow-y-auto ${editIsOpen ? 'block' : 'hidden'}`}>
       <div className="fixed inset-0 bg-gray-500 opacity-75"></div>
@@ -162,18 +162,19 @@ export default function CRUDApp() {
               <div className="mb-4">
                 <label htmlFor="firstName" className="block text-gray-700 text-sm font-bold mb-2">First Name*</label>
                 <input id="firstName" type="text" placeholder="First Name" 
-                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${error ? 'border-red-700' : 'border-none'}`}  
+                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline ${error ? 'border-red-700' : 'border-none'}`}  
                 value={firstName} onChange={handleChange} />
                 <p className="text-red-500 text-xs italic">{error}</p>
               </div>
               <div className="mb-4">
                 <label htmlFor="lastName" className="block text-gray-700 text-sm font-bold mb-2">Last Name</label>
-                <input id="lastName" type="text" placeholder="Last Name" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                <input id="lastName" type="text" placeholder="Last Name" 
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline" value={lastName} onChange={(e) => setLastName(e.target.value)} />
               </div>
               <div className="mb-4">
                 <label htmlFor="age" className="block text-gray-700 text-sm font-bold mb-2">Age</label>
                 <input id="age" type="number" placeholder="In Years" 
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline" 
                 value={age} onChange={(e) => {
                   // Ensure the entered value does not exceed 150
                   const newValue = Math.min(parseInt(e.target.value), 150);
@@ -182,7 +183,7 @@ export default function CRUDApp() {
               </div>
               <div className="mb-4">
                 <label htmlFor="fullTime" className="block text-gray-700 text-sm font-bold mb-2">Full-Time</label>
-                <select id="fullTime" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={fullTime} onChange={(e) => setFullTime(e.target.value)}>
+                <select id="fullTime" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline" value={fullTime} onChange={(e) => setFullTime(e.target.value)}>
                   <option value='...'>...</option>
                   <option value='Yes'>Yes</option>
                   <option value='No'>No</option>
@@ -191,7 +192,7 @@ export default function CRUDApp() {
               <div className="mb-4">
                 <label htmlFor="overTime" className="block text-gray-700 text-sm font-bold mb-2">Overtime</label>
                 <input id="overTime" type="number" placeholder="In Hours" 
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline" 
                 value={overTime} onChange={(e) => {
                   // Ensure the entered value does not exceed 40
                   const newValue = Math.min(parseInt(e.target.value), 40);
@@ -201,7 +202,7 @@ export default function CRUDApp() {
               <div className="mb-4">
                 <label htmlFor="recommendation" className="block text-gray-700 text-sm font-bold mb-2">Recommendation</label>
                 <input id="recommendation" type="number" placeholder="Score" 
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline" 
                 value={recommendation} onChange={(e) => {
                   // Ensure the entered value does not exceed 100
                   const newValue = Math.min(parseInt(e.target.value), 100);
@@ -224,18 +225,20 @@ export default function CRUDApp() {
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label htmlFor="firstName" className="block text-gray-700 text-sm font-bold mb-2">First Name*</label>
-                <input id="firstName" type="text" placeholder="First Name" className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${error ? 'border-red-700' : 'border-none'}`} 
+                <input id="firstName" type="text" placeholder="First Name" 
+                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline ${error ? 'border-red-700' : 'border-none'}`} 
                 value={firstName} onChange={handleChange} />
                 <p className="text-red-500 text-xs italic">{error}</p>
               </div>
               <div className="mb-4">
                 <label htmlFor="lastName" className="block text-gray-700 text-sm font-bold mb-2">Last Name</label>
-                <input id="lastName" type="text" placeholder="Last Name" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                <input id="lastName" type="text" placeholder="Last Name" 
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline" value={lastName} onChange={(e) => setLastName(e.target.value)} />
               </div>
               <div className="mb-4">
                 <label htmlFor="age" className="block text-gray-700 text-sm font-bold mb-2">Age</label>
                 <input id="age" type="number" placeholder="In Years" 
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline" 
                 value={age} onChange={(e) => {
                 // Ensure the entered value does not exceed 150
                 const newValue = Math.min(parseInt(e.target.value), 150);
@@ -244,7 +247,7 @@ export default function CRUDApp() {
               </div>
               <div className="mb-4">
                 <label htmlFor="fullTime" className="block text-gray-700 text-sm font-bold mb-2">Full-Time</label>
-                <select id="fullTime" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={fullTime} onChange={(e) => setFullTime(e.target.value)}>
+                <select id="fullTime" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline" value={fullTime} onChange={(e) => setFullTime(e.target.value)}>
                   <option value='...'>...</option>
                   <option value='Yes'>Yes</option>
                   <option value='No'>No</option>
@@ -253,7 +256,7 @@ export default function CRUDApp() {
               <div className="mb-4">
                 <label htmlFor="overTime" className="block text-gray-700 text-sm font-bold mb-2">Overtime</label>
                 <input id="overTime" type="number" placeholder="In Hours" 
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline" 
                 value={overTime} onChange={(e) => {
                   // Ensure the entered value does not exceed 40
                   const newValue = Math.min(parseInt(e.target.value), 40);
@@ -263,7 +266,7 @@ export default function CRUDApp() {
               <div className="mb-4">
                 <label htmlFor="recommendation" className="block text-gray-700 text-sm font-bold mb-2">Recommendation</label>
                 <input id="recommendation" type="number" placeholder="Score" 
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline" 
                 value={recommendation} onChange={(e) => {
                   // Ensure the entered value does not exceed 100
                   const newValue = Math.min(parseInt(e.target.value), 100);
@@ -280,36 +283,36 @@ export default function CRUDApp() {
             
     <div className="justify-center items-center py-20 bg-gray-800">
       <div className="justify-center container mx-auto px-4">
-          <h1 className="text-3xl mb-6 font-bold text-center">Employee Evaluation</h1>
+          <h1 className="text-3xl mb-6 font-bold text-center text-white">Employee Evaluation</h1>
           <div className="overflow-x-auto">
               <table className="table-auto border">
                   <thead>
                       <tr>
-                          <th className="border px-4">#</th>
-                          <th className="border px-4">First Name</th>
-                          <th className="border px-4">Last Name</th>
-                          <th className="border px-4">Age</th>
-                          <th className="border px-4">Full-Time</th>
-                          <th className="border px-4">Overtime</th>
-                          <th className="border px-4">Recommendation</th>
-                          <th className="border px-4">Total</th>
-                          <th className="border px-4">Edit</th>
-                          <th className="border px-4">Delete</th>
+                          <th className="border px-4 text-white">#</th>
+                          <th className="border px-4 text-white">First Name</th>
+                          <th className="border px-4 text-white">Last Name</th>
+                          <th className="border px-4 text-white">Age</th>
+                          <th className="border px-4 text-white">Full-Time</th>
+                          <th className="border px-4 text-white">Overtime</th>
+                          <th className="border px-4 text-white">Recommendation</th>
+                          <th className="border px-4 text-white">Total</th>
+                          <th className="border px-4 text-white">Edit</th>
+                          <th className="border px-4 text-white">Delete</th>
                       </tr>
                   </thead>
                   <tbody>
                       {newRow.map((row, index) => (
                           <tr key={uuidv4()}>
-                              <td className="border px-4">{index + 1}</td>
-                              <td className="border px-4">{row.fName}</td>
-                              <td className="border px-4">{row.lName}</td>
-                              <td className="border px-4">{row.age}</td>
-                              <td className="border px-4">{row.fTime}</td>
-                              <td className="border px-4">{row.oTime}</td>
-                              <td className="border px-4">{row.recomm}</td>
-                              <td className="border px-4">{row.total}</td>
-                              <td className="border px-4">{editIcon()}</td>
-                              <td className="border px-4">{deleteIcon()}</td>
+                              <td className="border px-4 text-white">{index + 1}</td>
+                              <td className="border px-4 text-white">{row.fName}</td>
+                              <td className="border px-4 text-white">{row.lName}</td>
+                              <td className="border px-4 text-white">{row.age}</td>
+                              <td className="border px-4 text-white">{row.fTime}</td>
+                              <td className="border px-4 text-white">{row.oTime}</td>
+                              <td className="border px-4 text-white">{row.recomm}</td>
+                              <td className="border px-4 text-white">{row.total}</td>
+                              <td className="border px-4 text-white">{editIcon()}</td>
+                              <td className="border px-4 text-white">{deleteIcon()}</td>
                           </tr>
                       ))}
                   </tbody>
