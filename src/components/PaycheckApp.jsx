@@ -10,7 +10,8 @@ export default function PaycheckApp() {
   const [earnings, setEarnings] = useState('');
   const [endTime, setEndTime] = useState('');
   const [startTime, setStartTime] = useState('');
-  const [showData, setShowData] = useState(false)
+  const [showData, setShowData] = useState(false);
+  const [error, setError] = useState('')
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -61,6 +62,10 @@ export default function PaycheckApp() {
   }
 
   const handleSubmit = () => {
+    if(salary == '' || workHours == '' || city == ''){
+      setError("Fields cannot be empty")
+      return
+    }
     setShow(false)
     setStartTime(time)
     setEarnings((salary / workHours).toFixed(2));

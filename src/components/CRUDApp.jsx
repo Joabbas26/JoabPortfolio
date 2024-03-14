@@ -176,8 +176,8 @@ export default function CRUDApp() {
                 <input id="age" type="number" placeholder="In Years" 
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none focus:shadow-outline" 
                 value={age} onChange={(e) => {
-                  // Ensure the entered value does not exceed 150
-                  const newValue = Math.min(parseInt(e.target.value), 150);
+                  // Ensure the entered value does not exceed 90
+                  const newValue = Math.min(parseInt(e.target.value), 90);
                   setage(newValue);
                 }}  />
               </div>
