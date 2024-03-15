@@ -8,8 +8,7 @@ export default function PokedexApp() {
   const [pokemonData, setPokemonData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [pokemonDescription, setPokemonDescription] = useState("");
-  const [isReading, setIsReading] = useState(false);
-  const [audio, setAudio] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -94,36 +93,23 @@ export default function PokedexApp() {
     }
   };
 
+  const handlePlay = async () => {
+    if (!isPlaying) {
+      const response = await axios.post('http://localhost:5173/play-audio', { audioData: pokemonDescription });
+      const audioUrl = URL.createObjectURL(new Blob([response.data]));
+      const audio = new Audio(audioUrl);
+      audio.play();
+      setIsPlaying(true);
+    }
+  };
+  
 
-  const handleRead = async () => {
-    if (!isReading) {
-      try {
-        const response = await axios.post('http://localhost:5173/tts', {
-          text: pokemonDescription,
-          voice: 'en-US-JennyNeural',
-          output_format: 'mp3',
-        });
-        const audioUrl = response.data.audioUrl;
-        const newAudio = new Audio(audioUrl);
-        newAudio.addEventListener('loadedmetadata', () => {
-          newAudio.play();
-        });
-        setAudio(newAudio);
-        setIsReading(true);
-        newAudio.onended = () => setIsReading(false);
-      } catch (error) {
-        console.error('Error generating audio:', error);
-      }
-    }
-  };
-  
   const handlePause = () => {
-    if (isReading && audio) {
-      audio.pause();
-      setIsReading(false);
+    if (isPlaying) {
+      setIsPlaying(false);
     }
   };
-  
+
 
   return (
   <div className="justify-center items-center py-20 bg-gray-800 grow h-screen">
@@ -200,10 +186,10 @@ export default function PokedexApp() {
         {/* Row of 3 buttons on the bottom */}
         <div className="row-start-3 col-start-1 col-end-4 flex justify-center items-center">
           <button className="border border-black p-5 mx-2">
-            <FontAwesomeIcon icon={faPlay} onClick={handleRead} disabled={!pokemonDescription}/>
+            <FontAwesomeIcon icon={faPlay} onClick={handlePlay} disabled={!pokemonDescription}/>
           </button>
           <button className="border border-black p-5 mx-2">
-            <FontAwesomeIcon icon={faStop} onClick={handlePause} disabled={!isReading}/>
+            <FontAwesomeIcon icon={faStop} onClick={handlePause} disabled={!isPlaying}/>
           </button>
           <button className="border border-black p-5 mx-2" onClick={fetchRandomPokemon}>
             <FontAwesomeIcon icon={faShuffle} />
