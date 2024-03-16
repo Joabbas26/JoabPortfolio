@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, {useState, useEffect } from 'react';
 
 export default function PaycheckApp() {
   const [show, setShow] = useState(false);
@@ -6,12 +6,15 @@ export default function PaycheckApp() {
   const [jobTitle, setJobTitle] = useState('');
   const [salary, setSalary] = useState('');
   const [workHours, setWorkHours] = useState('');
-  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
   const [earnings, setEarnings] = useState('');
   const [endTime, setEndTime] = useState('');
   const [startTime, setStartTime] = useState('');
   const [showData, setShowData] = useState(false);
   const [error, setError] = useState('')
+  const [intervalId, setIntervalId] = useState(null);
+  const [result, setResult] = useState("");
+
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -19,42 +22,10 @@ export default function PaycheckApp() {
   const now = new Date();
   const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-  // Function to handle city input change
-  const handleCityChange = (e) => {
-    // Get the input value and convert it to uppercase
-    let inputVal = e.target.value.toUpperCase();
-
-    // Check if the input consists of exactly 2 letters
-    if (/^[A-Z]{2}$/.test(inputVal)) {
-      // Update the state with the validated and capitalized input
-      setCity(inputVal);
-    }
-  };
-
-  // Function to handle work hours input change
-  const handleWorkHoursChange = (e) => {
-    let inputVal = parseInt(e.target.value);
-
-    // Check if the input is a positive integer between 0 and 16
-    if (!isNaN(inputVal) && inputVal >= 0 && inputVal <= 16) {
-      // Update the state with the validated input
-      setWorkHours(inputVal);
-    }
-  };
-
-  // Function to handle salary input change
-  const handleSalaryChange = (e) => {
-    let inputVal = parseInt(e.target.value);
-
-    // Check if the input is a positive integer between 0 and 100,000
-    if (!isNaN(inputVal) && inputVal >= 0 && inputVal <= 100000) {
-      // Update the state with the validated input
-      setSalary(inputVal);
-    }
-  };
-
   const toggleStop = () => {
     setEndTime(time);
+    clearInterval(intervalId);
+    setIntervalId(null);
   }
 
   const toggleClear = () => {
@@ -62,15 +33,24 @@ export default function PaycheckApp() {
   }
 
   const handleSubmit = () => {
-    if(salary == '' || workHours == '' || city == ''){
+    if(salary == '' || workHours == '' || state == ''){
       setError("Fields cannot be empty")
       return
     }
     setShow(false)
     setStartTime(time)
-    setEarnings((salary / workHours).toFixed(2));
+    setEarnings(Number((salary / workHours).toFixed(2)));
     setShowData(true);
+    const id = setInterval(() => {
+      setResult((prevResult) => prevResult + earnings);
+    }, 1000);
+    setIntervalId(id);
   }
+
+  useEffect(() => {
+    return () => clearInterval(intervalId);
+  }, [intervalId]);
+
 
   return (
     <div className="justify-center items-center py-20 bg-gray-800 grow h-screen">
@@ -96,19 +76,19 @@ export default function PaycheckApp() {
                   <label htmlFor="salary" className="block text-gray-700 text-sm font-bold mb-2">Salary</label>
                   <input id="salary" type="number" placeholder="Hourly Wage" 
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 bg-white leading-tight focus:outline-none focus:shadow-outline" 
-                  value={salary} onChange={(e) => handleSalaryChange(e)} />
+                  value={salary} onChange={(e) => setSalary(parseInt(e.target.value), 10)} />
                 </div>
                 <div className="mb-4">
                   <label htmlFor="workHours" className="block text-gray-700 text-sm font-bold mb-2">Work Hours</label>
                   <input id="workHours" type="number" placeholder="Per day" 
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 bg-white leading-tight focus:outline-none focus:shadow-outline" 
-                  value={workHours} onChange={(e) => handleWorkHoursChange(e)} />
+                  value={workHours} onChange={(e) => setWorkHours(parseInt(e.target.value), 10)} />
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="city" className="block text-gray-700 text-sm font-bold mb-2">State 2 Letter Abbreviation</label>
-                  <input id="city" type="text" placeholder="State ABRV" 
+                  <label htmlFor="state" className="block text-gray-700 text-sm font-bold mb-2">State</label>
+                  <input id="state" type="text" placeholder="State" 
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 bg-white leading-tight focus:outline-none focus:shadow-outline" 
-                  value={city} onChange={(e) => handleCityChange(e)} />
+                  value={state} onChange={(e) => setState(e.target.value)} />
                 </div>
               </form>
               <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
@@ -129,7 +109,7 @@ export default function PaycheckApp() {
                   <h3>{jobTitle} {firstName}'s Income</h3>
                 </div>
                 <div className='text-center my-4'>
-                  <p className="earnings">${earnings}</p>
+                  <p className="earnings">${result}</p>
                 </div>
                 <div className="text-center my-4">
                   <div className='flex flex-row justify-center'>

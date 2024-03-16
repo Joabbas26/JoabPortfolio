@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { TextToSpeechClient } from '@google-cloud/text-to-speech';
+import credentials from '../../mindful-bivouac-417320-7d27adbd895b.json';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStop, faPlay, faShuffle, faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -13,6 +15,7 @@ export default function PokedexApp() {
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
+
 
   const getTypeColor = (type) => {
     // Define color mappings for each type
@@ -84,7 +87,7 @@ export default function PokedexApp() {
         .toLowerCase()
         .replace(/(?:^|[.!?]\s+)\w/g, firstChar => firstChar.toUpperCase());
   
-      // Assuming setPokemonData and setPokemonDescription are defined elsewhere and properly update the state
+      
       setPokemonData(pokemonData);
       setPokemonDescription(sanitizedDescription);
       setPokemonName('')
@@ -94,21 +97,34 @@ export default function PokedexApp() {
   };
 
   const handlePlay = async () => {
-    if (!isPlaying) {
-      const response = await axios.post('http://localhost:5173/play-audio', { audioData: pokemonDescription });
-      const audioUrl = URL.createObjectURL(new Blob([response.data]));
+    setIsPlaying(true);
+    try {
+      const response = await axios.get(`http://localhost:5173/api/speak?pokemonDescription=${encodeURIComponent(pokemonDescription)}`);
+      const audioBlob = new Blob([response.data], { type: 'audio/mp3' });
+      const audioUrl = URL.createObjectURL(audioBlob);
+      
       const audio = new Audio(audioUrl);
       audio.play();
-      setIsPlaying(true);
-    }
-  };
-  
-
-  const handlePause = () => {
-    if (isPlaying) {
+      
+      audio.addEventListener('ended', () => setIsPlaying(false));
+      audio.addEventListener('error', (err) => {
+        console.error('Error playing audio:', err);
+        setIsPlaying(false);
+      });
+    } catch (err) {
+      console.error('Error fetching audio data:', err);
       setIsPlaying(false);
     }
   };
+  
+  const handlePause = () => {
+    const audio = document.querySelector('audio');
+    if (audio) audio.pause();
+    setIsPlaying(false);
+  };
+  
+  
+  
 
 
   return (
@@ -200,3 +216,4 @@ export default function PokedexApp() {
      )}
  </div>
 );};
+
