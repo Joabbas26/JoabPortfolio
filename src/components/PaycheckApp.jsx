@@ -35,9 +35,9 @@ export default function PaycheckApp() {
     setEndTime('')
     setInputs({
       firstName: '',
-    salary: '',
-    workHours: '',
-    state: '',
+      salary: '',
+      workHours: '',
+      state: '',
     })
     setShowData(false)
   }
@@ -49,46 +49,68 @@ export default function PaycheckApp() {
       [id]: value.trim(),
     });
   }
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-
-     // Validate inputs
-  if (
-    inputs.firstName.trim() === '' ||
-    isNaN(Number(inputs.salary)) ||
-    isNaN(Number(inputs.workHours)) ||
-    Number(inputs.workHours) <= 0 ||
-    Number(inputs.salary) <= 0
-  ) {
-    setError('Invalid input values');
-    setShowError(true);
-    return;
-  }
-
-    if (inputs.firstName.trim() === '' || inputs.salary.trim() === '' || inputs.workHours.trim() === '' || inputs.state.trim() === '') {
+  
+    console.log('Inputs:', inputs); // Debug: Output input values
+  
+    // Validate inputs
+    if (
+      inputs.firstName.trim() === '' ||
+      isNaN(parseFloat(inputs.salary)) ||
+      isNaN(parseFloat(inputs.workHours)) ||
+      parseFloat(inputs.workHours) <= 0 ||
+      parseFloat(inputs.salary) <= 0
+    ) {
+      setError('Invalid input values');
+      setShowError(true);
+      return;
+    }
+  
+    if (
+      inputs.firstName.trim() === '' ||
+      inputs.salary.trim() === '' ||
+      inputs.workHours.trim() === '' ||
+      inputs.state.trim() === ''
+    ) {
       setError('Required fields cannot be empty');
       setShowError(true);
       return;
     }
-    setShow(false)
-    setStartTime(time)
-    setEarnings(Number(((Number(inputs.salary) / Number(inputs.workHours)) / 3600).toFixed(2)));
+  
+    setShow(false);
+    setStartTime(time);
+  
+    const earningsPerSecond = parseFloat(inputs.salary) / (parseFloat(inputs.workHours) * 3600);
+    
+    console.log('Earnings per second:', earningsPerSecond); // Debug: Output earnings per second
+  
+    setEarnings(Number(earningsPerSecond.toFixed(4)));
+  
     setShowData(true);
     setTimeout(() => {
       setShowError(false);
     }, 3000);
   }
-
+  
   useEffect(() => {
     const id = setInterval(() => {
-      setResult((prevResult) => prevResult + Number(earnings));
-      console.log(typeof(result))
+      setResult((prevResult) => {
+        // Calculate the sum of prevResult and earnings
+        const sum = prevResult + Number(earnings);
+        // Round the sum to four decimal places
+        const roundedSum = Number(sum.toFixed(4));
+        return roundedSum;
+      });
     }, 1000);
-
+  
     setIntervalId(id);
     return () => clearInterval(id);
-  }, [earnings]); 
+  }, [earnings]);
+  
+  
+  
 
   return (
     <div className="justify-center items-center py-20 bg-gray-800 grow h-screen">
@@ -114,13 +136,13 @@ export default function PaycheckApp() {
                   <label htmlFor="salary" className="block text-gray-700 text-sm font-bold mb-2">Salary</label>
                   <input id="salary" type="number" placeholder="Hourly Wage" 
                   className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 bg-white leading-tight focus:outline-none focus:shadow-outline ${inputs.salary.trim() === '' ? 'border-red-500' : ''}`} 
-                  value={parseInt(inputs.salary, 10)} onChange={handleChange} />
+                  value={inputs.salary} onChange={handleChange} />
                 </div>
                 <div className="mb-4">
                   <label htmlFor="workHours" className="block text-gray-700 text-sm font-bold mb-2">Work Hours</label>
                   <input id="workHours" type="number" placeholder="Per day" 
                   className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 bg-white leading-tight focus:outline-none focus:shadow-outline ${inputs.workHours.trim() === '' ? 'border-red-500' : ''}`} 
-                  value={parseInt(inputs.workHours, 10)} onChange={handleChange} />
+                  value={inputs.workHours} onChange={handleChange} />
                 </div>
                 <div className="mb-4">
                   <label htmlFor="state" className="block text-gray-700 text-sm font-bold mb-2">State</label>
