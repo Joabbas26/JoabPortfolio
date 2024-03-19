@@ -33,6 +33,9 @@ export default function PaycheckApp() {
 
   const toggleClear = () => {
     setEndTime('')
+    setStartTime('')
+    setEarnings('')
+    setResult(0)
     setInputs({
       firstName: '',
       salary: '',
@@ -51,10 +54,7 @@ export default function PaycheckApp() {
   }
   
   const handleSubmit = (e) => {
-    e.preventDefault();
-  
-    console.log('Inputs:', inputs); // Debug: Output input values
-  
+    e.preventDefault();  
     // Validate inputs
     if (
       inputs.firstName.trim() === '' ||
@@ -83,11 +83,7 @@ export default function PaycheckApp() {
     setStartTime(time);
   
     const earningsPerSecond = parseFloat(inputs.salary) / (parseFloat(inputs.workHours) * 3600);
-    
-    console.log('Earnings per second:', earningsPerSecond); // Debug: Output earnings per second
-  
     setEarnings(Number(earningsPerSecond.toFixed(4)));
-  
     setShowData(true);
     setTimeout(() => {
       setShowError(false);
@@ -104,7 +100,6 @@ export default function PaycheckApp() {
         return roundedSum;
       });
     }, 1000);
-  
     setIntervalId(id);
     return () => clearInterval(id);
   }, [earnings]);
