@@ -1,8 +1,8 @@
 import React, {useState, useEffect } from 'react';
+import taxRatesData from '../JSON/TaxRates.json';
 
 export default function PaycheckApp() {
   const [show, setShow] = useState(false);
-  const [jobTitle, setJobTitle] = useState('');
   const [earnings, setEarnings] = useState('');
   const [endTime, setEndTime] = useState('');
   const [startTime, setStartTime] = useState('');
@@ -13,6 +13,7 @@ export default function PaycheckApp() {
   const [result, setResult] = useState(0);
   const [inputs, setInputs] = useState({
     firstName: '',
+    jobTitle: '',
     salary: '',
     workHours: '',
     state: '',
@@ -38,6 +39,7 @@ export default function PaycheckApp() {
     setResult(0)
     setInputs({
       firstName: '',
+      jobTitle: '',
       salary: '',
       workHours: '',
       state: '',
@@ -47,21 +49,36 @@ export default function PaycheckApp() {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
+    const capitalizedValue = value
+      .replace(/\s+/g, ' ') // Replace multiple spaces with a single space
+      .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter of each word
     setInputs({
       ...inputs,
-      [id]: value.trim(),
+      [id]: capitalizedValue,
     });
-  }
+  };
+  
   
   const handleSubmit = (e) => {
-    e.preventDefault();  
-    // Validate inputs
+    e.preventDefault();
+  
+    // Create a copy of the inputs object with trimmed values
+    const trimmedInputs = {
+      firstName: inputs.firstName.trim(),
+      jobTitle: inputs.jobTitle.trim(),
+      salary: inputs.salary.trim(),
+      workHours: inputs.workHours.trim(),
+      state: inputs.state.trim(),
+    };
+  
+    // Validate inputs using the trimmed values
     if (
-      inputs.firstName.trim() === '' ||
-      isNaN(parseFloat(inputs.salary)) ||
-      isNaN(parseFloat(inputs.workHours)) ||
-      parseFloat(inputs.workHours) <= 0 ||
-      parseFloat(inputs.salary) <= 0
+      trimmedInputs.firstName === '' ||
+      trimmedInputs.jobTitle === '' ||
+      isNaN(parseFloat(trimmedInputs.salary)) ||
+      isNaN(parseFloat(trimmedInputs.workHours)) ||
+      parseFloat(trimmedInputs.workHours) <= 0 ||
+      parseFloat(trimmedInputs.salary) <= 0
     ) {
       setError('Invalid input values');
       setShowError(true);
@@ -69,12 +86,20 @@ export default function PaycheckApp() {
     }
   
     if (
-      inputs.firstName.trim() === '' ||
-      inputs.salary.trim() === '' ||
-      inputs.workHours.trim() === '' ||
-      inputs.state.trim() === ''
+      trimmedInputs.firstName === '' ||
+      trimmedInputs.jobTitle === '' ||
+      trimmedInputs.salary === '' ||
+      trimmedInputs.workHours === '' ||
+      trimmedInputs.state === ''
     ) {
       setError('Required fields cannot be empty');
+      setShowError(true);
+      return;
+    }
+  
+    const validStates = Object.keys(taxRatesData);
+    if (!validStates.includes(trimmedInputs.state)) {
+      setError('Invalid State');
       setShowError(true);
       return;
     }
@@ -82,7 +107,8 @@ export default function PaycheckApp() {
     setShow(false);
     setStartTime(time);
   
-    const earningsPerSecond = parseFloat(inputs.salary) / (parseFloat(inputs.workHours) * 3600);
+    const stateTaxRate = taxRatesData[trimmedInputs.state];
+    const earningsPerSecond = parseFloat(trimmedInputs.salary) / (parseFloat(trimmedInputs.workHours) * 3600 * (1 + stateTaxRate));
     setEarnings(Number(earningsPerSecond.toFixed(4)));
     setShowData(true);
     setTimeout(() => {
@@ -125,7 +151,7 @@ export default function PaycheckApp() {
                   <label htmlFor="jobTitle" className="block text-gray-700 text-sm font-bold mb-2">Job Title</label>
                   <input id="jobTitle" type="text" placeholder="Job Title" 
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 bg-white leading-tight focus:outline-none focus:shadow-outline" 
-                  value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} />
+                  value={inputs.jobTitle} onChange={handleChange} />
                 </div>
                 <div className="mb-4">
                   <label htmlFor="salary" className="block text-gray-700 text-sm font-bold mb-2">Salary</label>
@@ -147,7 +173,7 @@ export default function PaycheckApp() {
                 </div>
               </form>
               {showError && (
-              <p className={`border ${error === 'Required fields cannot be empty' ? 'bg-red-500' : 'border-green-500'}
+              <p className={`border ${error === 'Required fields cannot be empty' || error === 'Invalid State' ? 'bg-red-500 text-white': 'border-green-500'}
               p-2 text-gray-900`}>
                 {error}
               </p>
@@ -167,7 +193,7 @@ export default function PaycheckApp() {
               </div>
               <div className={`${showData === false ? 'hidden' : 'block'}`}>
                 <div className='text-center my-8'>
-                  <p className='text-9xl font-bold text-blue-500'>{jobTitle} {inputs.firstName}'s Income</p>
+                  <p className='text-9xl font-bold text-blue-500'>{inputs.jobTitle} {inputs.firstName}'s Income</p>
                 </div>
                 <div className='text-center my-16'>
                 <h1 className="text-9xl font-bold text-green-800">${result}</h1>
@@ -175,8 +201,8 @@ export default function PaycheckApp() {
                 <div className="text-center my-4">
                   <div className='flex flex-row justify-center'>
                     <p className='inline-block md:mr-4'>Start Time: {startTime}</p>
-                    <button className="inline-block mx-4" onClick={toggleStop}>Stop</button>
-                    <button className="inline-block mx-4" onClick={toggleClear}>Clear</button>
+                    <button className="p-2 inline-block mr-1 md:mx-4 sm:p-6" onClick={toggleStop}>Stop</button>
+                    <button className="p-2 inline-block ml-1 md:mx-4 sm:p-6" onClick={toggleClear}>Clear</button>
                     <p className='inline-block md:ml-4'>End Time: {endTime}</p>
                   </div>
                 </div>
