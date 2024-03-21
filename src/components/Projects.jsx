@@ -1,8 +1,8 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import table from '../assets/CRUDApp.png';
 import weather from '../assets/Weather.png';
 import pokedex from '../assets/Pokedex.png';
-import payCheck from '../assets/PaycheckApp.png';
+import payCheck from '../assets/Paycheck.png';
 
 export default function Projects() {
 
@@ -17,14 +17,6 @@ export default function Projects() {
     },
     {
       id: 2,
-      title: 'Pokedex',
-      description: 'Pokédex application utilizing JavaScript, React, and Axios, that seamlessly retrieves and displays comprehensive information on Pokémon from the official Pokémon API while providing real-time data updates.',
-      imageUrl: pokedex,
-      githubLink: 'https://github.com/Joabbas26/Rank-Table',
-      demoLink: '/pokedex'
-    },
-    {
-      id: 3,
       title: 'Weather App',
       description: 'User-friendly weather application using JavaScript, React, and Axios, that fetches and presents detailed local weather data from the OpenWeatherMap API with an intuitive interface and comprehensive weather display.',
       imageUrl: weather,
@@ -32,13 +24,22 @@ export default function Projects() {
       demoLink: '/weather'
     },
     {
-      id: 4,
+      id: 3,
       title: 'Paycheck App',
       description: 'Pay Check calculator using JavaScript, React, and Axios, that calculates how much you make per second depending on your hourly wage.',
       imageUrl: payCheck,
       githubLink: 'https://github.com/Joabbas26/WeatherApp',
       demoLink: '/paycheck'
+    },
+    {
+      id: 4,
+      title: 'Pokedex',
+      description: 'Pokédex application utilizing JavaScript, React, and Axios, that seamlessly retrieves and displays comprehensive information on Pokémon from the official Pokémon API while providing real-time data updates.',
+      imageUrl: pokedex,
+      githubLink: 'https://github.com/Joabbas26/Rank-Table',
+      demoLink: '/pokedex'
     }
+    
   ];
 
   return (
