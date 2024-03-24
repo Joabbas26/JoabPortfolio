@@ -3,17 +3,27 @@ const { TextToSpeechClient } = require('@google-cloud/text-to-speech');
 const cors = require('cors');
 const app = express();
 
+require('dotenv').config()
+
 app.use(cors());
 app.use(express.json());
 
-const client = new TextToSpeechClient({ keyFilename: './mindful-bivouac-417320-7d27adbd895b.json' });
+const client = new TextToSpeechClient({ keyFilename: './serviceaccount.json' });
 
-app.get('/api/speak', async (req, res) => {
+app.options('pokedex/api/speak', cors()); 
+
+app.get('pokedex/api/speak', async (req, res) => {
   const pokemonDescription = req.query.pokemonDescription;
+
+  // Check if pokemonDescription is defined and convert to string if necessary
+  if (typeof pokemonDescription !== 'string') {
+    pokemonDescription = ''; // Set to empty string if not a string
+  }
+  
   const request = {
-    input: { text: pokemonDescription },
-    voice: { languageCode: 'en-US', ssmlGender: 'FEMALE' },
-    audioConfig: { audioEncoding: 'MP3' },
+    input: { text: pokemonDescription},
+    voice: { languageCode: 'en-US', ssmlGender: 'NEUTRAL' },
+    audioConfig: { audioEncoding: 'MP3'},
   };
   try {
     const [response] = await client.synthesizeSpeech(request);
