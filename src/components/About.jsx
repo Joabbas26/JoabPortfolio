@@ -1,8 +1,9 @@
 export default function About() {
+  
   return (
     <div className="bg-gray-800 py-20 grow">
       <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold mb-6 text-center">About Me</h1>
+        <h1 className="text-3xl text-white font-bold mb-6 text-center">About Me</h1>
         <div className="grid gap-6 p-6 md:grid-cols-4">
           <div className="bg-gray-700 rounded-lg p-6 shadow-md md:col-span-1">
             <h2 className="text-xl font-bold mb-4 text-white">Current Projects</h2>

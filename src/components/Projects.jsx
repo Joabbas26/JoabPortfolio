@@ -45,7 +45,7 @@ export default function Projects() {
   return (
     <div className='bg-gray-800 py-20 grow w-full flex justify-center scroll-smooth'>
       <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold mb-8 text-center">My Projects</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center text-white">My Projects</h1>
         <div className="grid grid-cols-1 xs-grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map(project => (
             <div key={project.id} className="bg-gray-700 rounded-lg shadow-md p-6">

@@ -26,7 +26,7 @@ export default function Footer() {
           </a>
         </div>
       </div>
-      <div className="mt-4 text-center">
+      <div className="mt-4 text-white text-center">
         <p>&copy; 2024 Joab Bastidas. All rights reserved.</p>
       </div>
     </footer>

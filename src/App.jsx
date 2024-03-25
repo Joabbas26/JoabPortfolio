@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { Provider } from "react-redux";
 import store from "./store.jsx";
 import Nav from './components/Nav.jsx'
