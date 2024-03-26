@@ -21,10 +21,6 @@ export default function Contact() {
     return emailRegex.test(email);
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if(email.trim() === "" && message.trim() === ""){
@@ -38,12 +34,12 @@ export default function Contact() {
       setShowConfirmation(true);
       return
     }
-    emailjs
-    .send(
-      "service_v16sidi",
-      "template_wjaoovc",
+
+    emailjs.send(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
       { name, email, message },
-      "BkTBjQCdtQ_kvasib"
+      import.meta.env.VITE_EMAILJS_USER_ID
     )
     .then(() => {
       setResult("Message Sent Successfully!");
@@ -81,7 +77,7 @@ export default function Contact() {
               <label htmlFor="email" className="block text-white font-bold mb-2">Email</label>
               <input type="email" id="email" name="email" placeholder="Your Email" 
               className={`w-full px-3 py-2 border rounded-md text-black bg-white ${result === 'Required fields cannot be empty' || result === 'Email address invalid' ? 'border-red-500' : 'bg-white'}`}
-              onChange={handleEmailChange}
+              onChange={(e) => setEmail(e.target.value)}
               ref={emailInputRef}/>
             </div>
             <div className="mb-4">

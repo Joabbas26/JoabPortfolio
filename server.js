@@ -14,11 +14,6 @@ app.options('pokedex/api/speak', cors());
 
 app.get('pokedex/api/speak', async (req, res) => {
   const pokemonDescription = req.query.pokemonDescription;
-
-  // Check if pokemonDescription is defined and convert to string if necessary
-  if (typeof pokemonDescription !== 'string') {
-    pokemonDescription = ''; // Set to empty string if not a string
-  }
   
   const request = {
     input: { text: pokemonDescription},

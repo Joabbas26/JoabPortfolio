@@ -59,9 +59,10 @@ export default function PokedexApp() {
         entry => entry.language.name === 'en'
       );
       const sanitizedDescription = description.flavor_text
-      .replace(/[\x00-\x1F\x7F-\x9F]+|[^a-zA-Z0-9\séÉ.]+/g, ' ') // Exclude é and É from replacement, also include periods ('.')
-    .toLowerCase()  // Convert all characters to lowercase
-    .replace(/(?:^|[.!?]\s+)\w/g, firstChar => firstChar.toUpperCase()); // Capitalize first letter of each word after period, exclamation mark, or question mark
+        .replace(/[\x00-\x1F\x7F-\x9F]+|[^a-zA-Z0-9\séÉ.]+/g, ' ') // Exclude é and É from replacement, also include periods ('.')
+        .toLowerCase()  // Convert all characters to lowercase
+        .replace(/(?:^|[.!?]\s+)\w/g, firstChar => firstChar.toUpperCase()); // Capitalize first letter of each word after period, exclamation mark, or question mark
+      
       setPokemonDescription(sanitizedDescription);
 
     } catch (error) {
