@@ -85,6 +85,7 @@ export default function PaycheckApp() {
       return;
     }
   
+    // Validate if fields are empty
     if (
       trimmedInputs.firstName === '' ||
       trimmedInputs.jobTitle === '' ||

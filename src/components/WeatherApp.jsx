@@ -35,24 +35,24 @@ const [data, setData] = useState({});
     ];
  
     // Fetches the day of the week
-    var day = days[d.getDay()]; 
+    let day = days[d.getDay()]; 
     // Fetches the date i.e. 1st - 31st day of the month
-    var date = d.getDate(); 
+    let date = d.getDate(); 
     // Fetches the month
-    var month = months[d.getMonth()]; 
+    let month = months[d.getMonth()]; 
     // Fetches the year
-    var year = d.getFullYear();
+    let year = d.getFullYear();
     return `${day} ${date} ${month} ${year}`;
   }
 
-  var Time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit" });
-  var description = '';
+  let Time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit" });
+  let description = '';
 
  
 
   // api key and base url
   const api = {
-    key: "3fabe9fdca16afb5e55e69008aee39d3",
+    key: import.meta.env.VITE_API_KEY,
     base: "https://api.openweathermap.org/data/2.5/"
   }
 
@@ -67,7 +67,7 @@ const [data, setData] = useState({});
       setCity('');
   }
 
-  var hour = data.timezone;
+  let hour = data.timezone;
 
   const selectCondition = () => {
     const condition = [
@@ -115,7 +115,7 @@ const [data, setData] = useState({});
       'Night'
     ]
 
-    for(var i = 0; i < condition.length; i++){
+    for(let i = 0; i < condition.length; i++){
       if(parseInt(hour) >= 19){
         description = 'Night';
         return <FontAwesomeIcon icon={faMoon} size='10x'/>
