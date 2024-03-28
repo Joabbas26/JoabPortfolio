@@ -98,8 +98,12 @@ export default function PokedexApp() {
   const handlePlay = async () => {
     setIsPlaying(true);
     try {
-      const response = await axios.get(`http://localhost:5173/pokedex/api/speak?pokemonDescription=${encodeURIComponent(pokemonDescription)}`);
-      const audio = new Audio(URL.createObjectURL(response.data));
+      const response = await axios.get('http://localhost:5173/pokedex/api/speak', {
+        params: { pokemonDescription: encodeURIComponent(pokemonDescription) },
+        responseType: 'blob', // Specify response type as blob
+      });
+      const audioUrl = URL.createObjectURL(response.data); // Create object URL from blob data
+      const audio = new Audio(audioUrl);
       audio.play();
       audio.addEventListener('ended', () => setIsPlaying(false));
       audio.addEventListener('error', (err) => {
@@ -117,6 +121,7 @@ export default function PokedexApp() {
     if (audio) audio.pause();
     setIsPlaying(false);
   };
+  
   
 
 

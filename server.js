@@ -1,25 +1,31 @@
-const express = require('express');
-const { TextToSpeechClient } = require('@google-cloud/text-to-speech');
-const cors = require('cors');
+import express from 'express';
+import { TextToSpeechClient } from '@google-cloud/text-to-speech';
+import cors from 'cors'
 const app = express();
+import dotenv from 'dotenv';
+dotenv.config();
 
-require('dotenv').config()
 
-app.use(cors());
+app.use(cors()); // Adjusted position for broader CORS handling
 app.use(express.json());
 
 const client = new TextToSpeechClient({ keyFilename: './serviceaccount.json' });
 
-app.options('pokedex/api/speak', cors()); 
+// Added route for preflight requests
+app.options('/pokedex/api/speak', cors());
 
-app.get('pokedex/api/speak', async (req, res) => {
-  const pokemonDescription = req.query.pokemonDescription;
-  
+app.get('/pokedex/api/speak', async (req, res) => {
+  const pokemonDescription = req.query.pokemonDescription || '';
+  if (!pokemonDescription.trim()) {
+    return res.status(400).send('Please provide a valid pokemonDescription');
+  }
+
   const request = {
-    input: { text: pokemonDescription},
+    input: { text: pokemonDescription },
     voice: { languageCode: 'en-US', ssmlGender: 'NEUTRAL' },
-    audioConfig: { audioEncoding: 'MP3'},
+    audioConfig: { audioEncoding: 'MP3' },
   };
+
   try {
     const [response] = await client.synthesizeSpeech(request);
     res.set('Content-Type', 'audio/mp3');
