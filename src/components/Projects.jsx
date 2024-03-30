@@ -39,7 +39,6 @@ export default function Projects() {
       githubLink: 'https://github.com/Joabbas26/Rank-Table',
       demoLink: '/pokedex'
     }
-    
   ];
 
   return (
