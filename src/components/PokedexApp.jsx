@@ -98,7 +98,7 @@ export default function PokedexApp() {
   const handlePlay = async () => {
     setIsPlaying(true);
     try {
-      const response = await axios.get('/pokedex/api/speech/', {
+      const response = await axios.get('/pokedex/api/speak', {
         params: {
           text: pokemonDescription,
           languageCode: 'en-US',
@@ -116,6 +116,7 @@ export default function PokedexApp() {
       });
     } catch (err) {
       console.error('Error fetching audio data:', err);
+      console.log('Error toJSON:', err.toJSON());
       setIsPlaying(false);
     }
   };
