@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStop, faPlay, faShuffle, faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -9,6 +9,7 @@ export default function PokedexApp() {
   const [loading, setLoading] = useState(false);
   const [pokemonDescription, setPokemonDescription] = useState("");
   const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -107,10 +108,10 @@ export default function PokedexApp() {
         responseType: 'blob', // Set response type to blob
       });
       const audioUrl = URL.createObjectURL(new Blob([response.data])); // Create object URL from blob data
-      const audio = new Audio(audioUrl); // Create Audio object with the audio URL
-      audio.play();
-      audio.addEventListener('ended', () => setIsPlaying(false));
-      audio.addEventListener('error', (err) => {
+      audioRef.current = new Audio(audioUrl); // Create Audio object with the audio URL
+      audioRef.current.play();
+      audioRef.current.addEventListener('ended', () => setIsPlaying(false));
+      audioRef.current.addEventListener('error', (err) => {
         console.error('Error playing audio:', err);
         setIsPlaying(false);
       });
@@ -122,8 +123,7 @@ export default function PokedexApp() {
   };
 
   const handlePause = () => {
-    const audio = document.querySelector('audio');
-    if (audio) audio.pause();
+    if (audioRef.current) audioRef.current.pause();
     setIsPlaying(false);
   };
   
