@@ -16,34 +16,31 @@ const client = new TextToSpeechClient({
   keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
 });
 
-app.options('/pokedex/api/speak', cors());
+app.options('/pokedex', cors());
 
-app.get('/pokedex/api/speak', async (req, res) => {
-  console.log('Received request at /pokedex/api/speak');
+app.post('/pokedex', async (req, res) => {
+  console.log('Received request at /pokedex');
   
-  const { text, languageCode, voice } = req.query;
+  const { text, voice } = req.query;
 
-  if (!text ||!languageCode ||!voice) {
+  if (!text ||!voice) {
     return res.status(400).send('Missing required parameters');
   }
 
   try {
     const [response] = await client.synthesizeSpeech({
       input: { text },
-      voice: { languageCode, name: voice },
+      voice: { name: voice },
       audioConfig: { audioEncoding: 'MP3' },
     });
-    res.set('Content-Type', 'audio/mpeg');
-    res.send(response.audioContent);
+    const audioUrl = response.audioContent;
+    res.setHeader('Content-Type', 'audio/mpeg');
+    res.send(audioUrl);
+    res.status(200).json({ audioUrl });
   } catch (err) {
     console.error('Error synthesizing speech:', err);
     res.status(500).send('Error synthesizing speech');
   }
-});
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
 });
 
 app.listen(port, () => {

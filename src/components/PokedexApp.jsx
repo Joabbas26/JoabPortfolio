@@ -99,10 +99,9 @@ export default function PokedexApp() {
   const handlePlay = async () => {
     setIsPlaying(true);
     try {
-      const response = await axios.get('/pokedex/api/speak', {
+      const response = await axios.post('/pokedex', {
         params: {
           text: pokemonDescription,
-          languageCode: 'en-US',
           voice: 'NEUTRAL',
         },
         responseType: 'blob', // Set response type to blob
@@ -123,7 +122,10 @@ export default function PokedexApp() {
   };
 
   const handlePause = () => {
-    if (audioRef.current) audioRef.current.pause();
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0; // Reset the audio current time to the beginning
+    }
     setIsPlaying(false);
   };
   
