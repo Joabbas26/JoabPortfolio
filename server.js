@@ -11,19 +11,27 @@ const port = process.env.PORT || 5173;
 app.use(cors());
 app.use(express.json());
 
+let credentials;
+if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+  credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+} else {
+  // Fallback to using the service account JSON file
+  credentials = require('./src/JSON/serviceaccount.json');
+}
+
 const client = new TextToSpeechClient({
   projectId: 'mindful-bivouac-417320',
-  keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+  credentials: credentials,
 });
 
-app.options('/pokedex', cors());
+app.options('/pokedex/api', cors());
 
-app.post('/pokedex', async (req, res) => {
-  console.log('Received request at /pokedex');
+app.post('/pokedex/api', async (req, res) => {
+  console.log('Received request at /pokedex/api');
   
   const { text, voice } = req.query;
 
-  if (!text ||!voice) {
+  if (!text || !voice) {
     return res.status(400).send('Missing required parameters');
   }
 

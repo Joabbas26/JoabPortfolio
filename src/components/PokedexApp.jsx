@@ -99,10 +99,10 @@ export default function PokedexApp() {
   const handlePlay = async () => {
     setIsPlaying(true);
     try {
-      const response = await axios.post('/pokedex', {
+      const response = await axios.get('/pokedex/api', {
         params: {
           text: pokemonDescription,
-          voice: 'NEUTRAL',
+          voice: 'MALE',
         },
         responseType: 'blob', // Set response type to blob
       });
