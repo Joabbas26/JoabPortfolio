@@ -118,3 +118,21 @@ export default function Contact() {
     </div>
   )
 }
+
+
+/**
+
+const [form, setForm] = useState({
+  name: "",
+  email: "",
+  message: ""
+});
+
+handleChange = (e) => {
+  setForm({
+    ...form,
+    [e.target.name]: e.target.value,
+  });
+}
+
+*/

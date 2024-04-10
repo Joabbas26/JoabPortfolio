@@ -38,23 +38,19 @@ export default function PaycheckApp() {
     setEarnings('')
     setResult(0)
     setInputs({
-      firstName: '',
-      jobTitle: '',
-      salary: '',
-      workHours: '',
-      state: '',
-    })
+      ...inputs,
+      [e.target.name]: e.target.value,
+    });
     setShowData(false)
   }
 
   const handleChange = (e) => {
-    const { id, value } = e.target;
-    const capitalizedValue = value
+    const capitalizedValue = e.target.value
       .replace(/\s+/g, ' ') // Replace multiple spaces with a single space
       .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter of each word
     setInputs({
       ...inputs,
-      [id]: capitalizedValue,
+      [e.target.name]: capitalizedValue,
     });
   };
   
@@ -144,31 +140,31 @@ export default function PaycheckApp() {
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label htmlFor="firstName" className="block text-gray-700 text-sm font-bold mb-2">First Name</label>
-                  <input id="firstName" type="text" placeholder="First Name" 
+                  <input name="firstName" type="text" placeholder="First Name" 
                   className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 bg-white leading-tight focus:outline-none focus:shadow-outline ${inputs.firstName.trim() === '' ? 'border-red-500' : ''}`} 
                   value={inputs.firstName} onChange={handleChange} />
                 </div>
                 <div className="mb-4">
                   <label htmlFor="jobTitle" className="block text-gray-700 text-sm font-bold mb-2">Job Title</label>
-                  <input id="jobTitle" type="text" placeholder="Job Title" 
+                  <input name="jobTitle" type="text" placeholder="Job Title" 
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 bg-white leading-tight focus:outline-none focus:shadow-outline" 
                   value={inputs.jobTitle} onChange={handleChange} />
                 </div>
                 <div className="mb-4">
                   <label htmlFor="salary" className="block text-gray-700 text-sm font-bold mb-2">Salary</label>
-                  <input id="salary" type="number" placeholder="Hourly Wage" 
+                  <input name="salary" type="number" placeholder="Hourly Wage" 
                   className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 bg-white leading-tight focus:outline-none focus:shadow-outline ${inputs.salary.trim() === '' ? 'border-red-500' : ''}`} 
                   value={inputs.salary} onChange={handleChange} />
                 </div>
                 <div className="mb-4">
                   <label htmlFor="workHours" className="block text-gray-700 text-sm font-bold mb-2">Work Hours</label>
-                  <input id="workHours" type="number" placeholder="Per day" 
+                  <input name="workHours" type="number" placeholder="Per day" 
                   className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 bg-white leading-tight focus:outline-none focus:shadow-outline ${inputs.workHours.trim() === '' ? 'border-red-500' : ''}`} 
                   value={inputs.workHours} onChange={handleChange} />
                 </div>
                 <div className="mb-4">
                   <label htmlFor="state" className="block text-gray-700 text-sm font-bold mb-2">State</label>
-                  <input id="state" type="text" placeholder="State" 
+                  <input name="state" type="text" placeholder="State" 
                   className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 bg-white leading-tight focus:outline-none focus:shadow-outline ${inputs.state.trim() === '' ? 'border-red-500' : ''}`} 
                   value={inputs.state} onChange={handleChange} />
                 </div>

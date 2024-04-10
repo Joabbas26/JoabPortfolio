@@ -326,3 +326,24 @@ export default function CRUDApp() {
 )
 }
 
+/**
+
+const [form, setForm] = useState({
+  rowNum: rowNumber,
+  fName : firstName,
+  lName : lastName, 
+  age : age, 
+  fTime : fullTime,
+  oTime : overTime,
+  recomm: recommendation,
+  total : totalRef.current,
+});
+
+handleChange = (e) => {
+  setForm({
+    ...form,
+    [e.target.name]: e.target.value,
+  });
+}
+
+*/
