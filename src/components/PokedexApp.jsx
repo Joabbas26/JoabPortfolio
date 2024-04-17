@@ -99,32 +99,38 @@ export default function PokedexApp() {
   const handlePlay = async () => {
     setIsPlaying(true);
     try {
-      const response = await axios.get('/pokedex/api', {
+      const { data } = await axios.get('/pokedex/api', {
         params: {
           text: pokemonDescription,
           voice: 'MALE',
         },
-        responseType: 'blob', // Set response type to blob
+        responseType: 'blob',
       });
-      const audioUrl = URL.createObjectURL(new Blob([response.data])); // Create object URL from blob data
-      audioRef.current = new Audio(audioUrl); // Create Audio object with the audio URL
-      audioRef.current.play();
-      audioRef.current.addEventListener('ended', () => setIsPlaying(false));
-      audioRef.current.addEventListener('error', (err) => {
+
+      const audioUrl = URL.createObjectURL(new Blob([data]));
+      const audio = new Audio(audioUrl);
+
+      audio.addEventListener('ended', () => setIsPlaying(false));
+      audio.addEventListener('error', (err) => {
         console.error('Error playing audio:', err);
         setIsPlaying(false);
       });
+
+      audioRef.current = audio;
+      await audioRef.current.play();
     } catch (err) {
       console.error('Error fetching audio data:', err);
       console.log('Error toJSON:', err.toJSON());
       setIsPlaying(false);
+      alert('Error fetching audio data. Please try again later.');
     }
   };
 
   const handlePause = () => {
     if (audioRef.current) {
       audioRef.current.pause();
-      audioRef.current.currentTime = 0; // Reset the audio current time to the beginning
+      audioRef.current.currentTime = 0;
+      audioRef.current = null; // Clear the audio reference
     }
     setIsPlaying(false);
   };

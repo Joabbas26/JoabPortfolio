@@ -24,14 +24,12 @@ const client = new TextToSpeechClient({
   credentials: credentials,
 });
 
-app.options('/pokedex/api', cors());
-
 app.post('/pokedex/api', async (req, res) => {
   console.log('Received request at /pokedex/api');
-  
+
   const { text, voice } = req.query;
 
-  if (!text || !voice) {
+  if (!text ||!voice) {
     return res.status(400).send('Missing required parameters');
   }
 
@@ -43,14 +41,16 @@ app.post('/pokedex/api', async (req, res) => {
     });
     const audioUrl = response.audioContent;
     res.setHeader('Content-Type', 'audio/mpeg');
-    res.send(audioUrl);
-    res.status(200).json({ audioUrl });
+    res.status(200).send(audioUrl);
   } catch (err) {
     console.error('Error synthesizing speech:', err);
-    res.status(500).send('Error synthesizing speech');
+    res.status(500).send('Error synthesizing speech: ' + err.message);
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(port, (err) => {
+  if (err) {
+    return console.error('Error starting server:', err);
+  }
+  console.log(`Server is running at http://localhost:${port}`);
 });
