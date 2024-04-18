@@ -24,8 +24,8 @@ const client = new TextToSpeechClient({
   credentials: credentials,
 });
 
-app.post('/pokedex/api', async (req, res) => {
-  console.log('Received request at /pokedex/api');
+app.get('/pokedex/', async (req, res) => {
+  console.log('Received request at /pokedex/');
 
   const { text, voice } = req.query;
 
@@ -34,14 +34,16 @@ app.post('/pokedex/api', async (req, res) => {
   }
 
   try {
+    // Generate the TTS audio
     const [response] = await client.synthesizeSpeech({
       input: { text },
-      voice: { name: voice },
+      voice: { languageCode: 'en-US', name: 'en-US-Wavenet-C'},
       audioConfig: { audioEncoding: 'MP3' },
     });
-    const audioUrl = response.audioContent;
-    res.setHeader('Content-Type', 'audio/mpeg');
-    res.status(200).send(audioUrl);
+
+    // Return the generated audio as a binary response
+    res.set('Content-Type', 'audio/mpeg');
+    res.send(response.audioContent);
   } catch (err) {
     console.error('Error synthesizing speech:', err);
     res.status(500).send('Error synthesizing speech: ' + err.message);
