@@ -139,17 +139,10 @@ export default function CRUDApp() {
     }
 
     // Delete button in row
-    const deleteIcon = () => {
-        return (
-          <FontAwesomeIcon icon={faTrashCan} style={{color: "red"}} onClick={openDeleteHandler} className="cursor-pointer"/>
-    )};
+    const deleteIcon = () => {return (<FontAwesomeIcon icon={faTrashCan} style={{color: "red"}} onClick={openDeleteHandler} className="cursor-pointer"/>)};
 
     // Edit button in row
-    const editIcon = () => {
-        return(
-          <FontAwesomeIcon icon={faPenToSquare} style={{color: "gray"}} onClick={openEditHandler} className="cursor-pointer"/>
-        )
-    }
+    const editIcon = () => {return(<FontAwesomeIcon icon={faPenToSquare} style={{color: "gray"}} onClick={openEditHandler} className="cursor-pointer"/>)}
 
     return (
   <div className={`bg-gray-800 ${isOpen || editIsOpen ? 'min-h-screen' : 'h-screen'} md:flex md:justify-center`}>
@@ -280,7 +273,8 @@ export default function CRUDApp() {
           </div>
         </div>
     </div>
-            
+    
+    {/* Table with data */}
     <div className="justify-center items-center py-20 bg-gray-800">
       <div className="justify-center container mx-auto px-4">
           <h1 className="text-3xl mb-6 font-bold text-center text-white">Employee Evaluation</h1>
@@ -321,29 +315,6 @@ export default function CRUDApp() {
           <FontAwesomeIcon icon={faPlusSquare} style={{color: "green"}} className="w-8 h-8 rounded-lg my-1 cursor-pointer" onClick={modalHandler}/>
       </div>
     </div>
-     
   </div>
-)
+  )
 }
-
-/**
-
-const [form, setForm] = useState({
-  rowNum: rowNumber,
-  fName : firstName,
-  lName : lastName, 
-  age : age, 
-  fTime : fullTime,
-  oTime : overTime,
-  recomm: recommendation,
-  total : totalRef.current,
-});
-
-handleChange = (e) => {
-  setForm({
-    ...form,
-    [e.target.name]: e.target.value,
-  });
-}
-
-*/

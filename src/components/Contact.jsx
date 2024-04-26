@@ -9,7 +9,7 @@ export default function Contact() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const [result, setResult] = useState('');
+  const [errorResult, seterrorResult] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const nameInputRef = useRef(null);
@@ -24,13 +24,13 @@ export default function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if(email.trim() === "" && message.trim() === ""){
-      setResult("Required fields cannot be empty")
+      seterrorResult("Required fields cannot be empty")
       setShowConfirmation(true);
       return
     }
     
     if(!isValidEmail(email)) {
-      setResult("Email address invalid");
+      seterrorResult("Email address invalid");
       setShowConfirmation(true);
       return
     }
@@ -42,7 +42,7 @@ export default function Contact() {
       import.meta.env.VITE_EMAILJS_USER_ID
     )
     .then(() => {
-      setResult("Message Sent Successfully!");
+      seterrorResult("Message Sent Successfully!");
       setShowConfirmation(true);
       // Clear input fields
         if (nameInputRef.current) nameInputRef.current.value = "";
@@ -63,6 +63,7 @@ export default function Contact() {
       <div className="container mx-auto px-4">
         <h1 className="text-3xl mb-6 font-bold text-center text-white">Contact Me</h1>
       <div className="container lg:w-2/3 px-6 py-8 bg-gray-700 rounded-3xl mx-auto flex flex-col md:flex-row">
+        
         {/* Contact Form */}
         <div className="md:w-1/2 md:pr-8">
           <form className='mb-2' onSubmit={handleSubmit}>
@@ -76,22 +77,22 @@ export default function Contact() {
             <div className="mb-4">
               <label htmlFor="email" className="block text-white font-bold mb-2">Email</label>
               <input type="email" id="email" name="email" placeholder="Your Email" 
-              className={`w-full px-3 py-2 border rounded-md text-black bg-white ${result === 'Required fields cannot be empty' || result === 'Email address invalid' ? 'border-red-500' : 'bg-white'}`}
+              className={`w-full px-3 py-2 border rounded-md text-black bg-white ${errorResult === 'Required fields cannot be empty' || errorResult === 'Email address invalid' ? 'border-red-500' : 'bg-white'}`}
               onChange={(e) => setEmail(e.target.value)}
               ref={emailInputRef}/>
             </div>
             <div className="mb-4">
               <label htmlFor="message" className="block text-white font-bold mb-2">Message</label>
               <textarea id="message" name="message" rows="4" placeholder="Your Message" 
-              className={`w-full px-3 py-2 border rounded-md text-black bg-white ${result === 'Required fields cannot be empty' ? 'border-red-500' : 'bg-white'}`}
+              className={`w-full px-3 py-2 border rounded-md text-black bg-white ${errorResult === 'Required fields cannot be empty' ? 'border-red-500' : 'bg-white'}`}
               onChange={(e) => setMessage(e.target.value)} ref={messageInputRef}/>
             </div>
             <button type="submit" className="bg-blue-500 text-white font-bold py-2 px-4 rounded-md" onClick={handleSubmit}>Send</button>
           </form>
           {showConfirmation && (
-          <p className={`border ${result === 'Required fields cannot be empty' || result === 'Email address invalid' ? 'bg-red-600' : 'border-green-500'}
+          <p className={`border ${errorResult === 'Required fields cannot be empty' || errorResult === 'Email address invalid' ? 'bg-red-600' : 'border-green-500'}
           p-2 text-white mx-1`}>
-            {result}
+            {errorResult}
           </p>
           )}
         </div>
@@ -118,21 +119,3 @@ export default function Contact() {
     </div>
   )
 }
-
-
-/**
-
-const [form, setForm] = useState({
-  name: "",
-  email: "",
-  message: ""
-});
-
-handleChange = (e) => {
-  setForm({
-    ...form,
-    [e.target.name]: e.target.value,
-  });
-}
-
-*/

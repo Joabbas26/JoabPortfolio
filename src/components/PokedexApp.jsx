@@ -135,7 +135,6 @@ export default function PokedexApp() {
     setIsPlaying(false);
   };
   
-  
 
 
   return (
@@ -190,13 +189,12 @@ export default function PokedexApp() {
                 {pokemonData.types.map((type, index) => (
                   <div className='inline-block rounded-full mx-1 shadow-lg' key={index} style={{ background: getTypeColor(type.type.name)}}>
                     <span key={index}
-                    className="text-xxs p-1 antialiased font-semibold text-black flex items-center ">
+                    className="text-xxs p-1 antialiased font-semibold text-white flex items-center ">
                     {type.type.name.toUpperCase()}
                     {index < pokemonData.types.length - 1 }
                     </span>
                   </div>
-                  
-                ))}
+                  ))}
               </div>
             )}
           </div>
@@ -212,11 +210,11 @@ export default function PokedexApp() {
         
         {/* Row of 3 buttons on the bottom */}
         <div className="row-start-3 col-start-1 col-end-4 flex justify-center items-center">
-          <button className="border border-black p-5 mx-2">
-            <FontAwesomeIcon icon={faPlay} onClick={handlePlay} disabled={!pokemonDescription}/>
+          <button className="border border-black p-5 mx-2" title="Temporarily disabled" disabled>
+            <FontAwesomeIcon icon={faPlay} onClick={handlePlay}/>
           </button>
-          <button className="border border-black p-5 mx-2">
-            <FontAwesomeIcon icon={faStop} onClick={handlePause} disabled={!isPlaying}/>
+          <button className="border border-black p-5 mx-2" title="Temporarily disabled" disabled>
+            <FontAwesomeIcon icon={faStop} onClick={handlePause}/>
           </button>
           <button className="border border-black p-5 mx-2" onClick={fetchRandomPokemon}>
             <FontAwesomeIcon icon={faShuffle} />
