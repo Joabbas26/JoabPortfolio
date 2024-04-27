@@ -22,13 +22,13 @@ export default function PokedexApp() {
       normal: 'gray',
       fire: 'red',
       water: 'blue',
-      electric: 'text-yellow-400',
+      electric: 'goldenrod',
       grass: 'green',
-      ice: 'text-cyan-600',
+      ice: 'steelblue',
       fighting: 'orange',
       poison: 'purple',
       ground: 'saddlebrown',
-      flying: 'text-blue-600',
+      flying: 'teal',
       psychic: 'magenta',
       bug: 'olive',
       rock: 'brown',
@@ -36,7 +36,7 @@ export default function PokedexApp() {
       dragon: 'darkorange',
       dark: 'dimgray',
       steel: 'darkgray',
-      fairy: 'text-pink-500',
+      fairy: 'fuchsia',
     };
   
     // Return the corresponding color for the type, or a default color if not found
