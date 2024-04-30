@@ -12,7 +12,7 @@ export default function Projects() {
       title: 'CRUD App',
       description: 'CRUD application using JavaScript, React, and Redux Toolkit, that enables users to efficiently manage data, perform calculations, and manipulate records within a dynamic user interface through modal data entry, dynamic table display, and advanced calculation capabilities.',
       imageUrl: table,
-      githubLink: 'https://github.com/Joabbas26/Rank-Table',
+      githubLink: 'https://github.com/Joabbas26/CRUD-Table',
       demoLink: '/table'
     },
     {
@@ -28,7 +28,7 @@ export default function Projects() {
       title: 'Paycheck App',
       description: 'Pay Check calculator using JavaScript, React, and Axios, that calculates how much you make per second depending on your hourly wage.',
       imageUrl: payCheck,
-      githubLink: 'https://github.com/Joabbas26/WeatherApp',
+      githubLink: 'https://github.com/Joabbas26/Paycheck-App',
       demoLink: '/paycheck'
     },
     {
@@ -36,7 +36,7 @@ export default function Projects() {
       title: 'Pokedex',
       description: 'Pokédex application utilizing JavaScript, React, and Axios, that seamlessly retrieves and displays comprehensive information on Pokémon from the official Pokémon API while providing real-time data updates.',
       imageUrl: pokedex,
-      githubLink: 'https://github.com/Joabbas26/Rank-Table',
+      githubLink: 'https://github.com/Joabbas26/Pokedex-App',
       demoLink: '/pokedex'
     }
   ];
