@@ -7,8 +7,8 @@ export default function About() {
         <div className="grid gap-6 p-6 md:grid-cols-4">
           <div className="bg-gray-700 rounded-lg p-6 shadow-md md:col-span-1">
             <h2 className="text-xl font-bold mb-4 text-white">Current Projects</h2>
-            <p className="mb-2 text-white">Web Scraper: Expected June 2024</p>
-            <p className="mb-2 text-white">PayCheck Calculator App: Expected August 2024</p>
+            <p className="mb-2 text-white">Web Scraper: Expected September 2024</p>
+            <p className="mb-2 text-white">Battle Islands Game: Expected October 2024</p>
           </div>
           <div className="bg-gray-700 rounded-lg p-6 shadow-md md:col-span-3">
             <h2 className="text-xl font-bold mb-4 text-white">Introduction</h2>
