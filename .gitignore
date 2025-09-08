@@ -25,3 +25,4 @@ dist-ssr
 
 .env
 src/JSON/serviceaccount.json
+serviceaccount.json

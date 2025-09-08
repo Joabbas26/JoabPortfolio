@@ -9,42 +9,109 @@ export default function PokedexApp() {
   const [pokemonDescription, setPokemonDescription] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // Keep a ref to the current utterance so we can cancel it
+  // ---- Typeahead state ----
+  const [allPokemon, setAllPokemon] = useState([]);        // ["bulbasaur", ...]
+  const [suggestions, setSuggestions] = useState([]);      // filtered list
+  const [activeIndex, setActiveIndex] = useState(-1);      // keyboard highlight
+  const inputWrapRef = useRef(null);
+
+  // ---- Standard voice (auto-picked) ----
+  const [ttsVoice, setTtsVoice] = useState(null);
   const utteranceRef = useRef(null);
 
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+  const pickStandardVoice = (voices) => {
+    if (!voices || !voices.length) return null;
+    const prefs = [
+      /microsoft david/i, /microsoft mark/i,
+      /google uk english male/i, /google us english/i,
+      /victoria/i, /alex/i, /samantha/i
+    ];
+    for (const re of prefs) {
+      const v = voices.find(v => re.test(v.name));
+      if (v) return v;
+    }
+    return voices.find(v => /^en/i.test(v.lang)) || voices.find(v => v.default) || voices[0] || null;
   };
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.speechSynthesis) return;
+    const loadVoices = () => {
+      const list = window.speechSynthesis.getVoices();
+      const chosen = pickStandardVoice(list);
+      setTtsVoice(chosen);
+    };
+    loadVoices();
+    window.speechSynthesis.addEventListener('voiceschanged', loadVoices);
+    return () => {
+      window.speechSynthesis.removeEventListener('voiceschanged', loadVoices);
+      window.speechSynthesis.cancel();
+    };
+  }, []);
+
+  // Fetch all Pokémon names once for suggestions
+  useEffect(() => {
+    const loadAll = async () => {
+      try {
+        const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
+        const json = await res.json();
+        const names = (json.results || []).map(x => x.name); // lowercase from API
+        setAllPokemon(names);
+      } catch (e) {
+        console.error('Failed to load Pokémon list for suggestions:', e);
+      }
+    };
+    loadAll();
+  }, []);
+
+  // Close suggestions when clicking outside
+  useEffect(() => {
+    const onDocClick = (e) => {
+      if (!inputWrapRef.current) return;
+      if (!inputWrapRef.current.contains(e.target)) {
+        setSuggestions([]);
+        setActiveIndex(-1);
+      }
+    };
+    document.addEventListener('mousedown', onDocClick);
+    return () => document.removeEventListener('mousedown', onDocClick);
+  }, []);
+
+  const capitalizeFirstLetter = (string) =>
+    string.charAt(0).toUpperCase() + string.slice(1);
 
   const getTypeColor = (type) => {
     const typeColors = {
-      normal: 'gray',
-      fire: 'red',
-      water: 'blue',
-      electric: 'goldenrod',
-      grass: 'green',
-      ice: 'steelblue',
-      fighting: 'orange',
-      poison: 'purple',
-      ground: 'saddlebrown',
-      flying: 'teal',
-      psychic: 'magenta',
-      bug: 'olive',
-      rock: 'brown',
-      ghost: 'darkviolet',
-      dragon: 'darkorange',
-      dark: 'dimgray',
-      steel: 'darkgray',
-      fairy: 'fuchsia',
+      normal: 'gray', fire: 'red', water: 'blue', electric: 'goldenrod',
+      grass: 'green', ice: 'steelblue', fighting: 'orange', poison: 'purple',
+      ground: 'saddlebrown', flying: 'teal', psychic: 'magenta', bug: 'olive',
+      rock: 'brown', ghost: 'darkviolet', dragon: 'darkorange', dark: 'dimgray',
+      steel: 'darkgray', fairy: 'fuchsia',
     };
     return typeColors[type] || 'black';
   };
 
-  const searchPokemon = async () => {
+  // Filter suggestions as the user types
+  const updateSuggestions = (rawValue) => {
+    const q = rawValue.trim().toLowerCase();
+    if (!q) {
+      setSuggestions([]);
+      setActiveIndex(-1);
+      return;
+    }
+    // prefix-first, then substring matches; limit to 8
+    const starts = allPokemon.filter(n => n.startsWith(q));
+    const contains = allPokemon.filter(n => !n.startsWith(q) && n.includes(q));
+    const merged = [...starts, ...contains].slice(0, 8);
+    setSuggestions(merged);
+    setActiveIndex(merged.length ? 0 : -1);
+  };
+
+  const searchPokemon = async (nameOverride) => {
     try {
-      const response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`
-      );
+      const name = (nameOverride ?? pokemonName).toLowerCase();
+      if (!name) return;
+
+      const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
       const data = response.data;
       setPokemonData(data);
 
@@ -63,6 +130,9 @@ export default function PokedexApp() {
         .replace(/(?:^|[.!?]\s+)\w/g, (c) => c.toUpperCase());
 
       setPokemonDescription(sanitizedDescription);
+      // Hide suggestions after a successful search
+      setSuggestions([]);
+      setActiveIndex(-1);
     } catch (error) {
       console.error(error);
       setPokemonData(null);
@@ -92,50 +162,26 @@ export default function PokedexApp() {
       setPokemonData(pokemonData);
       setPokemonDescription(sanitizedDescription);
       setPokemonName('');
+      setSuggestions([]);
+      setActiveIndex(-1);
     } catch (error) {
       console.error('Error fetching random Pokémon:', error);
     }
   };
 
-  // ---- Web Speech API (Option A) ----
-  // Preload voices on some browsers (voices load async)
-  useEffect(() => {
-    // Trigger loading of voices
-    window.speechSynthesis.getVoices();
-    const handle = () => {
-      // no-op: just ensures voices are loaded; you could store them if you want
-    };
-    window.speechSynthesis.addEventListener('voiceschanged', handle);
-    return () => {
-      window.speechSynthesis.removeEventListener('voiceschanged', handle);
-      window.speechSynthesis.cancel(); // stop any ongoing speech on unmount
-    };
-  }, []);
-
-  const pickEnglishVoice = () => {
-    const voices = window.speechSynthesis.getVoices() || [];
-    // Prefer a local English voice if available
-    return (
-      voices.find((v) => v.lang?.toLowerCase().startsWith('en') && v.localService) ||
-      voices.find((v) => v.lang?.toLowerCase().startsWith('en')) ||
-      null
-    );
-  };
-
+  // ---- Web Speech API Play/Stop using the standard voice ----
   const handlePlay = () => {
-    if (!pokemonDescription) return;
-
-    // Stop anything already speaking
+    if (!pokemonDescription || typeof window === 'undefined' || !window.speechSynthesis) return;
     window.speechSynthesis.cancel();
 
     const u = new SpeechSynthesisUtterance(pokemonDescription);
-    const voice = pickEnglishVoice();
-    if (voice) u.voice = voice;
-
-    // Optional tuning
-    u.rate = 1;   // 0.1–10
-    u.pitch = 1;  // 0–2
-    u.volume = 1; // 0–1
+    if (ttsVoice) {
+      u.voice = ttsVoice;
+      u.lang = ttsVoice.lang;
+    }
+    u.rate = 1.08;
+    u.pitch = 0.85;
+    u.volume = 1;
 
     u.onstart = () => setIsPlaying(true);
     u.onend = () => setIsPlaying(false);
@@ -146,32 +192,107 @@ export default function PokedexApp() {
   };
 
   const handlePause = () => {
-    window.speechSynthesis.cancel();
+    if (typeof window !== 'undefined' && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
     setIsPlaying(false);
     utteranceRef.current = null;
   };
   // ---- End Web Speech API ----
 
+  // Select a suggestion (click or Enter)
+  const selectSuggestion = (name) => {
+    const cased = capitalizeFirstLetter(name);
+    setPokemonName(cased);
+    searchPokemon(name); // search immediately
+  };
+
+  // Input handlers
+  const onInputChange = (e) => {
+    const raw = e.target.value;
+    // Keep your display capitalization while typing
+    const display = raw.charAt(0).toUpperCase() + raw.slice(1);
+    setPokemonName(display);
+    updateSuggestions(raw);
+  };
+
+  const onInputKeyDown = (e) => {
+    if (!suggestions.length) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        searchPokemon();
+      }
+      return;
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setActiveIndex((i) => (i + 1) % suggestions.length);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setActiveIndex((i) => (i - 1 + suggestions.length) % suggestions.length);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      const name = suggestions[activeIndex] ?? suggestions[0];
+      if (name) selectSuggestion(name);
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      setSuggestions([]);
+      setActiveIndex(-1);
+    }
+  };
+
   return (
     <div className="justify-center items-center py-20 bg-gray-800 grow h-screen">
-      <div className="flex items-center justify-center mb-5">
-        <input
-          className="border border-gray-400 p-2 mr-2 text-gray-800 rounded-lg bg-white"
-          type="text"
-          value={pokemonName}
-          onChange={(e) =>
-            setPokemonName(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))
-          }
-          placeholder="Enter Pokémon name"
-          onKeyDown={(e) => e.key === 'Enter' && searchPokemon(e)}
-        />
-        <button
-          className="bg-gray-700 border border-gray-700 text-white px-4 py-2 rounded"
-          onClick={searchPokemon}
-        >
-          <FontAwesomeIcon icon={faSearch} className="text-gray-400" />
-        </button>
-      </div>
+      <div className="flex items-center justify-center mb-5" ref={inputWrapRef}>
+  <div className="flex items-stretch gap-2">
+    {/* Input + suggestions (relative wrapper so dropdown matches input width) */}
+    <div className="relative">
+      <input
+        className="h-10 w-72 border border-gray-400 px-3 text-gray-800 rounded-lg bg-white"
+        type="text"
+        value={pokemonName}
+        onChange={onInputChange}
+        placeholder="Enter Pokémon name"
+        onKeyDown={onInputKeyDown}
+        autoComplete="off"
+      />
+
+      {/* Suggestions dropdown */}
+      {suggestions.length > 0 && (
+        <ul className="absolute z-20 mt-1 w-full max-h-64 overflow-auto bg-white border border-gray-300 rounded-lg shadow">
+          {suggestions.map((name, idx) => {
+            const display = capitalizeFirstLetter(name);
+            const isActive = idx === activeIndex;
+            return (
+              <li
+                key={name}
+                className={`px-3 py-2 cursor-pointer text-black ${
+                  isActive ? 'bg-gray-200' : 'hover:bg-gray-100'
+                }`}
+                onMouseEnter={() => setActiveIndex(idx)}
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => selectSuggestion(name)}
+              >
+                {display}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+
+    {/* Search button — same height as input */}
+    <button
+      className="h-10 px-3 bg-white border border-gray-300 text-gray-700 rounded-lg flex items-center justify-center"
+      onClick={() => searchPokemon()}
+      aria-label="Search"
+      title="Search"
+    >
+      <FontAwesomeIcon icon={faSearch} className="leading-none" />
+    </button>
+  </div>
+</div>
+
 
       {pokemonData && (
         <div className="flex justify-center items-center my-12 mx-4">
