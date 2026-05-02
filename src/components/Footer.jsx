@@ -27,7 +27,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="mt-4 text-white text-center">
-        <p>&copy; 2025 Joab Bastidas. All rights reserved.</p>
+        <p>&copy; 2026 Joab Bastidas. All rights reserved.</p>
       </div>
     </footer>
   )
