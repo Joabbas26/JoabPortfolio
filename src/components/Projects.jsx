@@ -3,6 +3,7 @@ import table from '../assets/CRUDApp.png';
 import weather from '../assets/Weather.png';
 import pokedex from '../assets/Pokedex.png';
 import payCheck from '../assets/Paycheck.png';
+import tracklore from '../assets/TrackLore.jpeg';
 
 export default function Projects() {
 
@@ -28,11 +29,11 @@ export default function Projects() {
     {
       id: 4,
       category: 'ios',
-      title: 'iOS App Project 1',
-      description: 'Completed iOS application project placeholder. Project details, screenshots, and demo links will be added soon.',
-      imageUrl: 'https://placehold.co/400x200/1f2937/ffffff?text=iOS+App+Project+1',
-      githubLink: 'https://github.com/Joabbas26',
-      demoLink: null
+      title: 'TrackLore iOS App',
+      description: 'TrackLore is an iOS application that helps you identify theme songs from your favorite TV shows, movies and anime.',
+      imageUrl: tracklore,
+      githubLink: 'https://apps.apple.com/us/app/tracklore/id6747784234',
+      demoLink: 'https://apps.apple.com/us/app/tracklore/id6747784234'
     },
     {
       id: 5,
