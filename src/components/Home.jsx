@@ -9,7 +9,7 @@ export default function Home() {
     <div className='container flex flex-col mx-auto px-4 py-16 justify-between items-center md:flex-row md:pl-16'>
       <div className='md:w-1/2'>
         <h1 className='mb-2 text-white'>Joab Bastidas</h1>
-        <p className='mb-5 text-gray-300 text-lg'>Data Analyst in Training | Web & iOS Projects</p>
+        <p className='mb-5 text-gray-300 text-lg'>Data Analyst in Training | Web Developer | iOS Developer</p>
         <Link className='rounded-xl border border-white bg-gray-800 p-3 mr-2 mb-5 inline-block text-white hover:bg-blue-700 hover:text-white' to='/projects#data-projects'>Data Projects</Link>
         <Link className='rounded-xl border border-white bg-gray-800 p-3 mr-2 mb-5 inline-block text-white hover:bg-blue-700 hover:text-white' to='/projects#full-stack-projects'>Full Stack</Link>
         <Link className='rounded-xl border border-white bg-gray-800 p-3 mr-2 mb-5 inline-block text-white hover:bg-blue-700 hover:text-white' to='/projects#ios-projects'>iOS Apps</Link>
