@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import table from '../assets/CRUDApp.png';
 import weather from '../assets/Weather.png';
 import pokedex from '../assets/Pokedex.png';
@@ -6,6 +7,18 @@ import payCheck from '../assets/Paycheck.png';
 import tracklore from '../assets/TrackLore.jpeg';
 
 export default function Projects() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.hash) {
+      return;
+    }
+
+    const section = document.querySelector(location.hash);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [location.hash]);
 
   const projects = [
     {
@@ -129,17 +142,17 @@ export default function Projects() {
       <div className="container mx-auto px-4">
         <h1 className="text-3xl font-bold mb-10 text-center text-white">My Projects</h1>
 
-        <section className="mb-12">
+        <section id="data-projects" className="mb-12 scroll-mt-24">
           <h2 className="text-2xl font-bold mb-6 text-white">Data Analytics Projects</h2>
           {renderCards(dataProjects)}
         </section>
 
-        <section className="mb-12">
+        <section id="ios-projects" className="mb-12 scroll-mt-24">
           <h2 className="text-2xl font-bold mb-6 text-white">iOS Apps</h2>
           {renderCards(iosProjects)}
         </section>
 
-        <section>
+        <section id="full-stack-projects" className="scroll-mt-24">
           <h2 className="text-2xl font-bold mb-6 text-white">Web Development Projects</h2>
           {renderCards(webProjects)}
         </section>

@@ -10,9 +10,9 @@ export default function Home() {
       <div className='md:w-1/2'>
         <h1 className='mb-2 text-white'>Joab Bastidas</h1>
         <p className='mb-5 text-gray-300 text-lg'>Data Analyst in Training | Web & iOS Projects</p>
-        <button className='rounded-xl border border-white bg-gray-800 p-3 mr-2 mb-5 inline-block text-white hover:bg-blue-700'><Link className='text-white hover:text-white' to='/projects'>Data Projects</Link></button>
-        <button className='rounded-xl border border-white bg-gray-800 p-3 mr-2 mb-5 inline-block text-white hover:bg-blue-700'><Link className='text-white hover:text-white' to='/projects'>Full Stack</Link></button>
-        <button className='rounded-xl border border-white bg-gray-800 p-3 mr-2 mb-5 inline-block text-white hover:bg-blue-700'><Link className='text-white hover:text-white' to='/projects'>iOS Apps</Link></button>
+        <Link className='rounded-xl border border-white bg-gray-800 p-3 mr-2 mb-5 inline-block text-white hover:bg-blue-700 hover:text-white' to='/projects#data-projects'>Data Projects</Link>
+        <Link className='rounded-xl border border-white bg-gray-800 p-3 mr-2 mb-5 inline-block text-white hover:bg-blue-700 hover:text-white' to='/projects#full-stack-projects'>Full Stack</Link>
+        <Link className='rounded-xl border border-white bg-gray-800 p-3 mr-2 mb-5 inline-block text-white hover:bg-blue-700 hover:text-white' to='/projects#ios-projects'>iOS Apps</Link>
         <span className="flex flex-wrap justify-center gap-1 items-center bg-gray-600 rounded-md p-1 mt-12 md:w-4/5 grow">
             {/* Data Analytics */}
             <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Logo" className="h-10"/>
