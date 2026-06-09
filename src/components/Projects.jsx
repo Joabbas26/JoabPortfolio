@@ -5,6 +5,7 @@ import weather from '../assets/Weather.png';
 import pokedex from '../assets/Pokedex.png';
 import payCheck from '../assets/Paycheck.png';
 import tracklore from '../assets/TrackLore.jpeg';
+import powerBI from '../assets/PowerBI.png';
 
 export default function Projects() {
   const location = useLocation();
@@ -24,6 +25,15 @@ export default function Projects() {
     {
       id: 1,
       category: 'data',
+      title: 'Power BI Dashboard',
+      description: 'Insurance claims data quality project using SQLite, SQL, Excel, and Power BI to clean 1,028 raw claim records and build dashboards showing claim trends, fraud rate, and data quality issues.',
+      imageUrl: powerBI,
+      githubLink: 'https://github.com/Joabbas26/insurance-claims-data-quality-analysis',
+      demoLink: null
+    },
+    {
+      id: 2,
+      category: 'data',
       title: 'Python Data Analysis',
       description: 'Exploratory data analysis using Python, Pandas, NumPy, and Matplotlib/Seaborn to uncover trends and insights from real-world datasets.',
       imageUrl: 'https://placehold.co/400x200/1e3a5f/ffffff?text=Python+Data+Analysis',
@@ -31,11 +41,11 @@ export default function Projects() {
       demoLink: null
     },
     {
-      id: 2,
+      id: 3,
       category: 'data',
-      title: 'Power BI Dashboard',
-      description: 'Interactive business intelligence dashboard built in Power BI, visualizing key metrics and KPIs to support data-driven decision making.',
-      imageUrl: 'https://placehold.co/400x200/1e3a5f/ffffff?text=Power+BI+Dashboard',
+      title: 'Python Data Analysis',
+      description: 'Exploratory data analysis using Python, Pandas, NumPy, and Matplotlib/Seaborn to uncover trends and insights from real-world datasets.',
+      imageUrl: 'https://placehold.co/400x200/1e3a5f/ffffff?text=Python+Data+Analysis',
       githubLink: 'https://github.com/Joabbas26',
       demoLink: null
     },
