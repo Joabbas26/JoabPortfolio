@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import table from '../assets/CRUDApp.png';
 import weather from '../assets/Weather.png';
@@ -7,167 +7,213 @@ import payCheck from '../assets/Paycheck.png';
 import tracklore from '../assets/TrackLore.jpeg';
 import powerBI from '../assets/PowerBI.png';
 
+const projects = [
+  {
+    id: 1,
+    category: 'data',
+    tag: 'DATA ANALYTICS',
+    title: 'Insurance Claims Data Quality',
+    description:
+      '1,028 raw claim records cleaned with SQLite, SQL and Excel; Power BI dashboards for claim trends, fraud rate and data quality.',
+    imageUrl: powerBI,
+    githubLink: 'https://github.com/Joabbas26/insurance-claims-data-quality-analysis',
+    demoLink: null,
+    demoLabel: null,
+    wip: false,
+  },
+  {
+    id: 2,
+    category: 'data',
+    tag: 'DATA ANALYTICS',
+    title: 'Python Data Analysis',
+    description:
+      'Exploratory data analysis with Pandas, NumPy and Matplotlib/Seaborn on real-world datasets.',
+    imageUrl: 'https://placehold.co/400x200/E9E4DA/6B675F?text=Python+Data+Analysis',
+    githubLink: 'https://github.com/Joabbas26',
+    demoLink: null,
+    demoLabel: null,
+    wip: true,
+  },
+  {
+    id: 3,
+    category: 'data',
+    tag: 'DATA ANALYTICS',
+    title: 'SQL Portfolio Project',
+    description: 'Advanced querying and data modeling on a public dataset.',
+    imageUrl: 'https://placehold.co/400x200/E9E4DA/6B675F?text=SQL+Portfolio+Project',
+    githubLink: 'https://github.com/Joabbas26',
+    demoLink: null,
+    demoLabel: null,
+    wip: true,
+  },
+  {
+    id: 4,
+    category: 'ios',
+    tag: 'iOS APP',
+    title: 'TrackLore',
+    description:
+      'Identify theme songs from your favorite TV shows, movies and anime. Live on the App Store.',
+    imageUrl: tracklore,
+    githubLink: 'https://apps.apple.com/us/app/tracklore/id6747784234',
+    demoLink: 'https://apps.apple.com/us/app/tracklore/id6747784234',
+    demoLabel: 'App Store',
+    external: true,
+    wip: false,
+  },
+  {
+    id: 5,
+    category: 'web',
+    tag: 'WEB DEV',
+    title: 'CRUD App',
+    description:
+      'Data management with modal entry, dynamic tables and calculations. React + Redux Toolkit.',
+    imageUrl: table,
+    githubLink: 'https://github.com/Joabbas26/CRUD-Table',
+    demoLink: '/table',
+    demoLabel: 'Live demo',
+    wip: false,
+  },
+  {
+    id: 6,
+    category: 'web',
+    tag: 'WEB DEV',
+    title: 'Weather App',
+    description:
+      'Local weather from the OpenWeatherMap API with a clean, detailed display. React + Axios.',
+    imageUrl: weather,
+    githubLink: 'https://github.com/Joabbas26/WeatherApp',
+    demoLink: '/weather',
+    demoLabel: 'Live demo',
+    wip: false,
+  },
+  {
+    id: 7,
+    category: 'web',
+    tag: 'WEB DEV',
+    title: 'Paycheck App',
+    description:
+      'Calculates how much you make per second based on your hourly wage. React + Axios.',
+    imageUrl: payCheck,
+    githubLink: 'https://github.com/Joabbas26/Paycheck-App',
+    demoLink: '/paycheck',
+    demoLabel: 'Live demo',
+    wip: false,
+  },
+  {
+    id: 8,
+    category: 'web',
+    tag: 'WEB DEV',
+    title: 'Pokedex',
+    description:
+      'Comprehensive Pokémon info from the official API with real-time data. React + Axios.',
+    imageUrl: pokedex,
+    githubLink: 'https://github.com/Joabbas26/Pokedex-App',
+    demoLink: '/pokedex',
+    demoLabel: 'Live demo',
+    wip: false,
+  },
+];
+
+const tabs = [
+  { key: 'all', label: 'All' },
+  { key: 'data', label: 'Data' },
+  { key: 'web', label: 'Web' },
+  { key: 'ios', label: 'iOS' },
+];
+
 export default function Projects() {
   const location = useLocation();
+  const [filter, setFilter] = useState('all');
 
+  // Support /projects#data, #web, #ios deep links (e.g. from Home buttons)
   useEffect(() => {
-    if (!location.hash) {
-      return;
-    }
-
-    const section = document.querySelector(location.hash);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const hash = location.hash.replace('#', '');
+    if (['data', 'web', 'ios'].includes(hash)) {
+      setFilter(hash);
     }
   }, [location.hash]);
 
-  const projects = [
-    {
-      id: 1,
-      category: 'data',
-      title: 'Power BI Dashboard',
-      description: 'Insurance claims data quality project using SQLite, SQL, Excel, and Power BI to clean 1,028 raw claim records and build dashboards showing claim trends, fraud rate, and data quality issues.',
-      imageUrl: powerBI,
-      githubLink: 'https://github.com/Joabbas26/insurance-claims-data-quality-analysis',
-      demoLink: null
-    },
-    {
-      id: 2,
-      category: 'data',
-      title: 'Python Data Analysis',
-      description: 'Exploratory data analysis using Python, Pandas, NumPy, and Matplotlib/Seaborn to uncover trends and insights from real-world datasets.',
-      imageUrl: 'https://placehold.co/400x200/1e3a5f/ffffff?text=Python+Data+Analysis',
-      githubLink: 'https://github.com/Joabbas26',
-      demoLink: null
-    },
-    {
-      id: 3,
-      category: 'data',
-      title: 'Python Data Analysis',
-      description: 'Exploratory data analysis using Python, Pandas, NumPy, and Matplotlib/Seaborn to uncover trends and insights from real-world datasets.',
-      imageUrl: 'https://placehold.co/400x200/1e3a5f/ffffff?text=Python+Data+Analysis',
-      githubLink: 'https://github.com/Joabbas26',
-      demoLink: null
-    },
-    {
-      id: 4,
-      category: 'ios',
-      title: 'TrackLore iOS App',
-      description: 'TrackLore is an iOS application that helps you identify theme songs from your favorite TV shows, movies and anime.',
-      imageUrl: tracklore,
-      githubLink: 'https://apps.apple.com/us/app/tracklore/id6747784234',
-      demoLink: 'https://apps.apple.com/us/app/tracklore/id6747784234'
-    },
-    {
-      id: 5,
-      category: 'ios',
-      title: 'iOS App Project 2',
-      description: 'Completed iOS application project placeholder. Project details, screenshots, and demo links will be added soon.',
-      imageUrl: 'https://placehold.co/400x200/1f2937/ffffff?text=iOS+App+Project+2',
-      githubLink: 'https://github.com/Joabbas26',
-      demoLink: null
-    },
-    {
-      id: 6,
-      category: 'web',
-      title: 'CRUD App',
-      description: 'CRUD application using JavaScript, React, and Redux Toolkit, that enables users to efficiently manage data, perform calculations, and manipulate records within a dynamic user interface through modal data entry, dynamic table display, and advanced calculation capabilities.',
-      imageUrl: table,
-      githubLink: 'https://github.com/Joabbas26/CRUD-Table',
-      demoLink: '/table'
-    },
-    {
-      id: 7,
-      category: 'web',
-      title: 'Weather App',
-      description: 'User-friendly weather application using JavaScript, React, and Axios, that fetches and presents detailed local weather data from the OpenWeatherMap API with an intuitive interface and comprehensive weather display.',
-      imageUrl: weather,
-      githubLink: 'https://github.com/Joabbas26/WeatherApp',
-      demoLink: '/weather'
-    },
-    {
-      id: 8,
-      category: 'web',
-      title: 'Paycheck App',
-      description: 'Pay Check calculator using JavaScript, React, and Axios, that calculates how much you make per second depending on your hourly wage.',
-      imageUrl: payCheck,
-      githubLink: 'https://github.com/Joabbas26/Paycheck-App',
-      demoLink: '/paycheck'
-    },
-    {
-      id: 9,
-      category: 'web',
-      title: 'Pokedex',
-      description: 'Pokédex application utilizing JavaScript, React, and Axios, that seamlessly retrieves and displays comprehensive information on Pokémon from the official Pokémon API while providing real-time data updates.',
-      imageUrl: pokedex,
-      githubLink: 'https://github.com/Joabbas26/Pokedex-App',
-      demoLink: '/pokedex'
-    }
-  ];
-
-  const dataProjects = projects.filter((project) => project.category === 'data');
-  const iosProjects = projects.filter((project) => project.category === 'ios');
-  const webProjects = projects.filter((project) => project.category === 'web');
-
-  const renderCards = (projectList) => (
-    <div className="grid grid-cols-1 xs-grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {projectList.map((project) => (
-        <div key={project.id} className="bg-gray-700 rounded-lg shadow-md p-6">
-          <div className="mb-3 flex justify-between items-center">
-            <span
-              className={`text-xs font-semibold px-2 py-1 rounded-full ${
-                project.category === 'data'
-                  ? 'bg-blue-600 text-white'
-                  : project.category === 'ios'
-                    ? 'bg-slate-500 text-white'
-                    : 'bg-gray-500 text-white'
-              }`}
-            >
-              {project.category === 'data' ? 'Data Analytics' : project.category === 'ios' ? 'iOS App' : 'Web Dev'}
-            </span>
-            {project.demoLink === null && (
-              <span className="text-xs text-yellow-400 font-semibold">Coming Soon</span>
-            )}
-          </div>
-          <div className="mb-4 flex justify-center">
-            <img src={project.imageUrl} alt={project.title} className="rounded-md" />
-          </div>
-          <h2 className="text-xl text-white font-bold mb-2">{project.title}</h2>
-          <p className="text-white mb-4">{project.description}</p>
-          <div className="flex justify-center">
-            <Link to={project.githubLink} target="_blank" rel="noopener noreferrer" className="bg-gray-800 text-white font-bold py-2 px-4 border rounded-md mr-4 hover:bg-gray-800 hover:text-white hover:border-gray-800">GitHub</Link>
-            {project.demoLink ? (
-              <Link to={project.demoLink} rel="noopener noreferrer" className="bg-blue-500 text-white font-bold py-2 px-4 border rounded-md hover:bg-blue-600">Live Demo</Link>
-            ) : (
-              <button disabled className="bg-gray-600 text-gray-400 font-bold py-2 px-4 border border-gray-500 rounded-md cursor-not-allowed">Coming Soon</button>
-            )}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
+  const filtered = filter === 'all' ? projects : projects.filter((p) => p.category === filter);
 
   return (
-    <div className='bg-gray-800 py-20 grow w-full flex justify-center scroll-smooth'>
-      <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold mb-10 text-center text-white">My Projects</h1>
+    <div className="grow w-full">
+      <div className="max-w-[1152px] mx-auto px-8 py-16">
+        <h1 className="font-serif font-semibold text-3xl md:text-[44px] text-ink mb-3">
+          Selected work
+        </h1>
+        <p className="font-sans text-[17px] text-body mb-9">
+          Data analytics first, then full-stack and iOS work.
+        </p>
 
-        <section id="data-projects" className="mb-12 scroll-mt-24">
-          <h2 className="text-2xl font-bold mb-6 text-white">Data Analytics Projects</h2>
-          {renderCards(dataProjects)}
-        </section>
+        {/* Filter tabs */}
+        <div className="flex gap-2.5 mb-9">
+          {tabs.map((t) => (
+            <button
+              key={t.key}
+              onClick={() => setFilter(t.key)}
+              className={`font-mono text-[13px] px-5 py-2 rounded-full border cursor-pointer ${
+                filter === t.key
+                  ? 'bg-ink text-btnfg border-ink'
+                  : 'bg-transparent text-subtle border-line'
+              }`}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
 
-        <section id="ios-projects" className="mb-12 scroll-mt-24">
-          <h2 className="text-2xl font-bold mb-6 text-white">iOS Apps</h2>
-          {renderCards(iosProjects)}
-        </section>
-
-        <section id="full-stack-projects" className="scroll-mt-24">
-          <h2 className="text-2xl font-bold mb-6 text-white">Web Development Projects</h2>
-          {renderCards(webProjects)}
-        </section>
+        {/* Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 font-sans">
+          {filtered.map((p) => (
+            <div
+              key={p.id}
+              className="border border-line bg-card flex flex-col hover:border-accent transition-colors"
+            >
+              <img
+                src={p.imageUrl}
+                alt={p.title}
+                className="w-full h-[170px] object-cover block border-b border-line"
+              />
+              <div className="p-5 flex flex-col gap-2.5 grow">
+                <div className="flex justify-between items-center">
+                  <span className="font-mono text-[11px] tracking-[0.1em] text-accent">{p.tag}</span>
+                  {p.wip && (
+                    <span className="font-mono text-[11px] text-warn">IN PROGRESS</span>
+                  )}
+                </div>
+                <h3 className="font-serif font-semibold text-xl text-ink m-0">{p.title}</h3>
+                <p className="text-[13px] leading-relaxed text-body grow m-0">{p.description}</p>
+                <div className="flex gap-[18px] mt-1.5 font-mono text-xs">
+                  <a
+                    href={p.githubLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-ink border-b border-ink pb-0.5"
+                  >
+                    GitHub →
+                  </a>
+                  {p.demoLink && (
+                    p.external ? (
+                      <a
+                        href={p.demoLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-accent border-b border-accent pb-0.5"
+                      >
+                        {p.demoLabel} →
+                      </a>
+                    ) : (
+                      <Link to={p.demoLink} className="text-accent border-b border-accent pb-0.5">
+                        {p.demoLabel} →
+                      </Link>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-    
-  )
+    </div>
+  );
 }

@@ -1,37 +1,34 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    listStyleType: {
-      none: 'none',
-      disc: 'disc',
-      decimal: 'decimal',
-      square: 'square',
-      roman: 'upper-roman',
+    extend: {
+      colors: {
+        // Theme tokens — actual values live as CSS variables in src/index.css
+        paper: 'var(--bg)',
+        card: 'var(--card)',
+        ink: 'var(--ink)',
+        body: 'var(--body)',
+        subtle: 'var(--sub)',
+        line: 'var(--line)',
+        accent: 'var(--accent)',
+        warn: 'var(--warn)',
+        btnfg: 'var(--btnfg)',
+      },
+      fontFamily: {
+        serif: ['"Source Serif 4"', 'Georgia', 'serif'],
+        mono: ['"IBM Plex Mono"', 'monospace'],
+        sans: ['Helvetica', 'Arial', 'sans-serif'],
+      },
+      fontSize: {
+        // Kept from the old config — used by WeatherApp and PokedexApp
+        xxs: '0.7rem',
+      },
     },
-    screens: {
-      xs: '480px',
-      sm: '375px',
-      md: '768px',
-      lg: '976px',
-      xl: '1440px',
-    },
-    fontSize: {
-      xxs: '0.7rem',
-      xs: '0.75',
-      sm: '0.8rem',
-      base: '1rem',
-      xl: '1.25rem',
-      '2xl': '1.563rem',
-      '3xl': '1.953rem',
-      '4xl': '2.441rem',
-      '5xl': '3.052rem',
-    },
-    extend: {},
   },
   plugins: [],
 }
-
