@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggle } from '../reducers/ModalSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

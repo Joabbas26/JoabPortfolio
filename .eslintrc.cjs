@@ -17,4 +17,11 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
+  overrides: [
+    {
+      // Redux slices export reducers/actions, not components
+      files: ['src/reducers/*.jsx'],
+      rules: { 'react-refresh/only-export-components': 'off' },
+    },
+  ],
 }

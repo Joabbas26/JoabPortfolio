@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import taxRatesData from '../JSON/TaxRates.json';
 
 export default function PaycheckApp() {
@@ -38,8 +38,11 @@ export default function PaycheckApp() {
     setEarnings('')
     setResult(0)
     setInputs({
-      ...inputs,
-      [e.target.name]: e.target.value,
+      firstName: '',
+      jobTitle: '',
+      salary: '',
+      workHours: '',
+      state: '',
     });
     setShowData(false)
   }
@@ -190,7 +193,7 @@ export default function PaycheckApp() {
               </div>
               <div className={`${showData === false ? 'hidden' : 'block'}`}>
                 <div className='text-center my-8'>
-                  <p className='text-9xl font-bold text-blue-500'>{inputs.jobTitle} {inputs.firstName}'s Income</p>
+                  <p className='text-9xl font-bold text-blue-500'>{inputs.jobTitle} {inputs.firstName}&apos;s Income</p>
                 </div>
                 <div className='text-center my-16'>
                 <h1 className="text-9xl font-bold text-green-800">${result}</h1>
