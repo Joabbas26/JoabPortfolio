@@ -10,11 +10,10 @@ export default function Home() {
             DATA ANALYST · NEW YORK, NY
           </p>
           <h1 className="font-serif font-semibold text-4xl md:text-[58px] md:leading-[1.08] text-ink mb-6">
-            I turn raw data into clear, defensible decisions.
+            Never trust data you haven&apos;t checked.
           </h1>
           <p className="font-sans text-lg md:text-[19px] leading-relaxed text-body mb-9">
-            Python, SQL, Power BI and Excel — backed by an accounting degree and
-            hands-on full-stack development experience.
+            Accounting and Computer Science graduate working with SQL, Python, Excel and Power BI.
           </p>
           <div className="flex flex-wrap gap-3.5">
             <Link

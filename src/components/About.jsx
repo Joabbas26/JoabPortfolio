@@ -8,26 +8,26 @@ export default function About() {
           </h1>
           <div className="font-sans text-base leading-[1.75] text-body flex flex-col gap-[18px]">
             <p>
-              I&apos;m a data analyst in training with a BA in Accounting from UMPI and a
-              Computer Science degree from NYC College of Technology. My quantitative
+              I&apos;m a data analyst in training with a BA in Accounting from UMPI and an
+              AS in Computer Science from NYC College of Technology. My quantitative
               background drives my passion for turning raw data into clear, actionable
               insights using Python, SQL, Power BI, and Excel.
             </p>
             <p>
-              I also have hands-on web development experience — building full-stack
-              applications with React, JavaScript, Node.js, and Tailwind CSS — which gives
+              I also have hands-on web development experience building full-stack
+              applications with React, JavaScript, Node.js, and Tailwind CSS, which gives
               me a strong technical foundation for data pipelines, dashboards, and
               automated reporting.
             </p>
             <p>
               When I&apos;m not coding or analyzing data, I enjoy drawing, playing volleyball,
-              ping pong, guitar, and chess with friends to keep my creative juices flowing.
+              ping pong, guitar, and chess with friends to keep the creative juices flowing.
             </p>
             <p>
               I&apos;m currently studying French and Japanese, with plans to learn Korean as
-              well — and I hope to travel to France, Japan, and South Korea soon.
+              well. I hope to travel to France, Japan, and South Korea soon.
               Ultimately, I&apos;m looking for opportunities that challenge me analytically and
-              let me make a meaningful impact through data.
+              allow me to make a meaningful impact through data.
             </p>
           </div>
         </div>
@@ -49,7 +49,7 @@ export default function About() {
             </p>
             <div className="flex flex-col gap-2.5 font-sans text-sm text-body">
               <span>BA Accounting — UMPI</span>
-              <span>Computer Science — NYC College of Technology</span>
+              <span>AS Computer Science — NYC College of Technology</span>
             </div>
           </div>
         </div>
